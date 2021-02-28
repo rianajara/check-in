@@ -37,7 +37,9 @@ export default class Welcome extends React.Component{
                     paddingVertical:10,
                     borderRadius:23
                 }}>
-                    <Text style={{
+                    <Text
+                    onPress={()=>navigate('LoginHost')} 
+                    style={{
                         color:"white",
                         fontFamily:"SemiBold"
                     }}>Log in as host</Text>
@@ -52,10 +54,13 @@ export default class Welcome extends React.Component{
                     paddingVertical:10,
                     borderRadius:23
                 }}>
-                    <Text style={{
-                        color:"white",
-                        fontFamily:"SemiBold"
-                    }}>Log in as attendee</Text>
+                <Text 
+                onPress={()=>navigate('LoginAttendee')}
+                style={{
+                    color:"white",
+                    fontFamily:"SemiBold"
+                }}>Log in as attendee
+                </Text>
                 </View>
 
                 <Text 

@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AppNavigator from './src/navigations/Navigator';
 import * as Font from 'expo-font';
-import {AppLoading} from 'expo';
+import AppLoading from 'expo-app-loading';
 
 export default class App extends React.Component {
   state = {
