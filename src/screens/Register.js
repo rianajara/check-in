@@ -1,7 +1,6 @@
 import React from 'react';
 import {Text, View, Image, TextInput,KeyboardAvoidingView, StyleSheet} from 'react-native';
 import { Button } from 'react-native-elements';
-import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 
 const Register = (props) => {
@@ -12,41 +11,40 @@ const Register = (props) => {
         <View style={styles.contentContainer}>
             <Image source={image} style={styles.smallImage} />
             <Text style={{
-                    fontSize: 30,
+                    fontSize: 20,
                     fontFamily:'Bold',
-                    alignSelf: "center" 
+                    alignSelf: "center",
+                    marginTop:25,
+                    marginBottom: 25
                 }}
-                >Create an account!</Text>
-            <View style={styles.inputContainer}>
-                <Input
-                    placeholder='Email address'
-                    leftIcon={
-                        <Icon
-                            name='mail'
-                            size={24}
-                            color='black'
-                            style={styles.icon}
-                        />
-                    }
-                    // onChangeText={text => setEmail(text)}
-                    // value={email}
+                >Create an account</Text>
+            <Text style={{
+                    fontSize:15,
+                    fontFamily:'Thin',
+                    textAlign:"center",
+                    marginTop:5,
+                    opacity: 0.6,
+                    //marginBottom:5
+                }}>
+                    Register account as:
+                </Text>
+            <View style={styles.buttonContainer}>
+                <Button 
+                    title="Organization Host"
+                />
+                <Text style={{
+                    fontSize:15,
+                    fontFamily:'Thin',
+                    textAlign:"center",
+                    opacity: 0.6,
+                    //marginBottom:5
+                }}>or</Text>
+                <Button 
+                    title="Student Attendee"
+                    
                 />
             </View>
-            <View style={styles.inputContainer}>
-                <Input
-                    placeholder='Enter password'
-                    secureTextEntry={true}
-                    leftIcon={
-                        <Icon
-                            name='lock'
-                            size={24}
-                            color='black'
-                            style={styles.icon}
-                        />
-                    }
-                    // onChangeText={text => setPassword(text)}
-                />
-            </View>
+            
         </View>
         
     )
@@ -56,20 +54,22 @@ const styles = StyleSheet.create({
         backgroundColor:"#fff7d5",
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-evenly',
-        marginTop: 15
+         
     },
     smallImage: {
+        marginTop:60,
         width: 200,
         height: 200,
     },
     inputContainer: {
-        width: '100%',
-        marginBottom: 10
+        width: '90%',
+        marginTop: 50,
+        justifyContent:'space-evenly',
+        
     },
     buttonContainer: {
-        height: '40%',
-        justifyContent: 'space-around'
+        justifyContent:'space-evenly',
+        height: '30%',
     },
     smallButton: {
     },
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
         marginRight: 15
     }
 })
+
 
 export default Register;
 //export default class Register extends React.Component{

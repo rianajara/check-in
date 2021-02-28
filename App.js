@@ -15,7 +15,8 @@ export default class App extends React.Component {
     await Font.loadAsync({
       'Bold' : require('./src/fonts/Montserrat-Bold.otf'),
       'SemiBold': require('./src/fonts/Montserrat-SemiBold.otf'),
-      'Regular': require('./src/fonts/Montserrat-Black.otf')
+      'Regular': require('./src/fonts/Montserrat-Black.otf'),
+      'Thin': require('./src/fonts/SpaceMono-Regular.ttf')
     });
     this.setState({isFontLoaded:true})
   }

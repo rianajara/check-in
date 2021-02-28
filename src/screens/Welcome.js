@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, View, Image, TextInput} from 'react-native';
+import {Button} from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 
 export default class Welcome extends React.Component{
@@ -28,7 +29,8 @@ export default class Welcome extends React.Component{
                     Welcome to the check-in app.
                 </Text>
 
-                <View style={{
+                <View style={{marginTop:30}}>
+                    {/* style={{
                     marginHorizontal:55,
                     alignItems:"center",
                     justifyContent:"center",
@@ -36,16 +38,15 @@ export default class Welcome extends React.Component{
                     backgroundColor:"#003060",
                     paddingVertical:10,
                     borderRadius:23
-                }}>
-                    <Text
-                    onPress={()=>navigate('LoginHost')} 
-                    style={{
-                        color:"white",
-                        fontFamily:"SemiBold"
-                    }}>Log in as host</Text>
+                }}> */}
+                    <Button
+                        title="Log in as host"
+                        onPress={() => navigate('LoginHost')}
+                    />
                 </View>
 
-                <View style={{
+                <View style={{marginTop:30}}>
+                    {/* style={{
                     marginHorizontal:55,
                     alignItems:"center",
                     justifyContent:"center",
@@ -53,14 +54,11 @@ export default class Welcome extends React.Component{
                     backgroundColor:"#003060",
                     paddingVertical:10,
                     borderRadius:23
-                }}>
-                <Text 
-                onPress={()=>navigate('LoginAttendee')}
-                style={{
-                    color:"white",
-                    fontFamily:"SemiBold"
-                }}>Log in as attendee
-                </Text>
+                }}> */}
+                    <Button
+                        title="Log in as attendee"
+                        onPress={() => navigate('LoginAttendee')}
+                    />
                 </View>
 
                 <Text 
@@ -69,7 +67,7 @@ export default class Welcome extends React.Component{
                 
                 style={{
                     alignSelf:"center",
-                    color:"#003060",
+                    color:"#288cdc",
                     fontFamily:"SemiBold",
                     paddingVertical:30
                 }}>New User</Text>
