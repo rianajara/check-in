@@ -3,9 +3,9 @@ import {Text, View, Image, TextInput} from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
 
 export default class Welcome extends React.Component{
-
     render(){
         const {navigate} = this.props.navigation
+        
         return(
             <View style = {{backgroundColor:"#fff7d5", height:"100%"}}>
                 <Image source= {require('../images/image.png')}
@@ -33,7 +33,7 @@ export default class Welcome extends React.Component{
                     alignItems:"center",
                     justifyContent:"center",
                     marginTop:30,
-                    backgroundColor:"#00716F",
+                    backgroundColor:"#003060",
                     paddingVertical:10,
                     borderRadius:23
                 }}>
@@ -48,7 +48,7 @@ export default class Welcome extends React.Component{
                     alignItems:"center",
                     justifyContent:"center",
                     marginTop:30,
-                    backgroundColor:"#00716F",
+                    backgroundColor:"#003060",
                     paddingVertical:10,
                     borderRadius:23
                 }}>
@@ -64,7 +64,7 @@ export default class Welcome extends React.Component{
                 
                 style={{
                     alignSelf:"center",
-                    color:"#00716F",
+                    color:"#003060",
                     fontFamily:"SemiBold",
                     paddingVertical:30
                 }}>New User</Text>
