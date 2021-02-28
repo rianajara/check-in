@@ -4,7 +4,6 @@ import Icon from '@expo/vector-icons/AntDesign';
 
 export default class Register extends React.Component{
 
-    
     render(){
         
         return(
@@ -44,11 +43,21 @@ export default class Register extends React.Component{
                     }}>Host</Text>
                 </View>
 
+                <Text style={{
+                    fontSize:15,
+                    fontFamily:'Regular',
+                    textAlign:"center",
+                    marginTop:5,
+                    opacity: 0.6
+                }}>
+                    or
+                </Text>
+
                 <View style={{
                     marginHorizontal:55,
                     alignItems:"center",
                     justifyContent:"center",
-                    marginTop:15,
+                    marginTop:10,
                     backgroundColor:"#003060",
                     paddingVertical:10,
                     borderRadius:23
