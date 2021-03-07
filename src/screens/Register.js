@@ -29,20 +29,16 @@ const Register = (props) => {
                     Register account as:
                 </Text>
             <View style={styles.buttonContainer}>
-                <Button 
-                    title="Organization Host"
-                />
-                <Text style={{
-                    fontSize:15,
-                    fontFamily:'Thin',
-                    textAlign:"center",
-                    opacity: 0.6,
-                    //marginBottom:5
-                }}>or</Text>
-                <Button 
-                    title="Student Attendee"
-                    
-                />
+            <Button style={styles.smallButton} title="Organization" onPress={() => props.navigation.navigate('RegisterHost')} />
+            <Text style={{
+                fontSize:15,
+                fontFamily:'Thin',
+                textAlign:"center",
+                opacity: 0.6,
+                //marginBottom:5
+            }}>or</Text>
+            <Button style={styles.smallButton} title="Student Attendee" onPress={() => props.navigation.navigate('RegisterAttendee')} />
+                
             </View>
             
         </View>

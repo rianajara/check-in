@@ -4,13 +4,16 @@ import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 
-const LoginAttendee = (props) => {
-    // const [email, setEmail] = React.useState("");
-    // const [password, setPassword] = React.useState("");
+const RegisterAttendee = (props) => {
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [verifypass, verifyPassword] = React.useState("");
+
     const image = require('../images/image.png');
+    
     return (
         <View style={styles.contentContainer}>
-            <Image source={image} style={styles.smallImage} />
+           
             <Text style={{
                     fontSize: 20,
                     fontFamily:'Bold',
@@ -18,10 +21,11 @@ const LoginAttendee = (props) => {
                     marginTop:50
                     
                 }}
-                >Attendee Sign In</Text>
+                >Register Student Attendee </Text>
             <View style={styles.inputContainer}>
                 <Input
-                    placeholder='Student Email'
+                    label = 'Enter student email:'
+                    placeholder='youremail@address.com'
                     leftIcon={
                         <Icon
                             name='mail'
@@ -30,11 +34,13 @@ const LoginAttendee = (props) => {
                             style={styles.icon}
                         />
                     }
-                    // onChangeText={text => setEmail(text)}
-                    // value={email}
+                    onChangeText={text => setEmail(text)}
+                    value={email}
                 />
+                
                 <Input
-                    placeholder='Enter password'
+                    label='Enter password:'
+                    placeholder='password'
                     secureTextEntry={true}
                     leftIcon={
                         <Icon
@@ -44,18 +50,57 @@ const LoginAttendee = (props) => {
                             style={styles.icon}
                         />
                     }
-                    // onChangeText={text => setPassword(text)}
+                    onChangeText={text => setPassword(text)}
+                    value={password}
+                />
+
+                <Input
+                    label='Re-type password:'
+                    placeholder='confirm password'
+                    secureTextEntry={true}
+                    leftIcon={
+                        <Icon
+                            name='lock'
+                            size={24}
+                            color='black'
+                            style={styles.icon}
+                        />
+                    }
+                    onChangeText={text => verifyPassword(text)}
+                    value={verifypass}
                 />
             </View>
             <View style={styles.buttonContainer}>
-                <Button style={styles.smallButton}  title="Log In" />
-                <Button style={styles.smallButton} type="clear" title="Forgot Password" />
-                <Button style={styles.smallButton} title = "Dev" onPress ={()=>props.navigation.navigate('MainAttendee')}/>
+                <Button style={styles.smallButton}  title="Sign Up" 
+                onPress={()=>validate_Field(email,password,verifypass)}
+                />
             </View>
         </View>
         
     )
 }
+
+const validate_Field=(email, password, verifypass)=>{
+    if(email==""){
+        alert("Please enter an email address")
+        return false
+    }
+    else if (password!=verifypass){
+        alert("The password you entered does not match")
+        return false
+    }
+    else if (password==""){
+        alert("Please enter a password")
+        return false
+    }
+    else if (verifypass==""){
+        alert("Please re-enter password")
+        return false
+    }
+    return true
+}
+
+
 const styles = StyleSheet.create({
     contentContainer: {
         backgroundColor:"#fff7d5",
@@ -85,4 +130,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default LoginAttendee;
+export default RegisterAttendee;

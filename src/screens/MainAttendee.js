@@ -4,7 +4,7 @@ import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 
-const LoginHost = (props) => {
+const MainAttendee= (props) => {
     // const [email, setEmail] = React.useState("");
     // const [password, setPassword] = React.useState("");
     const image = require('../images/image.png');
@@ -50,7 +50,6 @@ const LoginHost = (props) => {
             <View style={styles.buttonContainer}>
                 <Button style={styles.smallButton}  title="Log In" />
                 <Button style={styles.smallButton} type="clear" title="Forgot Password" />
-                <Button style={styles.smallButton} title = "Dev" onPress ={()=>props.navigation.navigate('MainHost')}/>
             </View>
         </View>
         
@@ -85,4 +84,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default LoginHost;
+export default MainAttendee;
