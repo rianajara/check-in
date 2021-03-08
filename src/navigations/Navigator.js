@@ -8,6 +8,7 @@ import LoginAttendee from '../screens/LoginAttendee';
 import RegisterAttendee from '../screens/RegisterAttendee';
 import MainAttendee from '../screens/MainAttendee';
 import MainHost from '../screens/MainHost';
+import CreateEvent from '../screens/CreateEvent';
 
 const stackNavigatorOptions = {
     headerShown:false
@@ -21,7 +22,8 @@ const AppNavigator = createStackNavigator({
     RegisterHost:RegisterHost,
     RegisterAttendee:RegisterAttendee,
     MainAttendee:MainAttendee,
-    MainHost:MainHost
+    MainHost:MainHost,
+    CreateEvent:CreateEvent
 },
 {
     defaultNavigationOptions : stackNavigatorOptions
