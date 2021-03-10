@@ -6,11 +6,26 @@ import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+
 const CreateEvent = (props) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [dateSelected, setDateSelected] = useState(''); 
+    const [isTimePickerVisible, setTimePickerVisibility] = useState(false)
+    const [dateSelected, setDateSelected] = useState(""); 
     const [timeSelected, setTimeSelected] = useState("");
 
+    const createTime = (time) => {
+        const hour = (time.getHours() > 12) ? (time.getHours() - 12) : time.getHours() ;
+        const minute = (time.getMinutes() < 10) ? ("0"+time.getMinutes()) : time.getMinutes();
+        const ampm = (time.getHours() > 11) ? "pm" : "am";
+        return(hour + ":" + minute + " " + ampm)
+    }
+
+    const createDate = (date) => {
+        return(months[date.getMonth().toString()] + " " + date.getDate() + ", " + date.getFullYear())
+    }
+
+    /* SHOWING DATE PICKER */
     const showDatePicker = () => {
     setDatePickerVisibility(true);
     };
@@ -19,16 +34,36 @@ const CreateEvent = (props) => {
     setDatePickerVisibility(false);
     };
 
-    const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
+    const handleDateConfirm = (date) => {
+    console.warn(`A date has been picked: ${createDate(date)} `);
     console.log(date)
-    setDateSelected(date);
+    setDateSelected(createDate(date));
     hideDatePicker();
     };
 
     useEffect(() =>{
         setDateSelected(dateSelected);
     }, [dateSelected])
+
+    /* SHOWING TIME PICKER */
+    const showTimePicker = () => {
+        setTimePickerVisibility(true);
+        };
+    
+        const hideTimePicker = () => {
+        setTimePickerVisibility(false);
+        };
+    
+        const handleTimeConfirm = (time) => {
+        console.warn("A time has been picked: ", createTime(time));
+        console.log(time)
+        setTimeSelected(createTime(time));
+        hideTimePicker();
+        };
+    
+        useEffect(() =>{
+            setTimeSelected(timeSelected);
+        }, [timeSelected])
 
 
     const image = require('../images/image.png');
@@ -40,7 +75,8 @@ const CreateEvent = (props) => {
                     fontSize: 20,
                     fontFamily:'Bold',
                     alignSelf: "center",
-                    marginTop:50
+                    marginTop: 60,
+                    marginBottom: 50
                     
                 }}
                 >Create Event </Text>
@@ -112,16 +148,26 @@ const CreateEvent = (props) => {
                 <DateTimePickerModal
                     isVisible={isDatePickerVisible}
                     mode="date"
-                    onConfirm={handleConfirm}
+                    onConfirm={handleDateConfirm}
                     onCancel={hideDatePicker}
                 />
 
-                <TouchableOpacity >
+                
+                <DateTimePickerModal
+                    isVisible={isTimePickerVisible}
+                    mode="time"
+                    onConfirm={handleTimeConfirm}
+                    onCancel={hideTimePicker}
+                    headerTextIOS="Pick a time"
+                    
+                />
+
+                <TouchableOpacity  onPress={() => [ showTimePicker()]}>
                 <Input
                     label='Time:'
                     placeholder="Event Start Time"
                     editable={false}
-                    onP
+                    value={timeSelected}
                     
                     leftIcon={
                         <Icon
@@ -188,6 +234,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent:'space-evenly',
         paddingTop: 50
+        
 
     },
     smallImage: {
