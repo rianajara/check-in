@@ -16,6 +16,8 @@ const colorPicker = (buttonNum) => {
 	}
 };
 
+//this is test comment
+
 const borderColorPicker = (buttonNum) => {
 	if (buttonNum % 4 == 1) {
 		return '#755500';
