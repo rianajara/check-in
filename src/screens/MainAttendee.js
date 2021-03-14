@@ -8,9 +8,10 @@ const MainAttendee= (props) => {
     // const [email, setEmail] = React.useState("");
     // const [password, setPassword] = React.useState("");
     const image = require('../images/image.png');
+
     return (
         <View style={styles.contentContainer}>
-            <Image source={image} style={styles.smallImage} />
+
             <Text style={{
                     fontSize: 20,
                     fontFamily:'Bold',
@@ -18,43 +19,21 @@ const MainAttendee= (props) => {
                     marginTop:50
                     
                 }}
-                >Organization Host Sign In</Text>
-            <View style={styles.inputContainer}>
-                <Input
-                    placeholder='Host Email'
-                    leftIcon={
-                        <Icon
-                            name='mail'
-                            size={24}
-                            color='black'
-                            style={styles.icon}
-                        />
-                    }
-                    // onChangeText={text => setEmail(text)}
-                    // value={email}
-                />
-                <Input
-                    placeholder='Enter password'
-                    secureTextEntry={true}
-                    leftIcon={
-                        <Icon
-                            name='lock'
-                            size={24}
-                            color='black'
-                            style={styles.icon}
-                        />
-                    }
-                    // onChangeText={text => setPassword(text)}
-                />
+                >Attendee Sign In</Text>
+
+            <View style={styles.api}>
             </View>
+            
             <View style={styles.buttonContainer}>
-                <Button style={styles.smallButton}  title="Log In" />
-                <Button style={styles.smallButton} type="clear" title="Forgot Password" />
+                <Button style={styles.smallButton}  title="RSVP to an event" />
             </View>
+            
         </View>
         
     )
 }
+
+
 const styles = StyleSheet.create({
     contentContainer: {
         backgroundColor:"#fff7d5",
@@ -62,20 +41,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent:'space-evenly'  
     },
-    smallImage: {
-        marginTop:60,
-        width: 200,
-        height: 200,
+    
+    api: {
+        width: 300,
+        height: 300,
+        backgroundColor: "gray",
     },
-    inputContainer: {
-        width: '90%',
-        marginTop: 50,
-        justifyContent:'space-evenly',
-        
-    },
+
     buttonContainer: {
         justifyContent:'space-around',
-        height: '40%',
+        height: '30%',
     },
     smallButton: {
     },
