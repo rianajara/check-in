@@ -10,6 +10,9 @@ import MainAttendee from '../screens/MainAttendee';
 import MainHost from '../screens/MainHost';
 import CreateEvent from '../screens/CreateEvent';
 
+
+  
+
 const stackNavigatorOptions = {
     headerShown:false
 }
