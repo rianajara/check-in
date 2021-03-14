@@ -35,36 +35,56 @@ const ViewEvents = (props) => {
 
 	return (
 		<View style={styles.contentContainer}>
-			<ScrollView style={styles.scrollView}>
-				{eventData['events'].map((data, key) => (
-					
-					<View key={key}>
-						
-						<TouchableOpacity
-							onPress={() =>
-								props.navigation.navigate('ViewEvent', {data : data})
-							}
-							style={[
-								styles.eventButton,
-								{
-									backgroundColor: colorPicker(key),
-									borderColor: borderColorPicker(key),
-								},
-							]}
-							key={key}>
-							<Text style={styles.buttonTitleText}>
-								{data['Event Name']}
-							</Text>
-							<Text style={styles.buttonDetailText}>
-								{data['Date']}, {data['Time']}
-							</Text>
-							<Text style={styles.buttonDetailText}>
-								{data['Location']}
-							</Text>
-						</TouchableOpacity>
-					</View>
-				))}
-			</ScrollView>
+			<View style={styles.scrollViewOuterView}>
+				<ScrollView style={styles.scrollView}>
+					{eventData['events'].map((data, key) => (
+						<View key={key}>
+							<TouchableOpacity
+								onPress={() =>
+									props.navigation.navigate('ViewEvent', {
+										data: data,
+									})
+								}
+								style={[
+									styles.eventButton,
+									{
+										backgroundColor: colorPicker(key),
+										borderColor: borderColorPicker(key),
+									},
+								]}
+								key={key}>
+								<Text style={styles.buttonTitleText}>
+									{data['Event Name']}
+								</Text>
+								<Text style={styles.buttonDetailText}>
+									{data['Date']}, {data['Time']}
+								</Text>
+								<Text style={styles.buttonDetailText}>
+									{data['Location']}
+								</Text>
+							</TouchableOpacity>
+						</View>
+					))}
+				</ScrollView>
+			</View>
+			<View style={styles.buttonViewContainer}>
+				<TouchableOpacity
+					style={[
+						styles.buttonView,
+						{ backgroundColor: '#66B2FF' },
+						{ borderColor: '#007FFF' },
+					]}>
+					<Text style={styles.buttonViewText}>Past Events</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={[
+						styles.buttonView,
+						{ backgroundColor: '#FF6666' },
+						{ borderColor: '#FF0000' },
+					]}>
+					<Text style={styles.buttonViewText}>Upcoming Events</Text>
+				</TouchableOpacity>
+			</View>
 		</View>
 	);
 };
@@ -77,10 +97,11 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-evenly',
 		paddingTop: 50,
 	},
-	scrollView: {
-		marginHorizontal: 20,
+	scrollViewOuterView: {
+		height: '80%',
 		width: '90%',
 	},
+	scrollView: {},
 	eventButton: {
 		width: '100%',
 		height: 100,
@@ -112,6 +133,29 @@ const styles = StyleSheet.create({
 	buttonDetailText: {
 		fontSize: 20,
 		marginTop: -5,
+	},
+	buttonViewContainer: {
+		width: '90%',
+		height: 70,
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-around',
+		marginTop: 40,
+	},
+	buttonView: {
+		width: 70,
+		height: 70,
+		backgroundColor: 'red',
+		alignItems: 'center',
+		justifyContent: 'space-around',
+		borderRadius: 15,
+		borderWidth: 4,
+		padding: 2,
+	},
+	buttonViewText: {
+		fontSize: 12,
+		textAlign: 'center',
+		fontWeight: '700',
 	},
 });
 
