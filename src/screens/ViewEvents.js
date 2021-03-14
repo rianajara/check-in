@@ -5,33 +5,33 @@ import { Button } from 'react-native-elements';
 import eventData from '../json/events.json';
 
 const colorPicker = (buttonNum) => {
-	if (buttonNum % 4 == 1) {
-		return '#A88800';
-	} else if (buttonNum % 4 == 2) {
-		return '#229977';
-	} else if (buttonNum % 4 == 3) {
-		return '#775555';
-	} else {
-		return '#881122';
-	}
+    if (buttonNum % 4 == 1) {
+        return '#A88800';
+    } else if (buttonNum % 4 == 2) {
+        return '#229977';
+    } else if (buttonNum % 4 == 3) {
+        return '#775555';
+    } else {
+        return '#881122';
+    }
 };
 
 //this is test comment
 
 const borderColorPicker = (buttonNum) => {
-	if (buttonNum % 4 == 1) {
-		return '#755500';
-	} else if (buttonNum % 4 == 2) {
-		return '#006644';
-	} else if (buttonNum % 4 == 3) {
-		return '#442222';
-	} else {
-		return '#550000';
-	}
+    if (buttonNum % 4 == 1) {
+        return '#755500';
+    } else if (buttonNum % 4 == 2) {
+        return '#006644';
+    } else if (buttonNum % 4 == 3) {
+        return '#442222';
+    } else {
+        return '#550000';
+    }
 };
 
 const ViewEvents = (props) => {
-	const image = require('../images/image.png');
+    const image = require('../images/image.png');
 
 	return (
 		<View style={styles.contentContainer}>
@@ -161,3 +161,5 @@ const styles = StyleSheet.create({
 
 export default ViewEvents;
 // https://www.npmjs.com/package/react-native-modal-datetime-picker
+
+

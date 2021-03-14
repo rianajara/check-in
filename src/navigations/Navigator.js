@@ -12,6 +12,9 @@ import CreateEvent from '../screens/CreateEvent';
 import ViewEvents from '../screens/ViewEvents';
 import ViewEvent from '../screens/ViewEvent';
 
+
+  
+
 const stackNavigatorOptions = {
     headerShown:false
 }

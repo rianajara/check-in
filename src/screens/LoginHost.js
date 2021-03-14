@@ -10,7 +10,11 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
+import { NavigationActions } from 'react-navigation';
 import Icon from '@expo/vector-icons/AntDesign';
+import { StackActions } from '@react-navigation/native';
+
+
 
 const LoginHost = (props) => {
 	// const [email, setEmail] = React.useState("");

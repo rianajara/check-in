@@ -25,10 +25,13 @@ const MainHost= (props) => {
                 <Button style={styles.smallButton}  title="Create an Event" onPress ={()=>props.navigation.navigate('CreateEvent')} />
                 <Button style={styles.smallButton}  title="View Events" onPress ={()=>props.navigation.navigate('ViewEvents')}/>
             </View>
+            
         </View>
         
     )
 }
+
+
 const styles = StyleSheet.create({
     contentContainer: {
         backgroundColor:"#fff7d5",
