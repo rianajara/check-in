@@ -5,6 +5,8 @@ import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import { NavigationEvents } from 'react-navigation';
 import MainHost from './MainHost';
+import Firebase from '../components/Firebase'
+import * as firebase from 'firebase';
 
 const RegisterHost = (props) => {
     const [email, setEmail] = React.useState("");
@@ -74,12 +76,36 @@ const RegisterHost = (props) => {
             </View>
             <View style={styles.buttonContainer}>
                 <Button style={styles.smallButton}  title="Sign Up" 
-                onPress={()=>correct(email,password,verifypass)}
+                onPress={()=>signUpWithEmailPassword(email,password,props,verifypass)}
+                
                 />
             </View>
         </View>
         
     )
+}
+
+//onPress={()=>correct(email,password,verifypass)}
+
+const signUpWithEmailPassword=(email,password,props,verifypass)=> {
+  //var email = "test@example.com";
+  //var password = "hunter2";
+  // [START auth_signup_password]
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in 
+      var user = userCredential.user;
+      alert("Successfuly registered.")
+      props.navigation.navigate('MainHost')
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = validate_Field(email,password,verifypass);
+      //validate_Field(email,password,verifypass)
+      // ..
+    });
+  // [END auth_signup_password]
 }
 
 const validate_Field=(email, password, verifypass)=>{

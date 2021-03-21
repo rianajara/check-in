@@ -13,12 +13,14 @@ import { Input } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
 import Icon from '@expo/vector-icons/AntDesign';
 import { StackActions } from '@react-navigation/native';
+import Firebase from '../components/Firebase'
+import * as firebase from 'firebase';
 
 
 
 const LoginHost = (props) => {
-	// const [email, setEmail] = React.useState("");
-	// const [password, setPassword] = React.useState("");
+	const [email, setEmail] = React.useState("");
+	const [password, setPassword] = React.useState("");
 	const image = require('../images/image.png');
 	return (
 		<View style={styles.contentContainer}>
@@ -43,8 +45,8 @@ const LoginHost = (props) => {
 							style={styles.icon}
 						/>
 					}
-					// onChangeText={text => setEmail(text)}
-					// value={email}
+					onChangeText={text => setEmail(text)}
+					value={email}
 				/>
 				<Input
 					placeholder='Enter password'
@@ -57,11 +59,13 @@ const LoginHost = (props) => {
 							style={styles.icon}
 						/>
 					}
-					// onChangeText={text => setPassword(text)}
+					onChangeText={text => setPassword(text)}
+					value={password}
 				/>
 			</View>
 			<View style={styles.buttonContainer}>
-				<Button style={styles.smallButton} title='Log In' />
+				<Button style={styles.smallButton} title='Log In' onPress={() => signInWithEmailPassword(email,password,props)}
+				/>
 				<Button
 					style={styles.smallButton}
 					type='clear'
@@ -76,6 +80,27 @@ const LoginHost = (props) => {
 		</View>
 	);
 };
+
+const signInWithEmailPassword = async(email,password,props)=> {
+  //var email = "test@example.com";
+  //var password = "hunter2";
+  // [START auth_signin_password]
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      var user = userCredential.user;
+      alert("Successfuly logged in.")
+      props.navigation.navigate('MainHost')
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      alert("Check your password and try again.")
+    });
+  // [END auth_signin_password]
+}
+
 const styles = StyleSheet.create({
 	contentContainer: {
 		backgroundColor: '#fff7d5',
