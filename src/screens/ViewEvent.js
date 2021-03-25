@@ -63,34 +63,35 @@ const ViewEvent = (props) => {
 				<TouchableOpacity
 					style={[
 						styles.viewEventButton,
-						{ backgroundColor: '#CCCCCC' },
-						{ borderColor: '#808080' },
+						{ backgroundColor: '#accebd' },
+						{ borderColor: '#8dbba4' },
 					]}>
 					<Text style={styles.viewEventButtonText}>Export Data</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={[
 						styles.viewEventButton,
-						{ backgroundColor: '#66FF66' },
-						{ borderColor: '#009900' },
+						{ backgroundColor: '#84c5cb' },
+						{ borderColor: '#65b6be' },
 					]}>
 					<Text style={styles.viewEventButtonText}>
 						Check In Attendees
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
+					onPress ={()=>props.navigation.navigate('ModifyEvent')}
 					style={[
 						styles.viewEventButton,
-						{ backgroundColor: '#66B2FF' },
-						{ borderColor: '#007FFF' },
+						{ backgroundColor: '#f8caca' },
+						{ borderColor: '#f19696' },
 					]}>
 					<Text style={styles.viewEventButtonText}>Modify Event</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={[
 						styles.viewEventButton,
-						{ backgroundColor: '#FF6666' },
-						{ borderColor: '#FF0000' },
+						{ backgroundColor: '#f7c46b' },
+						{ borderColor: '#f4b23f' },
 					]}>
 					<Text style={styles.viewEventButtonText}>Delete Event</Text>
 				</TouchableOpacity>
@@ -110,9 +111,9 @@ const styles = StyleSheet.create({
 	eventInfoContainer: {
 		width: '90%',
 		height: '75%',
-		backgroundColor: '#ADD8E6',
+		backgroundColor: '#c2d5a8',
 		borderRadius: 8,
-		borderColor: 'black',
+		borderColor: '#aac486',
 		borderWidth: 5,
 		marginTop: '5%',
 		paddingTop: 25,

@@ -24,6 +24,7 @@ const MainHost= (props) => {
                 <Button style={styles.smallButton}  title="Check In Attendees" />
                 <Button style={styles.smallButton}  title="Create an Event" onPress ={()=>props.navigation.navigate('CreateEvent')} />
                 <Button style={styles.smallButton}  title="View Events" onPress ={()=>props.navigation.navigate('ViewEvents')}/>
+                <Button style={styles.smallButton}  title="Modify Attendee" onPress ={()=>props.navigation.navigate('ModifyAttendee')}/>
             </View>
             
         </View>
