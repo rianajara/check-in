@@ -16,38 +16,18 @@ import * as firebase from 'firebase';
 import PopUpModal from '../screens/PopUpModal';
 
 const RegisterAttendee = (props) => {
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    const [verifypass, verifyPassword] = React.useState("");
+	const [email, setEmail] = React.useState('');
+	const [password, setPassword] = React.useState('');
+	const [verifypass, verifyPassword] = React.useState('');
+	const [updateClickCount, setUpdateClickCount] = React.useState(0);
 
-    const image = require('../images/image.png');
-    
-    return (
-        <View style={styles.contentContainer}>
-           
-            <Text style={{
-                    fontSize: 20,
-                    fontFamily:'Bold',
-                    alignSelf: "center",
-                    marginTop:115
-                    
-                }}
-                >Modify Student Attendee </Text>
-            <View style={styles.inputContainer}>
-                <Input
-                    label = 'Enter first name:'
-                    placeholder='first name'
-                    leftIcon={
-                        <Icon
-                            name='userOutlined'
-                            size={24}
-                            color='black'
-                            style={styles.icon}
-                        />
-                    }
-                    onChangeText={text => setEmail(text)}
-                    value={email}
-                />
+    const switchPage = () => {
+		setTimeout(() => {
+			props.navigation.navigate('MainAttendee');
+		}, 750);
+        
+        
+	};
 
 	return (
 		<View style={styles.contentContainer}>
