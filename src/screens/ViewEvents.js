@@ -8,11 +8,11 @@ const colorPicker = (buttonNum) => {
     if (buttonNum % 4 == 1) {
         return '#f8caca';//pastel salmon
     } else if (buttonNum % 4 == 2) {
-        return '#84c5cb';//baby blue
+        return '#a3d4d8';//baby blue
     } else if (buttonNum % 4 == 3) {
-        return '#f7c46b';//pastel orange
+        return '#f9d391';//pastel orange
     } else {
-        return '#accebd';//seafoam green
+        return '#c1dace';//seafoam green
     }
 };
 
@@ -71,7 +71,7 @@ const ViewEvents = (props) => {
 				<TouchableOpacity
 					style={[
 						styles.buttonView,
-						{ backgroundColor: '#c2d5a8' },
+						{ backgroundColor: '#d1dfbe' },
 						{ borderColor: '#aac486' },
 					]}>
 					<Text style={styles.buttonViewText}>Past Events</Text>

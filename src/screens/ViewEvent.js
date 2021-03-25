@@ -10,15 +10,11 @@ import {
 	Dimensions,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Button } from 'react-native-elements';
-import { Input } from 'react-native-elements';
-import Icon from '@expo/vector-icons/AntDesign';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import eventData from '../json/events.json';
 
 const ViewEvent = (props) => {
 	const eventInfo = props.navigation.state.params.data;
-
+	const [eventData, setEventData] = useState(eventInfo)
+	//console.warn(eventData)
 	return (
 		<View style={styles.contentContainer}>
 			<View style={styles.eventInfoContainer}>
@@ -63,7 +59,7 @@ const ViewEvent = (props) => {
 				<TouchableOpacity
 					style={[
 						styles.viewEventButton,
-						{ backgroundColor: '#accebd' },
+						{ backgroundColor: '#c1dace' },
 						{ borderColor: '#8dbba4' },
 					]}>
 					<Text style={styles.viewEventButtonText}>Export Data</Text>
@@ -71,7 +67,7 @@ const ViewEvent = (props) => {
 				<TouchableOpacity
 					style={[
 						styles.viewEventButton,
-						{ backgroundColor: '#84c5cb' },
+						{ backgroundColor: '#a3d4d8' },
 						{ borderColor: '#65b6be' },
 					]}>
 					<Text style={styles.viewEventButtonText}>
@@ -79,7 +75,10 @@ const ViewEvent = (props) => {
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					onPress ={()=>props.navigation.navigate('ModifyEvent')}
+					onPress={
+						() => {props.navigation.navigate('ModifyEvent', {eventInfo: eventInfo})}
+						
+					}
 					style={[
 						styles.viewEventButton,
 						{ backgroundColor: '#f8caca' },
@@ -90,7 +89,7 @@ const ViewEvent = (props) => {
 				<TouchableOpacity
 					style={[
 						styles.viewEventButton,
-						{ backgroundColor: '#f7c46b' },
+						{ backgroundColor: '#f9d391' },
 						{ borderColor: '#f4b23f' },
 					]}>
 					<Text style={styles.viewEventButtonText}>Delete Event</Text>
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
 	eventInfoContainer: {
 		width: '90%',
 		height: '75%',
-		backgroundColor: '#c2d5a8',
+		backgroundColor: '#d1dfbe',
 		borderRadius: 8,
 		borderColor: '#aac486',
 		borderWidth: 5,

@@ -29,7 +29,8 @@ const months = [
 	'December',
 ];
 
-const CreateEvent = (props) => {
+const ModifyEvent = (props) => {
+	const eventInfo = props.navigation.state.params.eventInfo
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 	const [dateSelected, setDateSelected] = useState('');
@@ -104,12 +105,13 @@ const CreateEvent = (props) => {
 					marginTop: 60,
 					marginBottom: 50,
 				}}>
-				Create Event{' '}
+				Modify Event{' '}
 			</Text>
 			<View style={styles.inputContainer}>
 				<Input
 					label='Event Title:'
 					placeholder='Name of Event'
+					value={eventInfo['Event Name']}
 					leftIcon={
 						<Icon
 							name='mail'
@@ -123,6 +125,7 @@ const CreateEvent = (props) => {
 				<Input
 					label='Location:'
 					placeholder='Event Location'
+					value={eventInfo['Location']}
 					leftIcon={
 						<Icon
 							name='enviromento'
@@ -136,6 +139,7 @@ const CreateEvent = (props) => {
 				<Input
 					label='Primary Contact:'
 					placeholder="Contact's name"
+					value={eventInfo['Primary Contact']}
 					leftIcon={
 						<Icon
 							name='user'
@@ -149,6 +153,7 @@ const CreateEvent = (props) => {
 				<Input
 					label='Contact Email:'
 					placeholder=" Primary Contact's email"
+					value={eventInfo['Email']}
 					leftIcon={
 						<Icon
 							name='user'
@@ -159,23 +164,14 @@ const CreateEvent = (props) => {
 					}
 				/>
 
-				<View>
-					{eventData['events'].map((data, key) => {
-						<>
-							<Text>{data['Event Name']}</Text>
-							<Text>{data['Date']}</Text>
-							<Text>{data['Time']}</Text>
-							<Text>{data['Location']}</Text>
-						</>;
-					})}
-				</View>
+				
 
 				<TouchableOpacity onPress={() => [showDatePicker()]}>
 					<Input
 						label='Date:'
 						placeholder='Event Date'
 						editable={false}
-						value={dateSelected}
+						value={eventInfo['Date']}
 						leftIcon={
 							<Icon
 								name='calendar'
@@ -207,7 +203,7 @@ const CreateEvent = (props) => {
 						label='Time:'
 						placeholder='Event Start Time'
 						editable={false}
-						value={timeSelected}
+						value={eventInfo['Time']}
 						leftIcon={
 							<Icon
 								name='clockcircleo'
@@ -222,6 +218,7 @@ const CreateEvent = (props) => {
 				<Input
 					label='Description:'
 					placeholder='Event Description'
+					value={eventInfo['Description']}
 					leftIcon={
 						<Icon
 							name='info'
@@ -233,7 +230,7 @@ const CreateEvent = (props) => {
 				/>
 			</View>
 			<View style={styles.buttonContainer}>
-				<Button style={styles.smallButton} title='Create Event' />
+				<Button style={styles.smallButton} title='Update Event' />
 			</View>
 		</View>
 	);
@@ -288,5 +285,5 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default CreateEvent;
+export default ModifyEvent;
 // https://www.npmjs.com/package/react-native-modal-datetime-picker
