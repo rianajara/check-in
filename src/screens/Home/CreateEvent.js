@@ -12,7 +12,7 @@ import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import eventData from '../json/events.json';
+import eventData from '../../json/events.json';
 
 const months = [
 	'January',
