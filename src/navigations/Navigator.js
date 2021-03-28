@@ -1,5 +1,5 @@
-import {createStackNavigator} from 'react-navigation-stack';
-import {createAppContainer} from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
 import Welcome from '../screens/Welcome';
 import Register from '../screens/Register';
 import LoginHost from '../screens/LoginHost';
@@ -11,31 +11,31 @@ import MainHost from '../screens/MainHost';
 import CreateEvent from '../screens/CreateEvent';
 import ViewEvents from '../screens/ViewEvents';
 import ViewEvent from '../screens/ViewEvent';
-
-
-  
+import ModifyEvent from '../screens/ModifyEvent';
+import ModifyAttendee from '../screens/ModifyAttendee';
 
 const stackNavigatorOptions = {
-    headerShown:false
-}
+	headerShown: false,
+};
 
-const AppNavigator = createStackNavigator({
-    Welcome:{screen:Welcome},
-    Register:Register,
-    LoginHost:LoginHost,
-    LoginAttendee:LoginAttendee,
-    RegisterHost:RegisterHost,
-    RegisterAttendee:RegisterAttendee,
-    MainAttendee:MainAttendee,
-    MainHost:MainHost,
-    CreateEvent:CreateEvent,
-    ViewEvents:ViewEvents,
-    ViewEvent:ViewEvent
-},
-{
-    defaultNavigationOptions : stackNavigatorOptions
-}  
+const AppNavigator = createStackNavigator(
+	{
+		Welcome: { screen: Welcome },
+		Register: Register,
+		LoginHost: LoginHost,
+		LoginAttendee: LoginAttendee,
+		RegisterHost: RegisterHost,
+		RegisterAttendee: RegisterAttendee,
+		MainAttendee: MainAttendee,
+		MainHost: MainHost,
+		CreateEvent: CreateEvent,
+		ViewEvents: ViewEvents,
+		ViewEvent: ViewEvent,
+        ModifyEvent: ModifyEvent,
+        ModifyAttendee: ModifyAttendee
+	},
+	{
+		defaultNavigationOptions: stackNavigatorOptions,
+	}
 );
 export default createAppContainer(AppNavigator);
-
- 

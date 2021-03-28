@@ -6,13 +6,13 @@ import eventData from '../json/events.json';
 
 const colorPicker = (buttonNum) => {
     if (buttonNum % 4 == 1) {
-        return '#A88800';
+        return '#f8caca';//pastel salmon
     } else if (buttonNum % 4 == 2) {
-        return '#229977';
+        return '#a3d4d8';//baby blue
     } else if (buttonNum % 4 == 3) {
-        return '#775555';
+        return '#f9d391';//pastel orange
     } else {
-        return '#881122';
+        return '#c1dace';//seafoam green
     }
 };
 
@@ -20,13 +20,13 @@ const colorPicker = (buttonNum) => {
 
 const borderColorPicker = (buttonNum) => {
     if (buttonNum % 4 == 1) {
-        return '#755500';
+        return '#f19696';
     } else if (buttonNum % 4 == 2) {
-        return '#006644';
+        return '#65b6be';
     } else if (buttonNum % 4 == 3) {
-        return '#442222';
+        return '#f4b23f';
     } else {
-        return '#550000';
+        return '#8dbba4';
     }
 };
 
@@ -71,16 +71,16 @@ const ViewEvents = (props) => {
 				<TouchableOpacity
 					style={[
 						styles.buttonView,
-						{ backgroundColor: '#66B2FF' },
-						{ borderColor: '#007FFF' },
+						{ backgroundColor: '#d1dfbe' },
+						{ borderColor: '#aac486' },
 					]}>
 					<Text style={styles.buttonViewText}>Past Events</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={[
 						styles.buttonView,
-						{ backgroundColor: '#FF6666' },
-						{ borderColor: '#FF0000' },
+						{ backgroundColor: '#d7eef6' },
+						{ borderColor: '#a6d9ea' },
 					]}>
 					<Text style={styles.buttonViewText}>Upcoming Events</Text>
 				</TouchableOpacity>

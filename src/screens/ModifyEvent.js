@@ -13,11 +13,6 @@ import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import eventData from '../json/events.json';
-import * as firebase from 'firebase';
-import Firebase from '../components/Firebase';
-
-const db = Firebase.firestore();
-db.settings({timestampsInSnapshots: true});
 
 const months = [
 	'January',
@@ -34,36 +29,12 @@ const months = [
 	'December',
 ];
 
-
-
-const CreateEvent = (props) => {
+const ModifyEvent = (props) => {
+	const eventInfo = props.navigation.state.params.eventInfo
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 	const [dateSelected, setDateSelected] = useState('');
 	const [timeSelected, setTimeSelected] = useState('');
-
-	const addNewEvent = () => {
-		const arrayOne = {}
-		/*
-		// all documents and information in each document
-		db.collection('Events').get().then((snapshot) => {
-			snapshot.docs.forEach(doc => {
-				console.warn(doc.data())
-			})
-		})
-		*/
-	/*
-
-		// Gets the individual document events
-		db.collection('Events').doc('RHA').get().then((snapshot) => {
-			
-			console.warn(snapshot.data())
-		})
-		*/
-
-		// Append additional dummy event to database
-		db.collection('Events').doc('RHA').set({'eventThree':{Location: 'Pyramid', Title: 'Illumination'}}, {merge: true})
-	}
 
 	const createTime = (time) => {
 		const hour =
@@ -134,12 +105,13 @@ const CreateEvent = (props) => {
 					marginTop: 60,
 					marginBottom: 50,
 				}}>
-				Create Event{' '}
+				Modify Event{' '}
 			</Text>
 			<View style={styles.inputContainer}>
 				<Input
 					label='Event Title:'
 					placeholder='Name of Event'
+					value={eventInfo['Event Name']}
 					leftIcon={
 						<Icon
 							name='mail'
@@ -153,6 +125,7 @@ const CreateEvent = (props) => {
 				<Input
 					label='Location:'
 					placeholder='Event Location'
+					value={eventInfo['Location']}
 					leftIcon={
 						<Icon
 							name='enviromento'
@@ -166,6 +139,7 @@ const CreateEvent = (props) => {
 				<Input
 					label='Primary Contact:'
 					placeholder="Contact's name"
+					value={eventInfo['Primary Contact']}
 					leftIcon={
 						<Icon
 							name='user'
@@ -179,6 +153,7 @@ const CreateEvent = (props) => {
 				<Input
 					label='Contact Email:'
 					placeholder=" Primary Contact's email"
+					value={eventInfo['Email']}
 					leftIcon={
 						<Icon
 							name='user'
@@ -189,23 +164,14 @@ const CreateEvent = (props) => {
 					}
 				/>
 
-				<View>
-					{eventData['events'].map((data, key) => {
-						<>
-							<Text>{data['Event Name']}</Text>
-							<Text>{data['Date']}</Text>
-							<Text>{data['Time']}</Text>
-							<Text>{data['Location']}</Text>
-						</>;
-					})}
-				</View>
+				
 
 				<TouchableOpacity onPress={() => [showDatePicker()]}>
 					<Input
 						label='Date:'
 						placeholder='Event Date'
 						editable={false}
-						value={dateSelected}
+						value={eventInfo['Date']}
 						leftIcon={
 							<Icon
 								name='calendar'
@@ -237,7 +203,7 @@ const CreateEvent = (props) => {
 						label='Time:'
 						placeholder='Event Start Time'
 						editable={false}
-						value={timeSelected}
+						value={eventInfo['Time']}
 						leftIcon={
 							<Icon
 								name='clockcircleo'
@@ -252,6 +218,7 @@ const CreateEvent = (props) => {
 				<Input
 					label='Description:'
 					placeholder='Event Description'
+					value={eventInfo['Description']}
 					leftIcon={
 						<Icon
 							name='info'
@@ -263,7 +230,7 @@ const CreateEvent = (props) => {
 				/>
 			</View>
 			<View style={styles.buttonContainer}>
-				<Button onPress={() => {addNewEvent(), console.warn("yyyyyy")}} style={styles.smallButton} title='Create Event' />
+				<Button style={styles.smallButton} title='Update Event' />
 			</View>
 		</View>
 	);
@@ -318,5 +285,5 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default CreateEvent;
+export default ModifyEvent;
 // https://www.npmjs.com/package/react-native-modal-datetime-picker
