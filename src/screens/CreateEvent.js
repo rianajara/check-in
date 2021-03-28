@@ -13,6 +13,11 @@ import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import eventData from '../json/events.json';
+import * as firebase from 'firebase';
+import Firebase from '../components/Firebase';
+
+const db = Firebase.firestore();
+db.settings({timestampsInSnapshots: true});
 
 const months = [
 	'January',
@@ -29,11 +34,36 @@ const months = [
 	'December',
 ];
 
+
+
 const CreateEvent = (props) => {
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 	const [dateSelected, setDateSelected] = useState('');
 	const [timeSelected, setTimeSelected] = useState('');
+
+	const addNewEvent = () => {
+		const arrayOne = {}
+		/*
+		// all documents and information in each document
+		db.collection('Events').get().then((snapshot) => {
+			snapshot.docs.forEach(doc => {
+				console.warn(doc.data())
+			})
+		})
+		*/
+	/*
+
+		// Gets the individual document events
+		db.collection('Events').doc('RHA').get().then((snapshot) => {
+			
+			console.warn(snapshot.data())
+		})
+		*/
+
+		// Append additional dummy event to database
+		db.collection('Events').doc('RHA').set({'eventThree':{Location: 'Pyramid', Title: 'Illumination'}}, {merge: true})
+	}
 
 	const createTime = (time) => {
 		const hour =
@@ -233,7 +263,7 @@ const CreateEvent = (props) => {
 				/>
 			</View>
 			<View style={styles.buttonContainer}>
-				<Button style={styles.smallButton} title='Create Event' />
+				<Button onPress={() => {addNewEvent(), console.warn("yyyyyy")}} style={styles.smallButton} title='Create Event' />
 			</View>
 		</View>
 	);

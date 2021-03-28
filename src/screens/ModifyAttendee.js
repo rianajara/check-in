@@ -127,7 +127,7 @@ const RegisterAttendee = (props) => {
 							props,
 							verifypass
 						);
-						
+						setUpdateClickCount(updateClickCount + 1);
 					}}
 				/>
 			</View>
@@ -147,7 +147,9 @@ const signUpWithEmailPassword = (email, password, props, verifypass) => {
 			// Signed in
 			var user = userCredential.user;
 			alert('Successfuly registered.');
-            setUpdateClickCount(updateClickCount + 1);
+            
+			console.warn("successfully registered")
+			
 			//props.navigation.navigate('MainAttendee');
 			// ...
 		})
@@ -157,6 +159,8 @@ const signUpWithEmailPassword = (email, password, props, verifypass) => {
 			//validate_Field(email,password,verifypass)
 			// ..
 		});
+		
+		console.warn("checking the firebase")
 	// [END auth_signup_password]
 };
 
@@ -174,6 +178,7 @@ const validate_Field = (email, password, verifypass) => {
 		alert('Please re-enter password');
 		return false;
 	}
+	console.warn("testing the validation")
 	return true;
 };
 

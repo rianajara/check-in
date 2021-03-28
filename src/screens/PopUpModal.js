@@ -9,6 +9,7 @@ const PopUpModal = (props) => {
 	useEffect(() => {
 		if (props.updateClickCount > 0) {
 			setModalVisible(true);
+			console.warn("testing pop up")
 		}
 	}, [props.updateClickCount]);
 	return (
