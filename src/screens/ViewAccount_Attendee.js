@@ -13,8 +13,9 @@ const ViewAttendee= (props) => {
                 marginTop:50
             }}
             >Attendee Account</Text>
-            
+
         {/* Need to find way to get current user information on to input --- connect to user database for this */}
+        
         <Button style={styles.smallButton}  title="Modify Attendee" onPress ={()=>props.navigation.navigate('ModifyAttendee')}/>
         </View>
     )
