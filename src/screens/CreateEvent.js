@@ -16,7 +16,10 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import eventData from '../json/events.json';
 import * as firebase from 'firebase';
 import Firebase from '../components/Firebase';
-import PopUpModal from '../screens/PopUpModal';
+import PopUpModal from '../components/PopUpModal';
+import EventTypeDropDown from '../components/EventTypeDropDown';
+
+
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -39,7 +42,9 @@ const months = [
 const CreateEvent = (props) => {
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+	const [isEventTypeVisible, setEventTypeVisibility] = useState(false);
 	const [title, setTitle] = useState('');
+	const [eventType, setEventType] = useState('');
 	const [location, setLocation] = useState('');
 	const [primaryContact, setPrimaryContact] = useState('');
 	const [contactEmail, setContactEmail] = useState('');
@@ -48,11 +53,9 @@ const CreateEvent = (props) => {
 	const [description, setDescription] = useState('');
 	const [maxCapacity, setMaxCapacity] = useState('');
 	const [updateClickCount, setUpdateClickCount] = useState(0);
-	const [popUpText, setPopUpText] = useState(null)
+	const [popUpText, setPopUpText] = useState(null);
 
 	const inputChecker = () => {
-		
-
 		if (
 			title.length < 1 ||
 			location.length < 1 ||
@@ -61,12 +64,13 @@ const CreateEvent = (props) => {
 			dateSelected.length < 1 ||
 			timeSelected.length < 1 ||
 			description.length < 1 ||
-			maxCapacity.length < 1
+			maxCapacity.length < 1 ||
+			eventType === null
 		) {
-			setPopUpText("Please fill out all fields")
-			
-		}else {
-			setPopUpText("Added")
+			setPopUpText('Please fill out all fields');
+
+		} else {
+			setPopUpText('Added');
 			addNewEvent(title);
 		}
 
@@ -74,12 +78,23 @@ const CreateEvent = (props) => {
 	};
 
 	const addNewEvent = () => {
-	
 		// Append actual data to the database (RHA for now)
 		db.collection('Events')
 			.doc('RHA')
 			.set(
-				{ [title] : { Title: title , Location: location, "Primary Contact": primaryContact, "Contact Email": contactEmail, Date: dateSelected, Time: timeSelected, Description: description, "Max Capacity": maxCapacity} },
+				{
+					[title]: {
+						'Title': title,
+						'Location': location,
+						'Primary Contact': primaryContact,
+						'Contact Email': contactEmail,
+						'Date': dateSelected,
+						'Time': timeSelected,
+						'Description': description,
+						'Max Capacity': maxCapacity,
+						'Event Type': eventType
+					},
+				},
 				{ merge: true }
 			);
 	};
@@ -143,7 +158,6 @@ const CreateEvent = (props) => {
 
 	return (
 		<View style={styles.contentContainer}>
-			
 			<Text
 				style={{
 					fontSize: 20,
@@ -154,7 +168,7 @@ const CreateEvent = (props) => {
 				}}>
 				Create Event{' '}
 			</Text>
-			
+
 			<KeyboardAvoidingView
 				style={styles.inputContainer}
 				behavior='padding'>
@@ -174,10 +188,16 @@ const CreateEvent = (props) => {
 							}
 						/>
 
+
+						<EventTypeDropDown setEventType={(value) => setEventType(value)}></EventTypeDropDown>
+						
+
+						
+
 						<Input
 							label='Location:'
 							placeholder='Event Location'
-							onChangeText={ setLocation}
+							onChangeText={setLocation}
 							leftIcon={
 								<Icon
 									name='enviromento'
@@ -271,7 +291,7 @@ const CreateEvent = (props) => {
 						<Input
 							label='Description:'
 							placeholder='Event Description'
-							onChangeText={ setDescription}
+							onChangeText={setDescription}
 							leftIcon={
 								<Icon
 									name='info'
@@ -297,27 +317,28 @@ const CreateEvent = (props) => {
 								/>
 							}
 						/>
-						<PopUpModal style={{height: 0, padding: 0, margin: 0}} popUpText={popUpText} updateClickCount={updateClickCount} ></PopUpModal>
-		
+						<PopUpModal
+							style={{ height: 0, padding: 0, margin: 0 }}
+							popUpText={popUpText}
+							updateClickCount={updateClickCount}></PopUpModal>
+							
 					</ScrollView>
+					
 				</View>
-				<View  />
+				
+				<View />
+				
 			</KeyboardAvoidingView>
-			
-			
+
 			<View style={styles.buttonContainer}>
-			
 				<Button
 					onPress={() => {
 						inputChecker();
-						
 					}}
 					style={styles.smallButton}
 					title='Create Event'
 				/>
-				
 			</View>
-			
 		</View>
 	);
 };
