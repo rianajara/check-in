@@ -18,13 +18,13 @@ const MainHost= (props) => {
                     marginTop:50
                     
                 }}
-                >Organization Host Sign In</Text>
+                >Organization Host Main Page</Text>
             
             <View style={styles.buttonContainer}>
                 <Button style={styles.smallButton}  title="Check In Attendees" onPress ={()=>props.navigation.navigate('CheckInAttendees')} />
                 <Button style={styles.smallButton}  title="Create an Event" onPress ={()=>props.navigation.navigate('CreateEvent')} />
                 <Button style={styles.smallButton}  title="View Events" onPress ={()=>props.navigation.navigate('ViewEvents')}/>
-                <Button style={styles.smallButton}  title="Modify Attendee" onPress ={()=>props.navigation.navigate('ModifyAttendee')}/>
+                <Button style={styles.smallButton}  title="Account" onPress ={()=>props.navigation.navigate('ViewAccount_Host')}/>
             </View>
             
         </View>
