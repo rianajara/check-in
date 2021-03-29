@@ -10,12 +10,12 @@ import {
 import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
-import ViewAccount_Attendee from './ViewAccount_Attendee';
+import ViewAccount_Host from './ViewAccount_Host';
 import Firebase from '../components/Firebase';
 import * as firebase from 'firebase';
 import PopUpModal from '../screens/PopUpModal';
 
-const RegisterAttendee = (props) => {
+const RegisterHost = (props) => {
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [verifypass, verifyPassword] = React.useState('');
@@ -23,7 +23,7 @@ const RegisterAttendee = (props) => {
 
     const switchPage = () => {
 		setTimeout(() => {
-			props.navigation.navigate('ViewAccount_Attendee');
+			props.navigation.navigate('ViewAccount_Host');
 		}, 750);
         
         
@@ -38,7 +38,7 @@ const RegisterAttendee = (props) => {
 					alignSelf: 'center',
 					marginTop: 115,
 				}}>
-				Modify Student Attendee{' '}
+				Modify Host Account{' '}
 			</Text>
 			<View style={styles.inputContainer}>
 				<Input
@@ -115,16 +115,6 @@ const RegisterAttendee = (props) => {
 					onChangeText={(text) => verifyPassword(text)}
 					value={verifypass}
 				/>
-
-				<Text style={{
-					fontSize: 15,
-					fontFamily: 'Bold',
-					color: 'grey',
-					alignSelf: 'center',
-					
-				}}>
-					Choose your major
-				</Text>
 			</View>
 			<View style={styles.buttonContainer}>
 				<Button
@@ -219,4 +209,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default RegisterAttendee;
+export default RegisterHost;

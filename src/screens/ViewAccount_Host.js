@@ -16,6 +16,10 @@ const ViewHost= (props) => {
             }}
             >Host Account
             </Text>
+            
+            {/* Need to find way to get current user information on to input --- connect to user database for this */}
+
+            <Button style={styles.smallButton}  title="Modify Host"onPress ={()=>props.navigation.navigate('ModifyHost')}/>
         </View>
     )
 }
