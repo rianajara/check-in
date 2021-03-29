@@ -9,7 +9,7 @@ const PopUpModal = (props) => {
 	useEffect(() => {
 		if (props.updateClickCount > 0) {
 			setModalVisible(true);
-			console.warn("testing pop up")
+			
 		}
 	}, [props.updateClickCount]);
 	return (
@@ -24,7 +24,7 @@ const PopUpModal = (props) => {
 				}}>
 				<View style={styles.centeredView}>
 					<View style={styles.modalView}>
-						<Text style={styles.modalText}>Information Saved!</Text>
+						<Text style={styles.modalText}>{props.popUpText}</Text>
 						<Pressable
 							style={[styles.button, styles.buttonClose]}
 							onPress={() => {
@@ -36,14 +36,13 @@ const PopUpModal = (props) => {
 					</View>
 				</View>
 			</Modal>
-			<Pressable
-				style={[styles.button, styles.buttonOpen]}
-				onPress={() => setModalVisible(true)}>
-				<Text style={styles.textStyle}>Show Modal</Text>
-			</Pressable>
 		</View>
 	);
 };
+
+PopUpModal.defaultProps = {
+	switchPage: (() => {})
+}
 
 const styles = StyleSheet.create({
 	centeredView: {

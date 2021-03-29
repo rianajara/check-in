@@ -131,7 +131,7 @@ const RegisterAttendee = (props) => {
 					}}
 				/>
 			</View>
-			<PopUpModal updateClickCount={updateClickCount} switchPage={() => switchPage()}></PopUpModal>
+			<PopUpModal popUpText={"Information Saved!"} updateClickCount={updateClickCount} switchPage={() => switchPage()}></PopUpModal>
 		</View>
 	);
 };
