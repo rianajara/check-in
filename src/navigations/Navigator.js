@@ -13,6 +13,8 @@ import ViewEvents from '../screens/ViewEvents';
 import ViewEvent from '../screens/ViewEvent';
 import ModifyEvent from '../screens/ModifyEvent';
 import ModifyAttendee from '../screens/ModifyAttendee';
+import CheckInAttendees from '../screens/CheckInAttendees';
+import CameraScan from '../screens/CameraScan';
 
 const stackNavigatorOptions = {
 	headerShown: false,
@@ -32,7 +34,9 @@ const AppNavigator = createStackNavigator(
 		ViewEvents: ViewEvents,
 		ViewEvent: ViewEvent,
         ModifyEvent: ModifyEvent,
-        ModifyAttendee: ModifyAttendee
+        ModifyAttendee: ModifyAttendee,
+		CheckInAttendees:CheckInAttendees,
+    	CameraScan:CameraScan
 	},
 	{
 		defaultNavigationOptions: stackNavigatorOptions,

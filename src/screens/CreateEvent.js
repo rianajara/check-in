@@ -149,7 +149,7 @@ const CreateEvent = (props) => {
 					fontSize: 20,
 					fontFamily: 'Bold',
 					alignSelf: 'center',
-					marginTop: 60,
+					marginTop: 70,
 					marginBottom: 65,
 				}}>
 				Create Event{' '}
