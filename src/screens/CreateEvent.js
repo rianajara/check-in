@@ -17,6 +17,7 @@ import eventData from '../json/events.json';
 import * as firebase from 'firebase';
 import Firebase from '../components/Firebase';
 import PopUpModal from '../components/PopUpModal';
+import EventTypeDropDown from '../components/EventTypeDropDown';
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -173,6 +174,8 @@ const CreateEvent = (props) => {
 								/>
 							}
 						/>
+
+						<EventTypeDropDown></EventTypeDropDown>
 
 						<Input
 							label='Location:'
