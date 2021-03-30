@@ -103,7 +103,7 @@ const pickerSelectStyles = StyleSheet.create({
 	inputAndroid: {
 		fontSize: 20,
 		paddingHorizontal: 10,
-		paddingVertical: 4,
+		paddingVertical: 13,
 		color: 'black',
 		paddingRight: 30, // to ensure the text is never behind the icon
 		width: 300,
