@@ -14,23 +14,24 @@ import ViewAccount_Attendee from './ViewAccount_Attendee';
 import Firebase from '../components/Firebase';
 import * as firebase from 'firebase';
 import PopUpModal from '../components/PopUpModal';
+import InfoDropDown from '../components/InfoDropDown';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const RegisterAttendee = (props) => {
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [verifypass, verifyPassword] = React.useState('');
 	const [updateClickCount, setUpdateClickCount] = React.useState(0);
+	const [major, setMajor] = React.useState('');
 
-    const switchPage = () => {
+	const switchPage = () => {
 		setTimeout(() => {
 			props.navigation.navigate('ViewAccount_Attendee');
 		}, 750);
-        
-        
 	};
 
 	return (
-		<View style={styles.contentContainer}>
+		<View style={styles.contentContainer} >
 			<Text
 				style={{
 					fontSize: 20,
@@ -40,8 +41,10 @@ const RegisterAttendee = (props) => {
 				}}>
 				Modify Student Attendee{' '}
 			</Text>
+			<ScrollView >
 			<View style={styles.inputContainer}>
 				<Input
+				
 					label='Enter first name:'
 					placeholder='first name'
 					leftIcon={
@@ -115,17 +118,15 @@ const RegisterAttendee = (props) => {
 					onChangeText={(text) => verifyPassword(text)}
 					value={verifypass}
 				/>
-
-				<Text style={{
-					fontSize: 15,
-					fontFamily: 'Bold',
-					color: 'grey',
-					alignSelf: 'center',
-					
-				}}>
-					Choose your major
-				</Text>
 			</View>
+
+			<View >
+				<InfoDropDown style={{width: "15%"}}
+					setDataType={(value) => setMajor(value)}
+					dropDownType={'majors'}
+					labelInfo="Choose a major"></InfoDropDown>
+			</View>
+			</ScrollView>
 			<View style={styles.buttonContainer}>
 				<Button
 					style={styles.smallButton}
@@ -141,7 +142,10 @@ const RegisterAttendee = (props) => {
 					}}
 				/>
 			</View>
-			<PopUpModal popUpText={"Information Saved!"} updateClickCount={updateClickCount} switchPage={() => switchPage()}></PopUpModal>
+			<PopUpModal
+				popUpText={'Information Saved!'}
+				updateClickCount={updateClickCount}
+				switchPage={() => switchPage()}></PopUpModal>
 		</View>
 	);
 };
@@ -157,9 +161,9 @@ const signUpWithEmailPassword = (email, password, props, verifypass) => {
 			// Signed in
 			var user = userCredential.user;
 			alert('Successfuly registered.');
-            
-			console.warn("successfully registered")
-			
+
+			console.warn('successfully registered');
+
 			//props.navigation.navigate('MainAttendee');
 			// ...
 		})
@@ -169,8 +173,8 @@ const signUpWithEmailPassword = (email, password, props, verifypass) => {
 			//validate_Field(email,password,verifypass)
 			// ..
 		});
-		
-		console.warn("checking the firebase")
+
+	console.warn('checking the firebase');
 	// [END auth_signup_password]
 };
 
@@ -188,7 +192,7 @@ const validate_Field = (email, password, verifypass) => {
 		alert('Please re-enter password');
 		return false;
 	}
-	console.warn("testing the validation")
+	console.warn('testing the validation');
 	return true;
 };
 
@@ -205,13 +209,13 @@ const styles = StyleSheet.create({
 		height: 200,
 	},
 	inputContainer: {
-		width: '90%',
-		marginTop: 100,
+		width: '99%',
+		marginTop: 15,
 		justifyContent: 'space-evenly',
 	},
 	buttonContainer: {
 		justifyContent: 'space-around',
-		height: '40%',
+		height: '17%',
 	},
 	smallButton: {},
 	icon: {

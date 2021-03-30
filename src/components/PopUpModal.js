@@ -4,12 +4,9 @@ import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 const PopUpModal = (props) => {
 	const [modalVisible, setModalVisible] = useState(false);
 
-	
-
 	useEffect(() => {
 		if (props.updateClickCount > 0) {
-			setModalVisible(true);
-			
+			setModalVisible(true);	
 		}
 	}, [props.updateClickCount]);
 	return (

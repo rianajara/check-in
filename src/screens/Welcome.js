@@ -3,6 +3,7 @@ import {Text, View, Image, TextInput} from 'react-native';
 import {Button} from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 
+
 export default class Welcome extends React.Component{
     render(){
         const {navigate} = this.props.navigation
@@ -60,6 +61,8 @@ export default class Welcome extends React.Component{
                         onPress={() => navigate('LoginAttendee')}
                     />
                 </View>
+
+               
 
                 <Text 
                 

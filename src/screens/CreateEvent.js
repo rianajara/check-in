@@ -13,13 +13,9 @@ import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import eventData from '../json/events.json';
-import * as firebase from 'firebase';
 import Firebase from '../components/Firebase';
 import PopUpModal from '../components/PopUpModal';
-import EventTypeDropDown from '../components/EventTypeDropDown';
-
-
+import InfoDropDown from '../components/InfoDropDown';
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -65,11 +61,10 @@ const CreateEvent = (props) => {
 			timeSelected.length < 1 ||
 			description.length < 1 ||
 			maxCapacity.length < 1 ||
-			eventType === null || 
-			eventType === ""
+			eventType === null ||
+			eventType === ''
 		) {
 			setPopUpText('Please fill out all fields');
-
 		} else {
 			setPopUpText('Added');
 			addNewEvent(title);
@@ -85,15 +80,15 @@ const CreateEvent = (props) => {
 			.set(
 				{
 					[title]: {
-						'Title': title,
-						'Location': location,
+						Title: title,
+						Location: location,
 						'Primary Contact': primaryContact,
 						'Contact Email': contactEmail,
-						'Date': dateSelected,
-						'Time': timeSelected,
-						'Description': description,
+						Date: dateSelected,
+						Time: timeSelected,
+						Description: description,
 						'Max Capacity': maxCapacity,
-						'Event Type': eventType
+						'Event Type': eventType,
 					},
 				},
 				{ merge: true }
@@ -189,11 +184,10 @@ const CreateEvent = (props) => {
 							}
 						/>
 
-
-						<EventTypeDropDown setEventType={(value) => setEventType(value)}></EventTypeDropDown>
-						
-
-						
+						<InfoDropDown
+							setDataType={(value) => setEventType(value)}
+							dropDownType={'event'}
+							labelInfo="Event Type"></InfoDropDown>
 
 						<Input
 							label='Location:'
@@ -322,13 +316,10 @@ const CreateEvent = (props) => {
 							style={{ height: 0, padding: 0, margin: 0 }}
 							popUpText={popUpText}
 							updateClickCount={updateClickCount}></PopUpModal>
-							
 					</ScrollView>
-					
 				</View>
-				
+
 				<View />
-				
 			</KeyboardAvoidingView>
 
 			<View style={styles.buttonContainer}>

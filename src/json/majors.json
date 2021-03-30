@@ -1,0 +1,44 @@
+{
+	"majors": [
+		{
+			"label": "Aerospace Engineering",
+			"value": "Aerospace Engineering"
+		},
+		{
+			"label": "Biomedical Engineering",
+			"value": "Biomedical Engineering"
+		},
+		{
+			"label": "Chemical Engineering",
+			"value": "Chemical Engineering"
+		},
+		{
+			"label": "Computer Engineering",
+			"value": "Computer Engineering"
+		},
+		{
+			"label": "Computer Science",
+			"value": "Computer Science"
+		},
+		{
+			"label": "Construction Management",
+			"value": "Construction Management"
+		},
+		{
+			"label": "Electrical Engineering",
+			"value": "Electrical Engineering"
+		},
+		{
+			"label": "Electronics Engineering Technology",
+			"value": "Electronics Engineering Technology"
+		},
+		{
+			"label": "Computer Engineering Technology",
+			"value": "Computer Engineering Technology"
+		},
+		{
+			"label": "Mechanical Engineering",
+			"value": "Mechanical Engineering"
+		}
+	]
+}
