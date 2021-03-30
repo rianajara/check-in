@@ -16,7 +16,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import eventData from '../json/events.json';
 import * as firebase from 'firebase';
 import Firebase from '../components/Firebase';
-import PopUpModal from '../screens/PopUpModal';
+import PopUpModal from '../components/PopUpModal';
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });

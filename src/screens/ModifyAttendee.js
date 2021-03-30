@@ -13,7 +13,7 @@ import Icon from '@expo/vector-icons/AntDesign';
 import ViewAccount_Attendee from './ViewAccount_Attendee';
 import Firebase from '../components/Firebase';
 import * as firebase from 'firebase';
-import PopUpModal from '../screens/PopUpModal';
+import PopUpModal from '../components/PopUpModal';
 
 const RegisterAttendee = (props) => {
 	const [email, setEmail] = React.useState('');
