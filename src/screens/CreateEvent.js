@@ -65,7 +65,8 @@ const CreateEvent = (props) => {
 			timeSelected.length < 1 ||
 			description.length < 1 ||
 			maxCapacity.length < 1 ||
-			eventType === null
+			eventType === null || 
+			eventType === ""
 		) {
 			setPopUpText('Please fill out all fields');
 
