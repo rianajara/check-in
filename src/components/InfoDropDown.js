@@ -61,7 +61,7 @@ export default class InfoDropDown extends React.Component {
 						style={{
 							marginRight: 7,
 							marginBottom: 0,
-							marginTop: 11,
+							marginTop: 8,
 						}}
 					/>
 					<RNPickerSelect
@@ -103,7 +103,7 @@ const pickerSelectStyles = StyleSheet.create({
 	inputAndroid: {
 		fontSize: 20,
 		paddingHorizontal: 10,
-		paddingVertical: 22.5,
+		paddingVertical: 13,
 		color: 'black',
 		paddingRight: 30, // to ensure the text is never behind the icon
 		width: 300,
