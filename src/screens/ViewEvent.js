@@ -23,17 +23,11 @@ const ViewEvent = (props) => {
 	const [eventData, setEventData] = useState(eventInfo)
 
 	const deleteEvent = async () => {
-		const tempData = await db.collection('Events').doc('RHA').
-		console.warn("this is hte data " + typeof JSON.parse(JSON.stringify(tempData.data())))
-		const dummyData = await JSON.parse(JSON.stringify(tempData.data()));
-		delete dummyData.Tuque
-		console.warn("this is myyyy data " + JSON.stringify(tempData.data()))
-		console.warn("properrrrryrr " + Object.size(dummyData))
-		
-		/*
-		const newData = tempData.data()
-		console.warn("this is hte data " + JSON.stringify(tempData.data()))
-		*/
+		db.collection('OrgEvents')
+			.doc('New Club')
+			.collection('Events')
+			.doc('Temp')
+			.delete()
 
 	}
 	//console.warn(eventData)

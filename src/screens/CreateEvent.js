@@ -88,7 +88,7 @@ const CreateEvent = (props) => {
 			db.collection('OrgEvents')
 			.doc('New Club')
 			.collection('Events')
-			.doc(title)
+			.doc('Temp')
 			.set(
 				{
 					[title]: {
@@ -111,7 +111,7 @@ const CreateEvent = (props) => {
 		db.collection('OrgEvents')
 			.doc('New Club')
 			.collection('Events')
-			.doc(title)
+			.doc('Temp')
 			.collection('Attendees')
 			.doc('temp Attendee')
 			.set(
@@ -125,8 +125,6 @@ const CreateEvent = (props) => {
 				},
 				{ merge: true }
 			);
-
-			
 
 		//Trying new method with new object (temp)
 		/*
