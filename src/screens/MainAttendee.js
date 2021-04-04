@@ -19,13 +19,14 @@ const MainAttendee= (props) => {
                     marginTop:50
                     
                 }}
-                >Attendee Sign In</Text>
+                >Attendee Main Page</Text>
 
             <View style={styles.api}>
             </View>
             
             <View style={styles.buttonContainer}>
                 <Button style={styles.smallButton}  title="RSVP to an event" />
+                <Button style={styles.smallButton}  title="Account" onPress ={()=>props.navigation.navigate('ViewAccount_Attendee')}/>
             </View>
             
         </View>
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     },
 
     buttonContainer: {
-        justifyContent:'space-around',
+        justifyContent:'space-evenly',
         height: '30%',
     },
     smallButton: {

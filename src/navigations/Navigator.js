@@ -13,6 +13,11 @@ import ViewEvents from '../screens/ViewEvents';
 import ViewEvent from '../screens/ViewEvent';
 import ModifyEvent from '../screens/ModifyEvent';
 import ModifyAttendee from '../screens/ModifyAttendee';
+import ModifyHost from '../screens/ModifyHost';
+import CheckInAttendees from '../screens/CheckInAttendees';
+import CameraScan from '../screens/CameraScan';
+import ViewAccount_Attendee from '../screens/ViewAccount_Attendee';
+import ViewAccount_Host from '../screens/ViewAccount_Host';
 
 const stackNavigatorOptions = {
 	headerShown: false,
@@ -27,12 +32,17 @@ const AppNavigator = createStackNavigator(
 		RegisterHost: RegisterHost,
 		RegisterAttendee: RegisterAttendee,
 		MainAttendee: MainAttendee,
+		ViewAccount_Attendee:ViewAccount_Attendee,
 		MainHost: MainHost,
+		ViewAccount_Host:ViewAccount_Host,
 		CreateEvent: CreateEvent,
 		ViewEvents: ViewEvents,
 		ViewEvent: ViewEvent,
         ModifyEvent: ModifyEvent,
-        ModifyAttendee: ModifyAttendee
+		ModifyHost:ModifyHost,
+        ModifyAttendee: ModifyAttendee,
+		CheckInAttendees:CheckInAttendees,
+    	CameraScan:CameraScan
 	},
 	{
 		defaultNavigationOptions: stackNavigatorOptions,

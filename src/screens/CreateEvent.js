@@ -13,13 +13,9 @@ import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import eventData from '../json/events.json';
-import * as firebase from 'firebase';
 import Firebase from '../components/Firebase';
 import PopUpModal from '../components/PopUpModal';
-import EventTypeDropDown from '../components/EventTypeDropDown';
-
-
+import InfoDropDown from '../components/InfoDropDown';
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -65,10 +61,10 @@ const CreateEvent = (props) => {
 			timeSelected.length < 1 ||
 			description.length < 1 ||
 			maxCapacity.length < 1 ||
-			eventType === null
+			eventType === null ||
+			eventType === ''
 		) {
 			setPopUpText('Please fill out all fields');
-
 		} else {
 			setPopUpText('Added');
 			addNewEvent(title);
@@ -78,25 +74,103 @@ const CreateEvent = (props) => {
 	};
 
 	const addNewEvent = () => {
-		// Append actual data to the database (RHA for now)
-		db.collection('Events')
-			.doc('RHA')
+		// Add an club name
+		db.collection('OrgEvents')
+			.doc('New Club')
+			.set(
+				{
+					ClubName: "Something To cmon"
+				},
+				{ merge: true }
+			);
+
+			// Event Document (temp set to RHa until we get an actual user that is logged in) added to the 
+			db.collection('OrgEvents')
+			.doc('New Club')
+			.collection('Events')
+			.doc('Temp')
 			.set(
 				{
 					[title]: {
-						'Title': title,
-						'Location': location,
+						Title: title,
+						Location: location,
 						'Primary Contact': primaryContact,
 						'Contact Email': contactEmail,
-						'Date': dateSelected,
-						'Time': timeSelected,
-						'Description': description,
+						Date: dateSelected,
+						Time: timeSelected,
+						Description: description,
 						'Max Capacity': maxCapacity,
-						'Event Type': eventType
+						'Event Type': eventType,
 					},
 				},
 				{ merge: true }
 			);
+
+
+		// Creates an attendee collection then deletes the mandatory first document
+		db.collection('OrgEvents')
+			.doc('New Club')
+			.collection('Events')
+			.doc('Temp')
+			.collection('Attendees')
+			.doc('temp Attendee')
+			.set(
+				{
+					'Joanne Summers': {
+						firstName: 'Joanne',
+						lastName: 'Summers'
+					},
+
+					
+				},
+				{ merge: true }
+			);
+
+		//Trying new method with new object (temp)
+		/*
+				db.collection('OrgEvents')
+			.doc('RHA')
+			.set(
+				{
+					[title]: {
+						Title: title,
+						Location: location,
+						'Primary Contact': primaryContact,
+						'Contact Email': contactEmail,
+						Date: dateSelected,
+						Time: timeSelected,
+						Description: description,
+						'Max Capacity': maxCapacity,
+						'Event Type': eventType,
+					},
+				},
+				{ merge: true }
+			);
+		
+		*/
+
+		//OG code for emergency
+		/*
+				db.collection('OrgEvents')
+			.doc('RHA')
+			.set(
+				{
+					[title]: {
+						Title: title,
+						Location: location,
+						'Primary Contact': primaryContact,
+						'Contact Email': contactEmail,
+						Date: dateSelected,
+						Time: timeSelected,
+						Description: description,
+						'Max Capacity': maxCapacity,
+						'Event Type': eventType,
+					},
+				},
+				{ merge: true }
+			);
+		
+		*/	
 	};
 
 	const createTime = (time) => {
@@ -188,11 +262,10 @@ const CreateEvent = (props) => {
 							}
 						/>
 
-
-						<EventTypeDropDown setEventType={(value) => setEventType(value)}></EventTypeDropDown>
-						
-
-						
+						<InfoDropDown
+							setDataType={(value) => setEventType(value)}
+							dropDownType={'event'}
+							labelInfo="Event Type"></InfoDropDown>
 
 						<Input
 							label='Location:'
@@ -321,13 +394,11 @@ const CreateEvent = (props) => {
 							style={{ height: 0, padding: 0, margin: 0 }}
 							popUpText={popUpText}
 							updateClickCount={updateClickCount}></PopUpModal>
-							
 					</ScrollView>
 					
 				</View>
-				
+
 				<View />
-				
 			</KeyboardAvoidingView>
 
 			<View style={styles.buttonContainer}>
