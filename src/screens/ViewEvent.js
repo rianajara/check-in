@@ -10,10 +10,32 @@ import {
 	Dimensions,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Firebase from '../components/Firebase';
+
+
+const db = Firebase.firestore();
+db.settings({ timestampsInSnapshots: true });
+
+
 
 const ViewEvent = (props) => {
 	const eventInfo = props.navigation.state.params.data;
 	const [eventData, setEventData] = useState(eventInfo)
+
+	const deleteEvent = async () => {
+		const tempData = await db.collection('Events').doc('RHA').
+		console.warn("this is hte data " + typeof JSON.parse(JSON.stringify(tempData.data())))
+		const dummyData = await JSON.parse(JSON.stringify(tempData.data()));
+		delete dummyData.Tuque
+		console.warn("this is myyyy data " + JSON.stringify(tempData.data()))
+		console.warn("properrrrryrr " + Object.size(dummyData))
+		
+		/*
+		const newData = tempData.data()
+		console.warn("this is hte data " + JSON.stringify(tempData.data()))
+		*/
+
+	}
 	//console.warn(eventData)
 	return (
 		<View style={styles.contentContainer}>
@@ -87,6 +109,7 @@ const ViewEvent = (props) => {
 					<Text style={styles.viewEventButtonText}>Modify Event</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
+					onPress={() => deleteEvent()}
 					style={[
 						styles.viewEventButton,
 						{ backgroundColor: '#f9d391' },

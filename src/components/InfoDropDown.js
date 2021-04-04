@@ -103,11 +103,11 @@ const pickerSelectStyles = StyleSheet.create({
 	inputAndroid: {
 		fontSize: 20,
 		paddingHorizontal: 10,
-<<<<<<< HEAD
+
 		paddingVertical: 4,
-=======
+
 		paddingVertical: 22.5,
->>>>>>> parent of 6643023 (Revert "InfoDropDown")
+
 		color: 'black',
 		paddingRight: 30, // to ensure the text is never behind the icon
 		width: 300,

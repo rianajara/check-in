@@ -74,8 +74,63 @@ const CreateEvent = (props) => {
 	};
 
 	const addNewEvent = () => {
-		// Append actual data to the database (RHA for now)
-		db.collection('Events')
+		// Add an club name
+		db.collection('OrgEvents')
+			.doc('New Club')
+			.set(
+				{
+					ClubName: "Something To cmon"
+				},
+				{ merge: true }
+			);
+
+			// Event Document (temp set to RHa until we get an actual user that is logged in) added to the 
+			db.collection('OrgEvents')
+			.doc('New Club')
+			.collection('Events')
+			.doc(title)
+			.set(
+				{
+					[title]: {
+						Title: title,
+						Location: location,
+						'Primary Contact': primaryContact,
+						'Contact Email': contactEmail,
+						Date: dateSelected,
+						Time: timeSelected,
+						Description: description,
+						'Max Capacity': maxCapacity,
+						'Event Type': eventType,
+					},
+				},
+				{ merge: true }
+			);
+
+
+		// Creates an attendee collection then deletes the mandatory first document
+		db.collection('OrgEvents')
+			.doc('New Club')
+			.collection('Events')
+			.doc(title)
+			.collection('Attendees')
+			.doc('temp Attendee')
+			.set(
+				{
+					'Joanne Summers': {
+						firstName: 'Joanne',
+						lastName: 'Summers'
+					},
+
+					
+				},
+				{ merge: true }
+			);
+
+			
+
+		//Trying new method with new object (temp)
+		/*
+				db.collection('OrgEvents')
 			.doc('RHA')
 			.set(
 				{
@@ -93,6 +148,31 @@ const CreateEvent = (props) => {
 				},
 				{ merge: true }
 			);
+		
+		*/
+
+		//OG code for emergency
+		/*
+				db.collection('OrgEvents')
+			.doc('RHA')
+			.set(
+				{
+					[title]: {
+						Title: title,
+						Location: location,
+						'Primary Contact': primaryContact,
+						'Contact Email': contactEmail,
+						Date: dateSelected,
+						Time: timeSelected,
+						Description: description,
+						'Max Capacity': maxCapacity,
+						'Event Type': eventType,
+					},
+				},
+				{ merge: true }
+			);
+		
+		*/	
 	};
 
 	const createTime = (time) => {
