@@ -73,13 +73,17 @@ const CreateEvent = (props) => {
 		setUpdateClickCount(updateClickCount + 1);
 	};
 
+	const switchPage = () => {
+		 props.navigation.navigate('MainHost')
+	}
+
 	const addNewEvent = () => {
-		// Add an club name
+		// Add an club name (probably will be used in the creation of a user)
 		db.collection('OrgEvents')
 			.doc('New Club')
 			.set(
 				{
-					ClubName: "Something To cmon"
+					ClubName: "New Club"
 				},
 				{ merge: true }
 			);
@@ -107,16 +111,16 @@ const CreateEvent = (props) => {
 			);
 
 
-		// Creates an attendee collection then deletes the mandatory first document
+		// used to add an attendee to the event
 		db.collection('OrgEvents')
 			.doc('New Club')
 			.collection('Events')
 			.doc('Temp')
 			.collection('Attendees')
-			.doc('temp Attendee')
+			.doc('Attendees List')
 			.set(
 				{
-					'Joanne Summers': {
+					'ghost Summers': {
 						firstName: 'Joanne',
 						lastName: 'Summers'
 					},
@@ -393,7 +397,8 @@ const CreateEvent = (props) => {
 						<PopUpModal
 							style={{ height: 0, padding: 0, margin: 0 }}
 							popUpText={popUpText}
-							updateClickCount={updateClickCount}></PopUpModal>
+							updateClickCount={updateClickCount}
+							switchPage={() => switchPage()}></PopUpModal>
 					</ScrollView>
 					
 				</View>

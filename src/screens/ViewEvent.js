@@ -27,8 +27,18 @@ const ViewEvent = (props) => {
 			.doc('New Club')
 			.collection('Events')
 			.doc('Temp')
+			.collection('Attendees')
+			.doc('Attendees List')
 			.delete()
 
+		db.collection('OrgEvents')
+			.doc('New Club')
+			.collection('Events')
+			.doc('Temp')
+			.delete()
+			
+
+			
 	}
 	//console.warn(eventData)
 	return (
