@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   Text,
   View,
@@ -10,38 +10,44 @@ import {
 import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
-import UserService from '@Services/User';
-import UserConstants from '@Constants/User';
-import AppContext from '@Components/AppContext';
-import alert from '@Components/Alert';
+import ViewAccount_Host from './ViewAccount_Host';
+import Firebase, { db } from '@Firebase';
+import * as firebase from 'firebase';
+import PopUpModal from '@Components/PopUpModal';
 
-const RegisterAttendee = (props) => {
-  const { navigation } = props;
-  const globalState = useContext(AppContext);
-  const userType = globalState.auth.userType;
+const RegisterHost = (props) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [verifypass, verifyPassword] = React.useState('');
+  const [updateClickCount, setUpdateClickCount] = React.useState(0);
 
-  const image = require('../images/image.png');
-
-  const signUp = async () => {
-    if (!validate_Field(email, password, verifypass)) return;
-
-    globalState.changeLoading(true);
-
-    const res = await UserService.signUp(email, password, userType);
-
-    if (!res) return alert('가입 실패');
-    else {
-      globalState.changeLoading(false);
-      navigation.popToTop();
-    }
+  const switchPage = () => {
+    setTimeout(() => {
+      props.navigation.navigate('ViewAccount_Host');
+    }, 750);
   };
 
   return (
     <View style={styles.contentContainer}>
       <View style={styles.inputContainer}>
+        <Input
+          label="Enter first name:"
+          placeholder="first name"
+          leftIcon={
+            <Icon name="user" size={24} color="black" style={styles.icon} />
+          }
+          onChangeText={() => {}}
+        />
+
+        <Input
+          label="Enter last name:"
+          placeholder="last name"
+          leftIcon={
+            <Icon name="user" size={24} color="black" style={styles.icon} />
+          }
+          onChangeText={() => {}}
+        />
+
         <Input
           label="Enter student email:"
           placeholder="youremail@address.com"
@@ -75,10 +81,49 @@ const RegisterAttendee = (props) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button style={styles.smallButton} title="Sign Up" onPress={signUp} />
+        <Button
+          style={styles.smallButton}
+          title="Update"
+          onPress={() => {
+            signUpWithEmailPassword(email, password, props, verifypass);
+            setUpdateClickCount(updateClickCount + 1);
+          }}
+        />
       </View>
+      <PopUpModal
+        popUpText={'Information Saved!'}
+        updateClickCount={updateClickCount}
+        switchPage={() => switchPage()}></PopUpModal>
     </View>
   );
+};
+
+const signUpWithEmailPassword = (email, password, props, verifypass) => {
+  //var email = "test@example.com";
+  //var password = "hunter2";
+  // [START auth_signup_password]
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      var user = userCredential.user;
+      alert('Successfuly registered.');
+
+      console.warn('successfully registered');
+
+      //props.navigation.navigate('MainAttendee');
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = validate_Field(email, password, verifypass);
+      //validate_Field(email,password,verifypass)
+      // ..
+    });
+
+  console.warn('checking the firebase');
+  // [END auth_signup_password]
 };
 
 const validate_Field = (email, password, verifypass) => {
@@ -95,6 +140,7 @@ const validate_Field = (email, password, verifypass) => {
     alert('Please re-enter password');
     return false;
   }
+  console.warn('testing the validation');
   return true;
 };
 
@@ -112,7 +158,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: '90%',
-    marginTop: 50,
+    marginTop: 100,
     justifyContent: 'space-evenly',
   },
   buttonContainer: {
@@ -125,4 +171,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterAttendee;
+export default RegisterHost;
