@@ -12,5 +12,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 let Firebase = firebase.initializeApp(firebaseConfig)
+//const admin = require('firebase-admin');
 
 export default Firebase

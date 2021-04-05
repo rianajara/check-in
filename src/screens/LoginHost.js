@@ -16,11 +16,12 @@ import { StackActions } from '@react-navigation/native';
 import Firebase from '../components/Firebase'
 import * as firebase from 'firebase';
 
-
+const db = Firebase.firestore();
 
 const LoginHost = (props) => {
 	const [email, setEmail] = React.useState("");
 	const [password, setPassword] = React.useState("");
+	const [uniqueID, setUniqueID] = React.useState("");
 	const image = require('../images/image.png');
 	return (
 		<View style={styles.contentContainer}>
@@ -48,6 +49,7 @@ const LoginHost = (props) => {
 					onChangeText={text => setEmail(text)}
 					value={email}
 				/>
+
 				<Input
 					placeholder='Enter password'
 					secureTextEntry={true}
@@ -62,9 +64,23 @@ const LoginHost = (props) => {
 					onChangeText={text => setPassword(text)}
 					value={password}
 				/>
+
+				<Input
+					placeholder='Unique ID'
+					leftIcon={
+						<Icon
+							name='lock'
+							size={24}
+							color='black'
+							style={styles.icon}
+						/>
+					}
+					onChangeText={text => setUniqueID(text)}
+					value={uniqueID}
+				/>
 			</View>
 			<View style={styles.buttonContainer}>
-				<Button style={styles.smallButton} title='Log In' onPress={() => signInWithEmailPassword(email,password,props)}
+				<Button style={styles.smallButton} title='Log In' onPress={() => signInWithEmailPassword(email,password,props,uniqueID)}
 				/>
 				<Button
 					style={styles.smallButton}
@@ -81,19 +97,33 @@ const LoginHost = (props) => {
 	);
 };
 
-const signInWithEmailPassword = async(email,password,props)=> {
+const signInWithEmailPassword = async(email,password,props,uniqueID)=> {
   //var email = "test@example.com";
   //var password = "hunter2";
   // [START auth_signin_password]
+ //var obtainId
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in
       var user = userCredential.user;
-      alert("Successfuly logged in.")
-      props.navigation.navigate('MainHost')
-      // ...
+      //console.log(user)
+
+      const check = db.collection('Host').where('UniqueID','==',uniqueID)
+      		.get()
+      		.then(snap => {
+			    snap.forEach(doc => {
+			        if (doc.data().UniqueID == uniqueID && doc.data().email == email){
+			        	alert("Successfuly logged in.")
+      					props.navigation.navigate('MainHost')
+			        }
+			        else{
+				      	alert("Check your unique ID or email and try again.")
+				      }
+			    });
+            });
     })
     .catch((error) => {
+    	console.log(error)
       var errorCode = error.code;
       var errorMessage = error.message;
       alert("Check your password and try again.")

@@ -4,8 +4,11 @@ import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import MainAttendee from './MainAttendee';
-import Firebase from '../components/Firebase'
 import * as firebase from 'firebase';
+import Firebase from '../components/Firebase';
+
+//const admin = require('firebase-admin')
+const db = Firebase.firestore();
 
 const RegisterAttendee = (props) => {
     const [email, setEmail] = React.useState("");
@@ -90,12 +93,22 @@ const signUpWithEmailPassword=(email,password,props,verifypass)=> {
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in 
-      var user = userCredential.user;
-      alert("Successfuly registered.")
-      props.navigation.navigate('MainAttendee')
+    var user = userCredential.user;
+    //console.log(user)  
+    const data = {
+        email:user.email,
+        //uid:user.uid
+    }
+    //console.log(data)
+    //console.log(uid)
+    
+    props.navigation.navigate('MainAttendee')
+    alert("Successfuly registered.")
+    return db.collection('Attendee').doc(email).set(data);
       // ...
     })
-    .catch((error) => {
+
+    .catch((error) => { 
       var errorCode = error.code;
       var errorMessage = validate_Field(email,password,verifypass);
       //validate_Field(email,password,verifypass)
@@ -103,6 +116,15 @@ const signUpWithEmailPassword=(email,password,props,verifypass)=> {
     });
   // [END auth_signup_password]
 }
+
+// module.exports = {
+//     authOnCreate: functions.auth.user().onCreate(signUpWithEmailPassword),
+//          };
+
+// const createUser = (token)=>{
+//     var firestore = Firebase.firestore();
+    
+// }
 
 const validate_Field=(email, password, verifypass)=>{
     if(email==""){
