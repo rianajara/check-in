@@ -31,7 +31,6 @@ const borderColorPicker = (buttonNum) => {
 };
 
 const ViewEvents = (props) => {
-    const image = require('../images/image.png');
 
 	return (
 		<View style={styles.contentContainer}>
