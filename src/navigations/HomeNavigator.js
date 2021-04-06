@@ -28,6 +28,7 @@ import ModifyHost from '@Screens/Home/ModifyHost';
 import CreateEventScreen from '@Screens/Home/CreateEvent';
 
 import CheckInAttendees from '@Screens/Home/CheckInAttendees';
+import CameraScan from '@Screens/Home/CameraScan';
 
 import { defaultOption, defaultOption2 } from './Options';
 
@@ -117,6 +118,14 @@ export default HomeNavigator = ({ initialRouteName }) => {
         component={CheckInAttendees}
         options={({ navigation, route }) =>
           defaultOption({ navigation, route, title: 'Check In Attendees' })
+        }
+      />
+
+      <Stack.Screen
+        name="CameraScan"
+        component={CameraScan}
+        options={({ navigation, route }) =>
+          defaultOption({ navigation, route, title: 'CameraScan' })
         }
       />
     </Stack.Navigator>
