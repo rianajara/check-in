@@ -6,11 +6,13 @@ import Icon from '@expo/vector-icons/AntDesign';
 import MainAttendee from './MainAttendee';
 import Firebase from '../components/Firebase'
 import * as firebase from 'firebase';
+import InfoDropDown from '../components/InfoDropDown';
 
 const RegisterAttendee = (props) => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [verifypass, verifyPassword] = React.useState("");
+    const [major, setMajor] = React.useState("");
 
     const image = require('../images/image.png');
     
@@ -26,6 +28,13 @@ const RegisterAttendee = (props) => {
                 }}
                 >Register Student Attendee </Text>
             <View style={styles.inputContainer}>
+                <View style={{height: 50}}>
+            <InfoDropDown
+							setDataType={(value) => setMajor(value)}
+							dropDownType={'major'}
+							labelInfo="Major"></InfoDropDown>
+                            </View>
+                            
                 <Input
                     label = 'Enter student email:'
                     placeholder='youremail@address.com'
@@ -72,7 +81,12 @@ const RegisterAttendee = (props) => {
                     onChangeText={text => verifyPassword(text)}
                     value={verifypass}
                 />
+                 
+				
+				
             </View>
+           
+
             <View style={styles.buttonContainer}>
                 <Button style={styles.smallButton}  title="Sign Up" 
                 onPress={()=>signUpWithEmailPassword(email,password,props,verifypass)}

@@ -13,6 +13,7 @@ import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import eventData from '../json/events.json';
+import InfoDropDown from '../components/InfoDropDown';
 
 const months = [
 	'January',
@@ -122,6 +123,15 @@ const ModifyEvent = (props) => {
 					}
 				/>
 
+
+				<View>
+				<InfoDropDown
+							setDataType={(value) => setEventType(value)}
+							dropDownType={'event'}
+							labelInfo="Event Type"></InfoDropDown>
+				</View>
+
+				
 				<Input
 					label='Location:'
 					placeholder='Event Location'
