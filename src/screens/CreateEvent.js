@@ -73,9 +73,66 @@ const CreateEvent = (props) => {
 		setUpdateClickCount(updateClickCount + 1);
 	};
 
+	const switchPage = () => {
+		 props.navigation.navigate('MainHost')
+	}
+
 	const addNewEvent = () => {
-		// Append actual data to the database (RHA for now)
-		db.collection('Events')
+		// Add an club name (probably will be used in the creation of a user)
+		db.collection('OrgEvents')
+			.doc('New Club')
+			.set(
+				{
+					ClubName: "New Club"
+				},
+				{ merge: true }
+			);
+
+			// Event Document (temp set to RHa until we get an actual user that is logged in) added to the 
+			db.collection('OrgEvents')
+			.doc('New Club')
+			.collection('Events')
+			.doc('Temp')
+			.set(
+				{
+					[title]: {
+						Title: title,
+						Location: location,
+						'Primary Contact': primaryContact,
+						'Contact Email': contactEmail,
+						Date: dateSelected,
+						Time: timeSelected,
+						Description: description,
+						'Max Capacity': maxCapacity,
+						'Event Type': eventType,
+					},
+				},
+				{ merge: true }
+			);
+
+
+		// used to add an attendee to the event
+		db.collection('OrgEvents')
+			.doc('New Club')
+			.collection('Events')
+			.doc('Temp')
+			.collection('Attendees')
+			.doc('Attendees List')
+			.set(
+				{
+					'ghost Summers': {
+						firstName: 'Joanne',
+						lastName: 'Summers'
+					},
+
+					
+				},
+				{ merge: true }
+			);
+
+		//Trying new method with new object (temp)
+		/*
+				db.collection('OrgEvents')
 			.doc('RHA')
 			.set(
 				{
@@ -93,6 +150,31 @@ const CreateEvent = (props) => {
 				},
 				{ merge: true }
 			);
+		
+		*/
+
+		//OG code for emergency
+		/*
+				db.collection('OrgEvents')
+			.doc('RHA')
+			.set(
+				{
+					[title]: {
+						Title: title,
+						Location: location,
+						'Primary Contact': primaryContact,
+						'Contact Email': contactEmail,
+						Date: dateSelected,
+						Time: timeSelected,
+						Description: description,
+						'Max Capacity': maxCapacity,
+						'Event Type': eventType,
+					},
+				},
+				{ merge: true }
+			);
+		
+		*/	
 	};
 
 	const createTime = (time) => {
@@ -315,8 +397,10 @@ const CreateEvent = (props) => {
 						<PopUpModal
 							style={{ height: 0, padding: 0, margin: 0 }}
 							popUpText={popUpText}
-							updateClickCount={updateClickCount}></PopUpModal>
+							updateClickCount={updateClickCount}
+							switchPage={() => switchPage()}></PopUpModal>
 					</ScrollView>
+					
 				</View>
 
 				<View />

@@ -61,7 +61,7 @@ export default class InfoDropDown extends React.Component {
 						style={{
 							marginRight: 7,
 							marginBottom: 0,
-							marginTop: 8,
+							marginTop: 11,
 						}}
 					/>
 					<RNPickerSelect
