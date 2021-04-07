@@ -17,7 +17,7 @@ import PopUpModal from '../components/PopUpModal';
 import InfoDropDown from '../components/InfoDropDown';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const RegisterAttendee = (props) => {
+const ModfiyAttendee = (props) => {
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [verifypass, verifyPassword] = React.useState('');
@@ -121,11 +121,12 @@ const RegisterAttendee = (props) => {
 			</View>
 
 			<View >
-				<InfoDropDown style={{width: "15%"}}
+				<InfoDropDown 
 					setDataType={(value) => setMajor(value)}
-					dropDownType={'majors'}
+					dropDownType={'major'}
 					labelInfo="Choose a major"></InfoDropDown>
 			</View>
+			
 			</ScrollView>
 			<View style={styles.buttonContainer}>
 				<Button
@@ -223,4 +224,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default RegisterAttendee;
+export default ModfiyAttendee;

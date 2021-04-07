@@ -40,9 +40,10 @@ const ViewEvent = (props) => {
 
 			
 	}
-	//console.warn(eventData)
+
 	return (
 		<View style={styles.contentContainer}>
+			
 			<View style={styles.eventInfoContainer}>
 				<ScrollView style={styles.scrollView}>
 					<View style={styles.eventHeaderTextView}>

@@ -23,6 +23,8 @@ export default class InfoDropDown extends React.Component {
 		super(props);
 	}
 
+	
+
 	dropDownTyper()  {
 		return (this.props.dropDownType === "event") ? {eventTypes}.eventTypes : {majors}.majors;
 	}
@@ -36,6 +38,8 @@ export default class InfoDropDown extends React.Component {
 		};
 
 		const dataTypes = this.dropDownTyper.bind(this);
+
+		const dropDownText = this.props.defaultEventType;
 		
 
 		
@@ -60,17 +64,17 @@ export default class InfoDropDown extends React.Component {
 						style={styles.icon}
 						style={{
 							marginRight: 7,
-							marginBottom: 0,
-							marginTop: 11,
+							marginBottom: 5,
+							marginTop: 6.5,
 						}}
 					/>
 					<RNPickerSelect
-					
+						//value={dropDownText}
 						placeholder={placeholder}
 						placeholderTextColor='black'
 						items={dataTypes()}
 						onValueChange={(value) => {
-							this.props.setDataType(value);
+							this.props.setDataType(value); 
 						}}
 						style={pickerSelectStyles}
 					/>
@@ -101,11 +105,16 @@ const pickerSelectStyles = StyleSheet.create({
 		width: 300,
 	},
 	inputAndroid: {
-		fontSize: 20,
+		fontSize: 18,
 		paddingHorizontal: 10,
-		paddingVertical: 4,
+		paddingVertical: 17,
+		
 		color: 'black',
-		paddingRight: 30, // to ensure the text is never behind the icon
+		paddingRight: 32, // to ensure the text is never behind the icon
 		width: 300,
 	},
 });
+
+InfoDropDown.defaultProps = {
+	defaultEventType: ""
+}
