@@ -8,11 +8,14 @@ import MainHost from './MainHost';
 import Firebase from '../components/Firebase'
 import * as firebase from 'firebase';
 
+const db = Firebase.firestore();
+
 const RegisterHost = (props) => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [verifypass, verifyPassword] = React.useState("");
-    
+    const [uniqueID, setUniqueID] = React.useState("");
+
     const image = require('../images/image.png');
     
     return (
@@ -73,10 +76,26 @@ const RegisterHost = (props) => {
                     onChangeText={text => verifyPassword(text)}
                     value={verifypass}
                 />
+                <Input
+                    label='Enter your 6 digit code'
+                    placeholder='Unique ID'
+                    //secureTextEntry={true}
+                    leftIcon={
+                        <Icon
+                            name='lock'
+                            size={24}
+                            color='black'
+                            style={styles.icon}
+                        />
+                    }
+                    onChangeText={text => setUniqueID(text)}
+                    value={uniqueID}
+                />
+
             </View>
             <View style={styles.buttonContainer}>
                 <Button style={styles.smallButton}  title="Sign Up" 
-                onPress={()=>signUpWithEmailPassword(email,password,props,verifypass)}
+                onPress={()=>signUpWithEmailPassword(email,password,props,verifypass,uniqueID)}
                 
                 />
             </View>
@@ -87,7 +106,7 @@ const RegisterHost = (props) => {
 
 //onPress={()=>correct(email,password,verifypass)}
 
-const signUpWithEmailPassword=(email,password,props,verifypass)=> {
+const signUpWithEmailPassword=(email,password,props,verifypass,uniqueID)=> {
   //var email = "test@example.com";
   //var password = "hunter2";
   // [START auth_signup_password]
@@ -95,7 +114,12 @@ const signUpWithEmailPassword=(email,password,props,verifypass)=> {
     .then((userCredential) => {
       // Signed in 
       var user = userCredential.user;
-      alert("Successfuly registered.")
+      const data = {
+        email:user.email,
+        UniqueID:uniqueID
+        //uid:user.uid
+    }
+    console.log(data)
       props.navigation.navigate('MainHost')
       // ...
     })

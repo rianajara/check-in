@@ -17,6 +17,8 @@ import PopUpModal from '../components/PopUpModal';
 import InfoDropDown from '../components/InfoDropDown';
 import { ScrollView } from 'react-native-gesture-handler';
 
+const db = Firebase.firestore();
+
 const RegisterAttendee = (props) => {
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
@@ -161,12 +163,17 @@ const signUpWithEmailPassword = (email, password, props, verifypass) => {
 		.then((userCredential) => {
 			// Signed in
 			var user = userCredential.user;
-			alert('Successfuly registered.');
+    //console.log(user)  
+    const data = {
+        email:user.email,
+        //uid:user.uid
+    }
+    //console.log(data)
+    //console.log(uid)
 
-			console.warn('successfully registered');
-
-			//props.navigation.navigate('MainAttendee');
-			// ...
+    props.navigation.navigate('MainAttendee')
+    alert("Successfuly registered.")
+    return db.collection('Attendee').doc(email).set(data);
 		})
 		.catch((error) => {
 			var errorCode = error.code;
