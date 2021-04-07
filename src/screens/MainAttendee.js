@@ -3,6 +3,7 @@ import {Text, View, Image, TextInput,KeyboardAvoidingView, StyleSheet, Platform}
 import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
+import QRCode from 'react-native-qrcode-svg';
 
 const MainAttendee= (props) => {
     // const [email, setEmail] = React.useState("");
@@ -21,8 +22,12 @@ const MainAttendee= (props) => {
                 }}
                 >Attendee Main Page</Text>
 
-            <View style={styles.api}>
-            </View>
+            
+            <QRCode
+                value="Just some string value"
+                
+            />
+            
             
             <View style={styles.buttonContainer}>
                 <Button style={styles.smallButton}  title="RSVP to an event" />
