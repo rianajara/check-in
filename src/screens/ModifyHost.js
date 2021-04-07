@@ -20,6 +20,7 @@ const RegisterHost = (props) => {
 	const [password, setPassword] = React.useState('');
 	const [verifypass, verifyPassword] = React.useState('');
 	const [updateClickCount, setUpdateClickCount] = React.useState(0);
+	const [uniqueID, setUniqueID] = React.useState("");
 
     const switchPage = () => {
 		setTimeout(() => {
@@ -42,7 +43,7 @@ const RegisterHost = (props) => {
 			</Text>
 			<View style={styles.inputContainer}>
 				<Input
-					label='Enter first name:'
+					label="Enter host's first name:"
 					placeholder='first name'
 					leftIcon={
 						<Icon
@@ -56,7 +57,7 @@ const RegisterHost = (props) => {
 				/>
 
 				<Input
-					label='Enter last name:'
+					label="Enter host's last name:"
 					placeholder='last name'
 					leftIcon={
 						<Icon
@@ -70,7 +71,7 @@ const RegisterHost = (props) => {
 				/>
 
 				<Input
-					label='Enter student email:'
+					label='Enter preferred organization email:'
 					placeholder='youremail@address.com'
 					leftIcon={
 						<Icon
@@ -115,6 +116,22 @@ const RegisterHost = (props) => {
 					onChangeText={(text) => verifyPassword(text)}
 					value={verifypass}
 				/>
+
+				<Input
+                    label='Enter your 6 digit code'
+                    placeholder='Unique ID'
+                    //secureTextEntry={true}
+                    leftIcon={
+                        <Icon
+                            name='lock'
+                            size={24}
+                            color='black'
+                            style={styles.icon}
+                        />
+                    }
+                    onChangeText={text => setUniqueID(text)}
+                    value={uniqueID}
+                />
 			</View>
 			<View style={styles.buttonContainer}>
 				<Button

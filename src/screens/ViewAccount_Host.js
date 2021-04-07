@@ -23,7 +23,7 @@ const viewHost = (props) => {
 	const firstName = 'First';
 	const lastName = 'Last';
 	const email = 'Test@email.com';
-	const organization = 'org1'
+	const organization = 'SAMPLE CLUB NAME'
 
 	const switchPage = () => {
 		setTimeout(() => {
@@ -33,7 +33,7 @@ const viewHost = (props) => {
 
 	return (
       
-		//attendee information
+		//organization information
 		<View style={styles.contentContainer} >
 			
 			<Text
@@ -43,34 +43,12 @@ const viewHost = (props) => {
 					alignSelf: 'center',
 					marginTop: 50,
 				}}>
-				 Attendee Information{' '}
+				 Organization Host Information{' '}
 				 
 			</Text>
 			<ScrollView >
 
 				<View style={styles.textContainer}>
-
-					<Text style ={styles.biggerFont}> {'Name:'} </Text>
-
-
-
-					<Text styles = {styles.smallerFont}>
-							{'  '}
-           					<Icon //user text
-               			 		name='user'
-                				size={20}
-               			   		color='black'
-               			    	style={styles.icon}
-							/>
-                    
-						{ ' '+ firstName + ' ' + lastName + '\n' }
-					</Text>
-
-
-					
-
-  
-
 
 					<Text style ={styles.biggerFont}> {'Email:'} </Text>
 
@@ -89,7 +67,7 @@ const viewHost = (props) => {
 				
 			
 
-					<Text style ={styles.biggerFont}> {'Organizations:'} </Text>
+					<Text style ={styles.biggerFont}> {'Organization:'} </Text>
 
 					<Text styles = {styles.smallerFont}>
 							{'  '}
@@ -116,7 +94,7 @@ const viewHost = (props) => {
 				<Button //modify attendee button
 					style={styles.smallButton}
 					title='Edit Info'
-					onPress ={()=>props.navigation.navigate('ModifyAttendee')}
+					onPress ={()=>props.navigation.navigate('ModifyHost')}
 						
 					
 				/>
@@ -134,7 +112,7 @@ const styles = StyleSheet.create({
 	contentContainer: {
 		backgroundColor: '#fff7d5',
 		flex: 1,
-		//alignItems: 'center',
+		
 		justifyContent: 'space-evenly',
 	},
 	smallImage: {
