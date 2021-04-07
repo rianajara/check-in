@@ -25,7 +25,7 @@ const MainAttendee= (props) => {
             
             <QRCode
                 value="Just some string value"
-                
+                size ={300}
             />
             
             
