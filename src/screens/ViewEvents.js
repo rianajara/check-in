@@ -30,8 +30,54 @@ const borderColorPicker = (buttonNum) => {
     }
 };
 
-const ViewEvents = (props) => {
+const db = Firebase.firestore();
 
+
+//get all orgs (get all documents in a collection)
+async function getAllOrgs(db){
+	const collection = db.collection("OrgEvents");
+	const snapshot = await collection.get();
+
+	if (snapshot.empty) {
+		console.log('No matching documents.');
+		return;
+	  }  
+	
+	  snapshot.forEach(doc => {
+		console.log(doc.id, '=>', doc.data());
+	  });
+}
+
+//get all events in one org (AESB) --- still need to find a way to pass the host's name
+async function getAllEvents(db){
+	const aesbEvents = db.collection("OrgEvents").doc("AESB").collection('Events');
+	const snapshot = await aesbEvents.get();
+	snapshot.forEach(collection => {
+		console.log(collection.id,':', collection.data());
+		console.warn(collection.data())
+	  });
+
+	  
+	return snapshot;
+}
+
+//specific get singular event data 
+async function getEvent(db){
+	const aesb = db.collection('OrgEvents').doc('AESB').collection('Events').doc("Fall Week of Welcome")
+	const events = await aesb.get();
+
+	if (!events.exists){
+		console.log('No subcollections exist');
+	}
+	else{
+		console.log('Event Data:', events.data());
+	}
+}
+
+const ViewEvents = (props) => {
+	const [eventArray, setEventArray] = useState([])
+
+	getAllEvents(db);
 	return (
 		<View style={styles.contentContainer}>
 			<View style={styles.scrollViewOuterView}>
@@ -162,3 +208,57 @@ export default ViewEvents;
 // https://www.npmjs.com/package/react-native-modal-datetime-picker
 
 
+/*
+<View style={styles.contentContainer}>
+			<View style={styles.scrollViewOuterView}>
+				<ScrollView style={styles.scrollView}>
+					{eventData['events'].map((data, key) => (
+						<View key={key}>
+							<TouchableOpacity
+								onPress={() =>
+									props.navigation.navigate('ViewEvent', {
+										data: data,
+									})
+								}
+								style={[
+									styles.eventButton,
+									{
+										backgroundColor: colorPicker(key),
+										borderColor: borderColorPicker(key),
+									},
+								]}
+								key={key}>
+								<Text style={styles.buttonTitleText}>
+									{data['Event Name']}
+								</Text>
+								<Text style={styles.buttonDetailText}>
+									{data['Date']}, {data['Time']}
+								</Text>
+								<Text style={styles.buttonDetailText}>
+									{data['Location']}
+								</Text>
+							</TouchableOpacity>
+						</View>
+					))}
+				</ScrollView>
+			</View>
+			<View style={styles.buttonViewContainer}>
+				<TouchableOpacity
+					style={[
+						styles.buttonView,
+						{ backgroundColor: '#d1dfbe' },
+						{ borderColor: '#aac486' },
+					]}>
+					<Text style={styles.buttonViewText}>Past Events</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={[
+						styles.buttonView,
+						{ backgroundColor: '#d7eef6' },
+						{ borderColor: '#a6d9ea' },
+					]}>
+					<Text style={styles.buttonViewText}>Upcoming Events</Text>
+				</TouchableOpacity>
+			</View>
+		</View>
+*/
