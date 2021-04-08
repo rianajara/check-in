@@ -35,21 +35,6 @@ const ViewEvents = (props) => {
 
 	const db = Firebase.firestore();
 
-	//get all orgs (get all documents in a collection)
-	async function getAllOrgs(db) {
-		const collection = db.collection('OrgEvents');
-		const snapshot = await collection.get();
-
-		if (snapshot.empty) {
-			console.log('No matching documents.');
-			return;
-		}
-
-		snapshot.forEach((doc) => {
-			console.log(doc.id, '=>', doc.data());
-		});
-	}
-
 	//get all events in one org (AESB) --- still need to find a way to pass the host's name
 	async function getAllEvents(db) {
 		const aesbEvents = db
@@ -66,29 +51,9 @@ const ViewEvents = (props) => {
 		setEventArray(tempEventArray);
 	}
 
-	//specific get singular event data
-	async function getEvent(db) {
-		const aesb = db
-			.collection('OrgEvents')
-			.doc('AESB')
-			.collection('Events')
-			.doc('Fall Week of Welcome');
-		const events = await aesb.get();
-
-		if (!events.exists) {
-			console.log('No subcollections exist');
-		} else {
-			console.log('Event Data:', events.data());
-		}
-	}
-	const [eventArrayNew, setEventArrayNew] = useState([]);
 	useEffect(() => {
 		getAllEvents(db);
 	}, []);
-
-	
-
-	
 
 	return (
 		<View style={styles.contentContainer}>
@@ -185,12 +150,12 @@ const styles = StyleSheet.create({
 		marginRight: 15,
 	},
 	buttonTitleText: {
-		fontSize: 30,
+		fontSize: 24,
 		fontWeight: '600',
 	},
 	buttonDetailText: {
-		fontSize: 20,
-		marginTop: -5,
+		fontSize: 16,
+		
 	},
 	buttonViewContainer: {
 		width: '90%',

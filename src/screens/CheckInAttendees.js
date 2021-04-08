@@ -3,48 +3,65 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
 import eventData from '../json/events.json';
+import Firebase from '../components/Firebase.js'
+
+
+const CheckInAttendees = (props) => {
+
+const [eventArray, setEventArray] = useState([]);
+const db = Firebase.firestore();
 
 const colorPicker = (buttonNum) => {
-    if (buttonNum % 4 == 1) {
-        return '#f8caca';//pastel salmon
-    } else if (buttonNum % 4 == 2) {
-        return '#a3d4d8';//baby blue
-    } else if (buttonNum % 4 == 3) {
-        return '#f9d391';//pastel orange
-    } else {
-        return '#c1dace';//seafoam green
-    }
+	if (buttonNum % 4 == 1) {
+		return '#f8caca'; //pastel salmon
+	} else if (buttonNum % 4 == 2) {
+		return '#a3d4d8'; //baby blue
+	} else if (buttonNum % 4 == 3) {
+		return '#f9d391'; //pastel orange
+	} else {
+		return '#c1dace'; //seafoam green
+	}
 };
 
 const borderColorPicker = (buttonNum) => {
-    if (buttonNum % 4 == 1) {
-        return '#f19696';
-    } else if (buttonNum % 4 == 2) {
-        return '#65b6be';
-    } else if (buttonNum % 4 == 3) {
-        return '#f4b23f';
-    } else {
-        return '#8dbba4';
-    }
+	if (buttonNum % 4 == 1) {
+		return '#f19696';
+	} else if (buttonNum % 4 == 2) {
+		return '#65b6be';
+	} else if (buttonNum % 4 == 3) {
+		return '#f4b23f';
+	} else {
+		return '#8dbba4';
+	}
 };
 
-const CheckInAttendees = (props) => {
-    const image = require('../images/image.png');
+	const image = require('../images/image.png');
+
+	//get all events in one org (AESB) --- still need to find a way to pass the host's name
+	async function getAllEvents(db) {
+		const aesbEvents = db
+			.collection('OrgEvents')
+			.doc('AESB')
+			.collection('Events');
+		const snapshot = await aesbEvents.get();
+		const tempEventArray = [];
+		snapshot.forEach((collection) => {
+			console.log(collection.id, ':', collection.data());
+			tempEventArray.push(collection.data());
+		});
+
+		setEventArray(tempEventArray);
+	}
+
+	useEffect(() => {
+		getAllEvents(db);
+	}, []);
 
 	return (
 		<View style={styles.contentContainer}>
-            <Text style={{
-                    fontSize: 15,
-                    fontFamily:'Bold',
-                    alignSelf: "center"
-                
-                }}
-            >
-            Choose an event to check in attendees    
-            </Text>
 			<View style={styles.scrollViewOuterView}>
 				<ScrollView style={styles.scrollView}>
-					{eventData['events'].map((data, key) => (
+					{eventArray.map((data, key) => (
 						<View key={key}>
 							<TouchableOpacity
 								onPress={() =>
@@ -61,18 +78,37 @@ const CheckInAttendees = (props) => {
 								]}
 								key={key}>
 								<Text style={styles.buttonTitleText}>
-									{data['Event Name']}
+									{data['Details']['Event Title']}
 								</Text>
 								<Text style={styles.buttonDetailText}>
-									{data['Date']}, {data['Time']}
+									{data['Details']['Date']},{' '}
+									{data['Details']['Time']}
 								</Text>
 								<Text style={styles.buttonDetailText}>
-									{data['Location']}
+									{data['Details']['Location']}
 								</Text>
 							</TouchableOpacity>
 						</View>
 					))}
 				</ScrollView>
+			</View>
+			<View style={styles.buttonViewContainer}>
+				<TouchableOpacity
+					style={[
+						styles.buttonView,
+						{ backgroundColor: '#d1dfbe' },
+						{ borderColor: '#aac486' },
+					]}>
+					<Text style={styles.buttonViewText}>Past Events</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={[
+						styles.buttonView,
+						{ backgroundColor: '#d7eef6' },
+						{ borderColor: '#a6d9ea' },
+					]}>
+					<Text style={styles.buttonViewText}>Upcoming Events</Text>
+				</TouchableOpacity>
 			</View>
 		</View>
 	);
@@ -112,11 +148,11 @@ const styles = StyleSheet.create({
 		marginRight: 15,
 	},
 	buttonTitleText: {
-		fontSize: 30,
+		fontSize: 24,
 		fontWeight: '600',
 	},
 	buttonDetailText: {
-		fontSize: 20,
+		fontSize: 16,
 		marginTop: -5,
 	},
 	buttonViewContainer: {
