@@ -55,12 +55,6 @@ const ViewEvents = (props) => {
 		getAllEvents(db);
 	}, []);
 
-
-
-
-
-const ViewEvents = (props) => {
-	getAllEvents(db);
 	return (
 		<View style={styles.contentContainer}>
 			<View style={styles.scrollViewOuterView}>

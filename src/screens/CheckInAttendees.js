@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 	},
 	buttonDetailText: {
 		fontSize: 16,
-		marginTop: -5,
+		
 	},
 	buttonViewContainer: {
 		width: '90%',
