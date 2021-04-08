@@ -3,10 +3,11 @@ import {Text, View, Image, TextInput,KeyboardAvoidingView, StyleSheet, Platform}
 import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
+import QRCode from 'react-native-qrcode-svg';
 
 const MainAttendee= (props) => {
-    // const [email, setEmail] = React.useState("");
-    // const [password, setPassword] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
     const image = require('../images/image.png');
 
     return (
@@ -19,13 +20,18 @@ const MainAttendee= (props) => {
                     marginTop:50
                     
                 }}
-                >Attendee Sign In</Text>
+                >Attendee Main Page</Text>
 
-            <View style={styles.api}>
-            </View>
+            
+            <QRCode
+                value="Just some string value"
+                size ={300}
+            />
+            
             
             <View style={styles.buttonContainer}>
                 <Button style={styles.smallButton}  title="RSVP to an event" />
+                <Button style={styles.smallButton}  title="Account" onPress ={()=>props.navigation.navigate('ViewAccount_Attendee')}/>
             </View>
             
         </View>
@@ -49,7 +55,7 @@ const styles = StyleSheet.create({
     },
 
     buttonContainer: {
-        justifyContent:'space-around',
+        justifyContent:'space-evenly',
         height: '30%',
     },
     smallButton: {

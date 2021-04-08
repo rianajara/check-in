@@ -1,0 +1,23 @@
+{ "eventTypes": [
+	{
+		"label": "Social",
+		"value": "Social"
+	},
+	{
+		"label": "Industry",
+		"value": "Industry"
+	},
+	{
+		"label": "Tabling",
+		"value": "Tabling"
+	},
+	{
+		"label": "Workshop",
+		"value": "Workshop"
+	},
+	{
+		"label": "General Body",
+		"value": "General Body"
+	}
+]
+}

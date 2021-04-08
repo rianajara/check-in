@@ -10,28 +10,28 @@ import {
 import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
-import ViewAccount_Attendee from './ViewAccount_Attendee';
+import ViewAccount_Host from './ViewAccount_Host';
 import Firebase from '../components/Firebase';
 import * as firebase from 'firebase';
 import PopUpModal from '../components/PopUpModal';
-import InfoDropDown from '../components/InfoDropDown';
-import { ScrollView } from 'react-native-gesture-handler';
 
-const ModfiyAttendee = (props) => {
+const RegisterHost = (props) => {
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [verifypass, verifyPassword] = React.useState('');
 	const [updateClickCount, setUpdateClickCount] = React.useState(0);
-	const [major, setMajor] = React.useState('');
+	const [uniqueID, setUniqueID] = React.useState("");
 
-	const switchPage = () => {
+    const switchPage = () => {
 		setTimeout(() => {
-			props.navigation.navigate('ViewAccount_Attendee');
+			props.navigation.navigate('ViewAccount_Host');
 		}, 750);
+        
+        
 	};
 
 	return (
-		<View style={styles.contentContainer} >
+		<View style={styles.contentContainer}>
 			<Text
 				style={{
 					fontSize: 20,
@@ -39,13 +39,11 @@ const ModfiyAttendee = (props) => {
 					alignSelf: 'center',
 					marginTop: 115,
 				}}>
-				Modify Student Attendee{' '}
+				Modify Host Account{' '}
 			</Text>
-			<ScrollView >
 			<View style={styles.inputContainer}>
 				<Input
-				
-					label='Enter first name:'
+					label="Enter host's first name:"
 					placeholder='first name'
 					leftIcon={
 						<Icon
@@ -59,7 +57,7 @@ const ModfiyAttendee = (props) => {
 				/>
 
 				<Input
-					label='Enter last name:'
+					label="Enter host's last name:"
 					placeholder='last name'
 					leftIcon={
 						<Icon
@@ -73,7 +71,7 @@ const ModfiyAttendee = (props) => {
 				/>
 
 				<Input
-					label='Enter student email:'
+					label='Enter preferred organization email:'
 					placeholder='youremail@address.com'
 					leftIcon={
 						<Icon
@@ -118,16 +116,23 @@ const ModfiyAttendee = (props) => {
 					onChangeText={(text) => verifyPassword(text)}
 					value={verifypass}
 				/>
-			</View>
 
-			<View >
-				<InfoDropDown 
-					setDataType={(value) => setMajor(value)}
-					dropDownType={'major'}
-					labelInfo="Choose a major"></InfoDropDown>
+				<Input
+                    label='Enter your 6 digit code'
+                    placeholder='Unique ID'
+                    //secureTextEntry={true}
+                    leftIcon={
+                        <Icon
+                            name='lock'
+                            size={24}
+                            color='black'
+                            style={styles.icon}
+                        />
+                    }
+                    onChangeText={text => setUniqueID(text)}
+                    value={uniqueID}
+                />
 			</View>
-			
-			</ScrollView>
 			<View style={styles.buttonContainer}>
 				<Button
 					style={styles.smallButton}
@@ -143,10 +148,7 @@ const ModfiyAttendee = (props) => {
 					}}
 				/>
 			</View>
-			<PopUpModal
-				popUpText={'Information Saved!'}
-				updateClickCount={updateClickCount}
-				switchPage={() => switchPage()}></PopUpModal>
+			<PopUpModal popUpText={"Information Saved!"} updateClickCount={updateClickCount} switchPage={() => switchPage()}></PopUpModal>
 		</View>
 	);
 };
@@ -162,9 +164,9 @@ const signUpWithEmailPassword = (email, password, props, verifypass) => {
 			// Signed in
 			var user = userCredential.user;
 			alert('Successfuly registered.');
-
-			console.warn('successfully registered');
-
+            
+			
+			
 			//props.navigation.navigate('MainAttendee');
 			// ...
 		})
@@ -174,8 +176,8 @@ const signUpWithEmailPassword = (email, password, props, verifypass) => {
 			//validate_Field(email,password,verifypass)
 			// ..
 		});
-
-	console.warn('checking the firebase');
+		
+		
 	// [END auth_signup_password]
 };
 
@@ -193,7 +195,7 @@ const validate_Field = (email, password, verifypass) => {
 		alert('Please re-enter password');
 		return false;
 	}
-	console.warn('testing the validation');
+	
 	return true;
 };
 
@@ -210,13 +212,13 @@ const styles = StyleSheet.create({
 		height: 200,
 	},
 	inputContainer: {
-		width: '99%',
-		marginTop: 15,
+		width: '90%',
+		marginTop: 100,
 		justifyContent: 'space-evenly',
 	},
 	buttonContainer: {
 		justifyContent: 'space-around',
-		height: '17%',
+		height: '40%',
 	},
 	smallButton: {},
 	icon: {
@@ -224,4 +226,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default ModfiyAttendee;
+export default RegisterHost;

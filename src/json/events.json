@@ -8,7 +8,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Tabling"
 		},
         {
 			"Event Name": "Orientation",
@@ -18,7 +19,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Social"
 		},
         {
 			"Event Name": "Smorgasport",
@@ -28,7 +30,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Industry"
 		},
         {
 			"Event Name": "Oreoreo",
@@ -38,7 +41,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Workshop"
 		},
         {
 			"Event Name": "CSULGBT",
@@ -48,7 +52,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Industry"
 		},
         {
 			"Event Name": "Illumination",
@@ -68,7 +73,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Industry"
 		},
         {
 			"Event Name": "Cocoa and Cram",
@@ -78,7 +84,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Industry"
 		},
         {
 			"Event Name": "Week of Welcome",
@@ -88,7 +95,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Industry"
 		},
         {
 			"Event Name": "Orientation",
@@ -98,7 +106,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Social"
 		},
         {
 			"Event Name": "Smorgasport",
@@ -108,7 +117,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Tabling"
 		},
         {
 			"Event Name": "Oreoreo",
@@ -118,7 +128,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Workshop"
 		},
         {
 			"Event Name": "CSULGBT",
@@ -128,7 +139,8 @@
 			"Primary Contact": "Harry Styles",
 			"Email": "harryStyles82@gmail.com",
 			"Description": "Random Text that will be changed soon",
-			"Max Capacity": 70
+			"Max Capacity": 70,
+			"Event Type": "Social"
 
 		},
         {
@@ -137,7 +149,9 @@
 			"Time": "1:42 pm",
 			"Location": "The Pyramid",
 			"Primary Contact": "Harry Styles",
-			"Description": "Random Text that will be changed soon"
+			"Description": "Random Text that will be changed soon",
+			"Max Capacity": 82,
+			"Event Type": "Industry"
 		},
         {
 			"Event Name": "Resource Fair",
@@ -145,7 +159,9 @@
 			"Time": "12:00 am",
 			"Location": "Parkside Pathways",
 			"Primary Contact": "Harry Styles",
-			"Description": "Random Text that will be changed soon"
+			"Description": "Random Text that will be changed soon",
+			"Max Capacity": 82,
+			"Event Type": "Industry"
 		},
         {
 			"Event Name": "Cocoa and Cram",
@@ -153,7 +169,9 @@
 			"Time": "1:00 am",
 			"Location": "Hillside Service Center",
 			"Primary Contact": "Harry Styles",
-			"Description": "Random Text that will be changed soon"
+			"Description": "Random Text that will be changed soon",
+			"Max Capacity": 82,
+			"Event Type": "Industry"
 		}
 		
 	]

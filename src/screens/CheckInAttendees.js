@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
 import eventData from '../json/events.json';
-import Firebase from '../components/Firebase';
 
 const colorPicker = (buttonNum) => {
     if (buttonNum % 4 == 1) {
@@ -29,58 +28,27 @@ const borderColorPicker = (buttonNum) => {
     }
 };
 
-const db = Firebase.firestore();
+const CheckInAttendees = (props) => {
+    const image = require('../images/image.png');
 
-
-//get all orgs (get all documents in a collection)
-async function getAllOrgs(db){
-	const collection = db.collection("OrgEvents");
-	const snapshot = await collection.get();
-
-	if (snapshot.empty) {
-		console.log('No matching documents.');
-		return;
-	  }  
-	
-	  snapshot.forEach(doc => {
-		console.log(doc.id, '=>', doc.data());
-	  });
-}
-
-//get all events in one org (AESB) --- still need to find a way to pass the host's name
-async function getAllEvents(db){
-	const aesbEvents = db.collection("OrgEvents").doc("AESB").collection('Events');
-	const snapshot = await aesbEvents.get();
-	snapshot.forEach(collection => {
-		console.log(collection.id,':', collection.data());
-	  });
-	return snapshot;
-}
-
-//specific get singular event data 
-async function getEvent(db){
-	const aesb = db.collection('OrgEvents').doc('AESB').collection('Events').doc("Fall Week of Welcome")
-	const events = await aesb.get();
-
-	if (!events.exists){
-		console.log('No subcollections exist');
-	}
-	else{
-		console.log('Event Data:', events.data());
-	}
-}
-
-const ViewEvents = (props) => {
-	getAllEvents(db);
 	return (
 		<View style={styles.contentContainer}>
+            <Text style={{
+                    fontSize: 15,
+                    fontFamily:'Bold',
+                    alignSelf: "center"
+                
+                }}
+            >
+            Choose an event to check in attendees    
+            </Text>
 			<View style={styles.scrollViewOuterView}>
 				<ScrollView style={styles.scrollView}>
 					{eventData['events'].map((data, key) => (
 						<View key={key}>
 							<TouchableOpacity
 								onPress={() =>
-									props.navigation.navigate('ViewEvent', {
+									props.navigation.navigate('CameraScan', {
 										data: data,
 									})
 								}
@@ -105,24 +73,6 @@ const ViewEvents = (props) => {
 						</View>
 					))}
 				</ScrollView>
-			</View>
-			<View style={styles.buttonViewContainer}>
-				<TouchableOpacity
-					style={[
-						styles.buttonView,
-						{ backgroundColor: '#d1dfbe' },
-						{ borderColor: '#aac486' },
-					]}>
-					<Text style={styles.buttonViewText}>Past Events</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={[
-						styles.buttonView,
-						{ backgroundColor: '#d7eef6' },
-						{ borderColor: '#a6d9ea' },
-					]}>
-					<Text style={styles.buttonViewText}>Upcoming Events</Text>
-				</TouchableOpacity>
 			</View>
 		</View>
 	);
@@ -156,10 +106,6 @@ const styles = StyleSheet.create({
 		width: '90%',
 		marginTop: 50,
 		justifyContent: 'space-evenly',
-	},
-	buttonContainer: {
-		justifyContent: 'space-around',
-		height: '40%',
 	},
 	smallButton: {},
 	icon: {
@@ -198,7 +144,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default ViewEvents;
-// https://www.npmjs.com/package/react-native-modal-datetime-picker
-
-
+export default CheckInAttendees;

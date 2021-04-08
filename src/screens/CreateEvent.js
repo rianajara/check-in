@@ -6,18 +6,19 @@ import {
 	TextInput,
 	KeyboardAvoidingView,
 	StyleSheet,
+	ScrollView,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import eventData from '../json/events.json';
-import * as firebase from 'firebase';
 import Firebase from '../components/Firebase';
+import PopUpModal from '../components/PopUpModal';
+import InfoDropDown from '../components/InfoDropDown';
 
 const db = Firebase.firestore();
-db.settings({timestampsInSnapshots: true});
+db.settings({ timestampsInSnapshots: true });
 
 const months = [
 	'January',
@@ -34,36 +35,147 @@ const months = [
 	'December',
 ];
 
-
-
 const CreateEvent = (props) => {
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+	const [isEventTypeVisible, setEventTypeVisibility] = useState(false);
+	const [title, setTitle] = useState('');
+	const [eventType, setEventType] = useState('');
+	const [location, setLocation] = useState('');
+	const [primaryContact, setPrimaryContact] = useState('');
+	const [contactEmail, setContactEmail] = useState('');
 	const [dateSelected, setDateSelected] = useState('');
 	const [timeSelected, setTimeSelected] = useState('');
+	const [description, setDescription] = useState('');
+	const [maxCapacity, setMaxCapacity] = useState('');
+	const [updateClickCount, setUpdateClickCount] = useState(0);
+	const [popUpText, setPopUpText] = useState(null);
+
+	const inputChecker = () => {
+		if (
+			title.length < 1 ||
+			location.length < 1 ||
+			primaryContact.length < 1 ||
+			contactEmail.length < 1 ||
+			dateSelected.length < 1 ||
+			timeSelected.length < 1 ||
+			description.length < 1 ||
+			maxCapacity.length < 1 ||
+			eventType === null ||
+			eventType === ''
+		) {
+			setPopUpText('Please fill out all fields');
+		} else {
+			setPopUpText('Added');
+			addNewEvent(title);
+		}
+
+		setUpdateClickCount(updateClickCount + 1);
+	};
+
+	const switchPage = () => {
+		 props.navigation.navigate('MainHost')
+	}
 
 	const addNewEvent = () => {
-		const arrayOne = {}
+		// Add an club name (probably will be used in the creation of a user)
+		db.collection('OrgEvents')
+			.doc('New Club')
+			.set(
+				{
+					ClubName: "New Club"
+				},
+				{ merge: true }
+			);
+
+			// Event Document (temp set to RHa until we get an actual user that is logged in) added to the 
+			db.collection('OrgEvents')
+			.doc('New Club')
+			.collection('Events')
+			.doc('Temp')
+			.set(
+				{
+					[title]: {
+						Title: title,
+						Location: location,
+						'Primary Contact': primaryContact,
+						'Contact Email': contactEmail,
+						Date: dateSelected,
+						Time: timeSelected,
+						Description: description,
+						'Max Capacity': maxCapacity,
+						'Event Type': eventType,
+					},
+				},
+				{ merge: true }
+			);
+
+
+		// used to add an attendee to the event
+		db.collection('OrgEvents')
+			.doc('New Club')
+			.collection('Events')
+			.doc('Temp')
+			.collection('Attendees')
+			.doc('Attendees List')
+			.set(
+				{
+					'ghost Summers': {
+						firstName: 'Joanne',
+						lastName: 'Summers'
+					},
+
+					
+				},
+				{ merge: true }
+			);
+
+		//Trying new method with new object (temp)
 		/*
-		// all documents and information in each document
-		db.collection('Events').get().then((snapshot) => {
-			snapshot.docs.forEach(doc => {
-				console.warn(doc.data())
-			})
-		})
+				db.collection('OrgEvents')
+			.doc('RHA')
+			.set(
+				{
+					[title]: {
+						Title: title,
+						Location: location,
+						'Primary Contact': primaryContact,
+						'Contact Email': contactEmail,
+						Date: dateSelected,
+						Time: timeSelected,
+						Description: description,
+						'Max Capacity': maxCapacity,
+						'Event Type': eventType,
+					},
+				},
+				{ merge: true }
+			);
+		
 		*/
-	/*
 
-		// Gets the individual document events
-		db.collection('Events').doc('RHA').get().then((snapshot) => {
-			
-			console.warn(snapshot.data())
-		})
-		*/
-
-		// Append additional dummy event to database
-		db.collection('Events').doc('RHA').set({'eventThree':{Location: 'Pyramid', Title: 'Illumination'}}, {merge: true})
-	}
+		//OG code for emergency
+		/*
+				db.collection('OrgEvents')
+			.doc('RHA')
+			.set(
+				{
+					[title]: {
+						Title: title,
+						Location: location,
+						'Primary Contact': primaryContact,
+						'Contact Email': contactEmail,
+						Date: dateSelected,
+						Time: timeSelected,
+						Description: description,
+						'Max Capacity': maxCapacity,
+						'Event Type': eventType,
+					},
+				},
+				{ merge: true }
+			);
+		
+		*/	
+	};
 
 	const createTime = (time) => {
 		const hour =
@@ -122,8 +234,6 @@ const CreateEvent = (props) => {
 		setTimeSelected(timeSelected);
 	}, [timeSelected]);
 
-	const image = require('../images/image.png');
-
 	return (
 		<View style={styles.contentContainer}>
 			<Text
@@ -132,163 +242,182 @@ const CreateEvent = (props) => {
 					fontFamily: 'Bold',
 					alignSelf: 'center',
 					marginTop: 60,
-					marginBottom: 50,
+					marginBottom: 65,
 				}}>
 				Create Event{' '}
 			</Text>
-			<View style={styles.inputContainer}>
-				<Input
-					label='Event Title:'
-					placeholder='Name of Event'
-					leftIcon={
-						<Icon
-							name='mail'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-				/>
 
-				<Input
-					label='Location:'
-					placeholder='Event Location'
-					leftIcon={
-						<Icon
-							name='enviromento'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-				/>
-
-				<Input
-					label='Primary Contact:'
-					placeholder="Contact's name"
-					leftIcon={
-						<Icon
-							name='user'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-				/>
-
-				<Input
-					label='Contact Email:'
-					placeholder=" Primary Contact's email"
-					leftIcon={
-						<Icon
-							name='user'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-				/>
-
+			<KeyboardAvoidingView
+				style={styles.inputContainer}
+				behavior='padding'>
 				<View>
-					{eventData['events'].map((data, key) => {
-						<>
-							<Text>{data['Event Name']}</Text>
-							<Text>{data['Date']}</Text>
-							<Text>{data['Time']}</Text>
-							<Text>{data['Location']}</Text>
-						</>;
-					})}
+					<ScrollView>
+						<Input
+							label='Event Title:'
+							placeholder='Name of Event'
+							onChangeText={setTitle}
+							leftIcon={
+								<Icon
+									name='mail'
+									size={24}
+									color='black'
+									style={styles.icon}
+								/>
+							}
+						/>
+
+						<InfoDropDown
+							setDataType={(value) => setEventType(value)}
+							dropDownType={'event'}
+							labelInfo="Event Type"></InfoDropDown>
+
+						<Input
+							label='Location:'
+							placeholder='Event Location'
+							onChangeText={setLocation}
+							leftIcon={
+								<Icon
+									name='enviromento'
+									size={24}
+									color='black'
+									style={styles.icon}
+								/>
+							}
+						/>
+
+						<Input
+							label='Primary Contact:'
+							placeholder="Contact's name"
+							onChangeText={setPrimaryContact}
+							leftIcon={
+								<Icon
+									name='user'
+									size={24}
+									color='black'
+									style={styles.icon}
+								/>
+							}
+						/>
+
+						<Input
+							label='Contact Email:'
+							placeholder="Primary Contact's email"
+							onChangeText={setContactEmail}
+							returnKeyType={'done'}
+							leftIcon={
+								<Icon
+									name='user'
+									size={24}
+									color='black'
+									style={styles.icon}
+								/>
+							}
+						/>
+
+						<TouchableOpacity onPress={() => [showDatePicker()]}>
+							<Input
+								label='Date:'
+								placeholder='Event Date'
+								editable={false}
+								value={dateSelected}
+								onChangeText={setDateSelected}
+								leftIcon={
+									<Icon
+										name='calendar'
+										size={24}
+										color='black'
+										style={styles.icon}
+									/>
+								}
+							/>
+						</TouchableOpacity>
+
+						<DateTimePickerModal
+							isVisible={isDatePickerVisible}
+							mode='date'
+							onConfirm={handleDateConfirm}
+							onCancel={hideDatePicker}
+						/>
+
+						<DateTimePickerModal
+							isVisible={isTimePickerVisible}
+							mode='time'
+							onConfirm={handleTimeConfirm}
+							onCancel={hideTimePicker}
+							headerTextIOS='Pick a time'
+						/>
+
+						<TouchableOpacity onPress={() => [showTimePicker()]}>
+							<Input
+								label='Time:'
+								placeholder='Event Start Time'
+								editable={false}
+								value={timeSelected}
+								onChangeText={setTimeSelected}
+								leftIcon={
+									<Icon
+										name='clockcircleo'
+										size={24}
+										color='black'
+										style={styles.icon}
+									/>
+								}
+							/>
+						</TouchableOpacity>
+
+						<Input
+							label='Description:'
+							placeholder='Event Description'
+							onChangeText={setDescription}
+							leftIcon={
+								<Icon
+									name='info'
+									size={24}
+									color='black'
+									style={styles.icon}
+								/>
+							}
+						/>
+
+						<Input
+							label='Max Capacity:'
+							placeholder='Max Capacity'
+							keyboardType={'number-pad'}
+							onChangeText={setMaxCapacity}
+							returnKeyType={'done'}
+							leftIcon={
+								<Icon
+									name={'team'}
+									size={24}
+									color='black'
+									style={styles.icon}
+								/>
+							}
+						/>
+						<PopUpModal
+							style={{ height: 0, padding: 0, margin: 0 }}
+							popUpText={popUpText}
+							updateClickCount={updateClickCount}
+							switchPage={() => switchPage()}></PopUpModal>
+					</ScrollView>
+					
 				</View>
 
-				<TouchableOpacity onPress={() => [showDatePicker()]}>
-					<Input
-						label='Date:'
-						placeholder='Event Date'
-						editable={false}
-						value={dateSelected}
-						leftIcon={
-							<Icon
-								name='calendar'
-								size={24}
-								color='black'
-								style={styles.icon}
-							/>
-						}
-					/>
-				</TouchableOpacity>
+				<View />
+			</KeyboardAvoidingView>
 
-				<DateTimePickerModal
-					isVisible={isDatePickerVisible}
-					mode='date'
-					onConfirm={handleDateConfirm}
-					onCancel={hideDatePicker}
-				/>
-
-				<DateTimePickerModal
-					isVisible={isTimePickerVisible}
-					mode='time'
-					onConfirm={handleTimeConfirm}
-					onCancel={hideTimePicker}
-					headerTextIOS='Pick a time'
-				/>
-
-				<TouchableOpacity onPress={() => [showTimePicker()]}>
-					<Input
-						label='Time:'
-						placeholder='Event Start Time'
-						editable={false}
-						value={timeSelected}
-						leftIcon={
-							<Icon
-								name='clockcircleo'
-								size={24}
-								color='black'
-								style={styles.icon}
-							/>
-						}
-					/>
-				</TouchableOpacity>
-
-				<Input
-					label='Description:'
-					placeholder='Event Description'
-					leftIcon={
-						<Icon
-							name='info'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-				/>
-			</View>
 			<View style={styles.buttonContainer}>
-				<Button onPress={() => {addNewEvent(), console.warn("yyyyyy")}} style={styles.smallButton} title='Create Event' />
+				<Button
+					onPress={() => {
+						inputChecker();
+					}}
+					style={styles.smallButton}
+					title='Create Event'
+				/>
 			</View>
 		</View>
 	);
 };
-/*
-const validate_Field=(email, password, verifypass)=>{
-    if(email==""){
-        alert("Please enter an email address")
-        return false
-    }
-    else if (password!=verifypass){
-        alert("The password you entered does not match")
-        return false
-    }
-    else if (password==""){
-        alert("Please enter a password")
-        return false
-    }
-    else if (verifypass==""){
-        alert("Please re-enter password")
-        return false
-    }
-    return true
-}
-*/
 
 const styles = StyleSheet.create({
 	contentContainer: {
@@ -296,7 +425,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'space-evenly',
-		paddingTop: 75,
+		paddingTop: 95,
 	},
 	smallImage: {
 		marginTop: 60,
