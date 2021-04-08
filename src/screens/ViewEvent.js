@@ -19,7 +19,7 @@ db.settings({ timestampsInSnapshots: true });
 
 
 const ViewEvent = (props) => {
-	const eventInfo = props.navigation.state.params.data;
+	const eventInfo = props.navigation.state.params.data["Details"];
 	const [eventData, setEventData] = useState(eventInfo)
 
 	const deleteEvent = async () => {
@@ -48,7 +48,7 @@ const ViewEvent = (props) => {
 				<ScrollView style={styles.scrollView}>
 					<View style={styles.eventHeaderTextView}>
 						<Text style={styles.eventHeaderText}>
-							{eventInfo['Event Name']}
+							{eventInfo['Event Title']}
 						</Text>
 					</View>
 					<Text style={styles.eventInfoText}>
@@ -69,7 +69,7 @@ const ViewEvent = (props) => {
 					</Text>
 					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Email: </Text>
-						{eventInfo['Email']}
+						{eventInfo['Contact Email']}
 					</Text>
 					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Description:</Text>{' '}
