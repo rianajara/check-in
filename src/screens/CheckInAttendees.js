@@ -59,6 +59,15 @@ const borderColorPicker = (buttonNum) => {
 
 	return (
 		<View style={styles.contentContainer}>
+			<Text style={{
+                    fontSize: 15,
+                    fontFamily:'Bold',
+                    alignSelf: "center"
+                
+                }}
+            >
+            Choose an event to check in attendees    
+            </Text>
 			<View style={styles.scrollViewOuterView}>
 				<ScrollView style={styles.scrollView}>
 					{eventArray.map((data, key) => (
