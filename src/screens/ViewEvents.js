@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
 import eventData from '../json/events.json';
+import Firebase from '../components/Firebase';
 
 const colorPicker = (buttonNum) => {
     if (buttonNum % 4 == 1) {
@@ -16,8 +17,6 @@ const colorPicker = (buttonNum) => {
     }
 };
 
-//this is test comment
-
 const borderColorPicker = (buttonNum) => {
     if (buttonNum % 4 == 1) {
         return '#f19696';
@@ -30,8 +29,49 @@ const borderColorPicker = (buttonNum) => {
     }
 };
 
-const ViewEvents = (props) => {
+const db = Firebase.firestore();
 
+
+//get all orgs (get all documents in a collection)
+async function getAllOrgs(db){
+	const collection = db.collection("OrgEvents");
+	const snapshot = await collection.get();
+
+	if (snapshot.empty) {
+		console.log('No matching documents.');
+		return;
+	  }  
+	
+	  snapshot.forEach(doc => {
+		console.log(doc.id, '=>', doc.data());
+	  });
+}
+
+//get all events in one org (AESB) --- still need to find a way to pass the host's name
+async function getAllEvents(db){
+	const aesbEvents = db.collection("OrgEvents").doc("AESB").collection('Events');
+	const snapshot = await aesbEvents.get();
+	snapshot.forEach(collection => {
+		console.log(collection.id,':', collection.data());
+	  });
+	return snapshot;
+}
+
+//specific get singular event data 
+async function getEvent(db){
+	const aesb = db.collection('OrgEvents').doc('AESB').collection('Events').doc("Fall Week of Welcome")
+	const events = await aesb.get();
+
+	if (!events.exists){
+		console.log('No subcollections exist');
+	}
+	else{
+		console.log('Event Data:', events.data());
+	}
+}
+
+const ViewEvents = (props) => {
+	getAllEvents(db);
 	return (
 		<View style={styles.contentContainer}>
 			<View style={styles.scrollViewOuterView}>
