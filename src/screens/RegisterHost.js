@@ -120,7 +120,7 @@ const signUpWithEmailPassword=(email,password,props,verifypass,uniqueID)=> {
         UniqueID:uniqueID
         //uid:user.uid
     }
-    console.log(data)
+    //console.log(data)
       props.navigation.navigate('MainHost')
       alert("Successfuly registered.")
       return db.collection('Host').doc(email).set(data);
