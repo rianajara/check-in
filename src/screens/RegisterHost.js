@@ -65,7 +65,7 @@ const RegisterHost = (props) => {
 
                 <Input
                     label = 'Enter the name of the organization:'
-                    placeholder='Organization Name'
+                    placeholder='example: AESB'
                     leftIcon={
                         <Icon
                             name='mail'
