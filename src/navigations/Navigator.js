@@ -18,6 +18,7 @@ import CheckInAttendees from '../screens/CheckInAttendees';
 import CameraScan from '../screens/CameraScan';
 import ViewAccount_Attendee from '../screens/ViewAccount_Attendee';
 import ViewAccount_Host from '../screens/ViewAccount_Host';
+import { UserProvider } from '../context/UserContext';
 
 const stackNavigatorOptions = {
 	headerShown: false,
@@ -25,6 +26,7 @@ const stackNavigatorOptions = {
 
 const AppNavigator = createStackNavigator(
 	{
+		
 		Welcome: { screen: Welcome },
 		Register: Register,
 		LoginHost: LoginHost,

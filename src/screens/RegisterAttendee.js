@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	Text,
 	View,
@@ -6,7 +6,7 @@ import {
 	TextInput,
 	KeyboardAvoidingView,
 	StyleSheet,
-    ScrollView
+	ScrollView,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
@@ -14,6 +14,8 @@ import Icon from '@expo/vector-icons/AntDesign';
 import MainAttendee from './MainAttendee';
 import Firebase from '../components/Firebase';
 import * as firebase from 'firebase';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 //const admin = require('firebase-admin')
 const db = Firebase.firestore();
@@ -26,7 +28,93 @@ const RegisterAttendee = (props) => {
 	const [lastName, setlastName] = React.useState('');
 	const [major, setMajor] = React.useState('');
 	const [yearlevel, setyearLevel] = React.useState('');
-	const image = require('../images/image.png');
+	const { currentUser, setCurrentUser } = useContext(UserContext);
+
+	const signUpWithEmailPassword = (
+        email,
+        password,
+        props,
+        verifypass,
+        firstName,
+        lastName,
+        major,
+        yearlevel
+    ) => {
+        //var email = "test@example.com";
+        //var password = "hunter2";
+        // [START auth_signup_password]
+
+        
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+               
+                // Signed in
+                var user = userCredential.user;
+                //console.log(user)
+                const data = {
+                    email: user.email,
+                    Firstname: firstName,
+                    Lastname: lastName,
+                    Major: major,
+                    YearLevel: yearlevel,
+                    //uid:user.uid
+                };
+                //console.log(data)
+                //console.log(uid)
+                
+                setCurrentUser({
+                    attendeeEmail: email,
+                    attendeeFirstName: firstName,
+                    attendeeLastName: lastName,
+                    attendeeMajor: major,
+                    attendeeYearLevel: yearlevel,
+                });
+                props.navigation.navigate('MainAttendee');
+                alert('Successfuly registered.');
+                return db.collection('Attendee').doc(email).set(data);
+                // ...
+            })
+    
+            .catch((error) => {
+                
+                //console.warn(error)
+                var errorCode = error.code;
+                var errorMessage = validate_Field(email, password, verifypass);
+                //validate_Field(email,password,verifypass)
+                // ..
+            });
+        // [END auth_signup_password]
+
+        
+    };
+    
+    // module.exports = {
+    //     authOnCreate: functions.auth.user().onCreate(signUpWithEmailPassword),
+    //          };
+    
+    // const createUser = (token)=>{
+    //     var firestore = Firebase.firestore();
+    
+    // }
+    
+    const validate_Field = (email, password, verifypass) => {
+        if (email == '') {
+            alert('Please enter an email address');
+            return false;
+        } else if (password != verifypass) {
+            alert('The password you entered does not match');
+            return false;
+        } else if (password == '') {
+            alert('Please enter a password');
+            return false;
+        } else if (verifypass == '') {
+            alert('Please re-enter password');
+            return false;
+        }
+        return true;
+    };
 
 	return (
 		<View style={styles.contentContainer}>
@@ -159,7 +247,7 @@ const RegisterAttendee = (props) => {
 				<Button
 					style={styles.smallButton}
 					title='Sign Up'
-					onPress={() =>
+					onPress={() => {
 						signUpWithEmailPassword(
 							email,
 							password,
@@ -170,85 +258,16 @@ const RegisterAttendee = (props) => {
 							major,
 							yearlevel
 						)
-					}
+					}}
 				/>
 			</View>
 		</View>
 	);
-};
 
-const signUpWithEmailPassword = (
-	email,
-	password,
-	props,
-	verifypass,
-	firstName,
-	lastName,
-	major,
-	yearlevel
-) => {
-	//var email = "test@example.com";
-	//var password = "hunter2";
-	// [START auth_signup_password]
-	firebase
-		.auth()
-		.createUserWithEmailAndPassword(email, password)
-		.then((userCredential) => {
-			// Signed in
-			var user = userCredential.user;
-			//console.log(user)
-			const data = {
-				email: user.email,
-				Firstname: firstName,
-				Lastname: lastName,
-				Major: major,
-				YearLevel: yearlevel,
-				//uid:user.uid
-			};
-			//console.log(data)
-			//console.log(uid)
 
-			props.navigation.navigate('MainAttendee');
-			alert('Successfuly registered.');
-			return db.collection('Attendee').doc(org).set(data);
-			// ...
-		})
 
-		.catch((error) => {
-			var errorCode = error.code;
-			var errorMessage = validate_Field(email, password, verifypass);
-			//validate_Field(email,password,verifypass)
-			// ..
-		});
-	// [END auth_signup_password]
-};
 
-// module.exports = {
-//     authOnCreate: functions.auth.user().onCreate(signUpWithEmailPassword),
-//          };
-
-// const createUser = (token)=>{
-//     var firestore = Firebase.firestore();
-
-// }
-
-const validate_Field = (email, password, verifypass) => {
-	if (email == '') {
-		alert('Please enter an email address');
-		return false;
-	} else if (password != verifypass) {
-		alert('The password you entered does not match');
-		return false;
-	} else if (password == '') {
-		alert('Please enter a password');
-		return false;
-	} else if (verifypass == '') {
-		alert('Please re-enter password');
-		return false;
-	}
-	return true;
-};
-
+}
 const styles = StyleSheet.create({
 	contentContainer: {
 		backgroundColor: '#fff7d5',

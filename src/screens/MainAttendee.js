@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Text, View, Image, TextInput,KeyboardAvoidingView, StyleSheet, Platform} from 'react-native';
 import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import QRCode from 'react-native-qrcode-svg';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 const MainAttendee= (props) => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const image = require('../images/image.png');
+    const { currentUser, setCurrentUser } = useContext(UserContext);
+
+    useEffect(() => {
+        console.warn("yayayayay please show up " + currentUser['attendeeEmail'])
+    }, [])
 
     return (
         <View style={styles.contentContainer}>

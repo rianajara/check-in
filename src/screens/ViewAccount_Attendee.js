@@ -16,22 +16,25 @@ import * as firebase from 'firebase';
 import PopUpModal from '../components/PopUpModal';
 import InfoDropDown from '../components/InfoDropDown';
 import { ScrollView } from 'react-native-gesture-handler';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 const viewAttendee = (props) => {
-
+	const { currentUser, setCurrentUser } = useContext(UserContext);
 	//connect to firebase somehow (?)
-	const firstName = 'First';
-	const lastName = 'Last';
-	const email = 'Test@email.com';
-	const major = 'Computer Science';
-	const yearLevel = 'Junior';
+	const firstName = currentUser['attendeeFirstName'];
+	const lastName = currentUser['attendeeLastName'];
+	const email = currentUser['attendeeEmail'];
+	const major = currentUser['attendeeMajor'];
+	const yearLevel = currentUser['attendeeYearLevel'];
 
+/*
 	const switchPage = () => {
 		setTimeout(() => {
 			props.navigation.navigate('ViewAccount_Attendee');
 		}, 750);
 	};
-
+*/
 	return (
       
 		//attendee information
