@@ -15,6 +15,9 @@ const RegisterHost = (props) => {
     const [password, setPassword] = React.useState("");
     const [verifypass, verifyPassword] = React.useState("");
     const [uniqueID, setUniqueID] = React.useState("");
+    const [firstName, setfirstName] = React.useState("");
+    const [lastName, setlastName] = React.useState("");
+    const [org, setOrg] = React.useState("");
     
     const image = require('../images/image.png');
     
@@ -30,6 +33,50 @@ const RegisterHost = (props) => {
                 }}
                 >Register Organization Host </Text>
             <View style={styles.inputContainer}>
+            	<Input
+                    label = 'Enter host first name:'
+                    placeholder='First Name'
+                    leftIcon={
+                        <Icon
+                            name='mail'
+                            size={24}
+                            color='black'
+                            style={styles.icon}
+                        />
+                    }
+                    onChangeText={text => setfirstName(text)}
+                    value={firstName}
+                />
+
+                <Input
+                    label = 'Enter host last name:'
+                    placeholder='Last Name'
+                    leftIcon={
+                        <Icon
+                            name='mail'
+                            size={24}
+                            color='black'
+                            style={styles.icon}
+                        />
+                    }
+                    onChangeText={text => setlastName(text)}
+                    value={lastName}
+                />
+
+                <Input
+                    label = 'Enter the name of the organization:'
+                    placeholder='Organization Name'
+                    leftIcon={
+                        <Icon
+                            name='mail'
+                            size={24}
+                            color='black'
+                            style={styles.icon}
+                        />
+                    }
+                    onChangeText={text => setOrg(text)}
+                    value={org}
+                />
                 <Input
                     label = 'Enter host email associated to organization:'
                     placeholder='youremail@address.com'
@@ -95,7 +142,7 @@ const RegisterHost = (props) => {
             </View>
             <View style={styles.buttonContainer}>
                 <Button style={styles.smallButton}  title="Sign Up" 
-                onPress={()=>signUpWithEmailPassword(email,password,props,verifypass,uniqueID)}
+                onPress={()=>signUpWithEmailPassword(email,password,props,verifypass,uniqueID,firstName,lastName,org)}
                 
                 />
             </View>
@@ -106,7 +153,7 @@ const RegisterHost = (props) => {
 
 //onPress={()=>correct(email,password,verifypass)}
 
-const signUpWithEmailPassword=(email,password,props,verifypass,uniqueID)=> {
+const signUpWithEmailPassword=(email,password,props,verifypass,uniqueID,firstName,lastName,org)=> {
   //var email = "test@example.com";
   //var password = "hunter2";
   // [START auth_signup_password]
@@ -117,7 +164,11 @@ const signUpWithEmailPassword=(email,password,props,verifypass,uniqueID)=> {
 
       const data = {
         email:user.email,
-        UniqueID:uniqueID
+        UniqueID:uniqueID,
+        Firstname:firstName,
+        Lastname:lastName,
+        Organization:org
+
         //uid:user.uid
     }
     //console.log(data)

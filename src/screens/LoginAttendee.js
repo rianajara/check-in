@@ -99,10 +99,8 @@ const styles = StyleSheet.create({
         
     },
     buttonContainer: {
-        marginTop: 15,
-		justifyContent: 'space-around',
-		height: '35%',
-		marginBottom: 50,
+        justifyContent:'space-around',
+        height: '40%',
     },
     smallButton: {
     },

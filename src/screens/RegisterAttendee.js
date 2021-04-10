@@ -4,8 +4,8 @@ import { Button } from 'react-native-elements';
 import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import MainAttendee from './MainAttendee';
-import * as firebase from 'firebase';
 import Firebase from '../components/Firebase';
+import * as firebase from 'firebase';
 
 //const admin = require('firebase-admin')
 const db = Firebase.firestore();
@@ -14,7 +14,10 @@ const RegisterAttendee = (props) => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [verifypass, verifyPassword] = React.useState("");
-
+    const [firstName, setfirstName] = React.useState("");
+    const [lastName, setlastName] = React.useState("");
+    const [major, setMajor] = React.useState("");
+    const [yearlevel, setyearLevel] = React.useState("");
     const image = require('../images/image.png');
     
     return (
@@ -29,6 +32,66 @@ const RegisterAttendee = (props) => {
                 }}
                 >Register Student Attendee </Text>
             <View style={styles.inputContainer}>
+                <Input
+                    label = 'Enter attendee first name:'
+                    placeholder='First Name'
+                    leftIcon={
+                        <Icon
+                            name='mail'
+                            size={24}
+                            color='black'
+                            style={styles.icon}
+                        />
+                    }
+                    onChangeText={text => setfirstName(text)}
+                    value={firstName}
+                />
+
+                <Input
+                    label = 'Enter attendee last name:'
+                    placeholder='Last Name'
+                    leftIcon={
+                        <Icon
+                            name='mail'
+                            size={24}
+                            color='black'
+                            style={styles.icon}
+                        />
+                    }
+                    onChangeText={text => setlastName(text)}
+                    value={lastName}
+                />
+
+                <Input
+                    label = 'Enter attendee major:'
+                    placeholder='Major'
+                    leftIcon={
+                        <Icon
+                            name='mail'
+                            size={24}
+                            color='black'
+                            style={styles.icon}
+                        />
+                    }
+                    onChangeText={text => setMajor(text)}
+                    value={major}
+                />
+
+                <Input
+                    label = 'Enter attendee year level:'
+                    placeholder='Year Level'
+                    leftIcon={
+                        <Icon
+                            name='mail'
+                            size={24}
+                            color='black'
+                            style={styles.icon}
+                        />
+                    }
+                    onChangeText={text => setyearLevel(text)}
+                    value={yearlevel}
+                />
+
                 <Input
                     label = 'Enter student email:'
                     placeholder='youremail@address.com'
@@ -78,7 +141,7 @@ const RegisterAttendee = (props) => {
             </View>
             <View style={styles.buttonContainer}>
                 <Button style={styles.smallButton}  title="Sign Up" 
-                onPress={()=>signUpWithEmailPassword(email,password,props,verifypass)}
+                onPress={()=>signUpWithEmailPassword(email,password,props,verifypass,firstName,lastName,major,yearlevel)}
                 />
             </View>
         </View>
@@ -86,7 +149,7 @@ const RegisterAttendee = (props) => {
     )
 }
 
-const signUpWithEmailPassword=(email,password,props,verifypass)=> {
+const signUpWithEmailPassword=(email,password,props,verifypass,firstName,lastName,major,yearlevel)=> {
   //var email = "test@example.com";
   //var password = "hunter2";
   // [START auth_signup_password]
@@ -97,14 +160,18 @@ const signUpWithEmailPassword=(email,password,props,verifypass)=> {
     //console.log(user)  
     const data = {
         email:user.email,
+        Firstname:firstName,
+        Lastname:lastName,
+        Major:major,
+        YearLevel:yearlevel
         //uid:user.uid
     }
     //console.log(data)
     //console.log(uid)
     
-    props.navigation.navigate('MainAttendee')
-    alert("Successfuly registered.")
-    return db.collection('Attendee').doc(email).set(data);
+        props.navigation.navigate('MainAttendee')
+        alert("Successfuly registered.")
+        return db.collection('Attendee').doc(org).set(data);
       // ...
     })
 
