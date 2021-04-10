@@ -15,14 +15,18 @@ import Icon from '@expo/vector-icons/AntDesign';
 import { StackActions } from '@react-navigation/native';
 import Firebase from '../components/Firebase'
 import * as firebase from 'firebase';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 const db = Firebase.firestore();
 
 const LoginHost = (props) => {
+    const { currentUser, setCurrentUser } = useContext(UserContext);
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [uniqueID, setUniqueID] = React.useState("");
     const image = require('../images/image.png');
+
     return (
         <View style={styles.contentContainer}>
             <Image source={image} style={styles.smallImage} />
@@ -113,11 +117,18 @@ const signInWithEmailPassword = async(email,password,props,uniqueID)=> {
             .then(snap => {
                 snap.forEach(doc => {
                     if (doc.data().UniqueID == uniqueID && doc.data().email == email){
+                        setCurrentUser({
+                            attendeeEmail: doc.data().email,
+                            attendeeFirstName: firstName,
+                            attendeeLastName: lastName,
+                            attendeeMajor: major,
+                            attendeeYearLevel: yearlevel,
+                        });
                         alert("Successfuly logged in.")
                         props.navigation.navigate('MainHost')
                     }
                     else{
-                        alert("Check your unique IDDDD or email and try again.")
+                        alert("Check your unique ID or email and try again.")
                       }
                 });
             });

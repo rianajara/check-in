@@ -15,10 +15,13 @@ import MainHost from './MainHost';
 import Firebase from '../components/Firebase';
 import * as firebase from 'firebase';
 import { ScrollView } from 'react-native-gesture-handler';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 const db = Firebase.firestore();
 
 const RegisterHost = (props) => {
+	const { currentUser, setCurrentUser } = useContext(UserContext);
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [verifypass, verifyPassword] = React.useState('');
@@ -28,6 +31,85 @@ const RegisterHost = (props) => {
 	const [org, setOrg] = React.useState('');
 
 	const image = require('../images/image.png');
+
+	const signUpWithEmailPassword = (
+		email,
+		password,
+		props,
+		verifypass,
+		uniqueID,
+		firstName,
+		lastName,
+		org
+	) => {
+		//var email = "test@example.com";
+		//var password = "hunter2";
+		// [START auth_signup_password]
+		firebase
+			.auth()
+			.createUserWithEmailAndPassword(email, password)
+			.then((userCredential) => {
+				// Signed in
+				var user = userCredential.user;
+	
+				const data = {
+					Email: user.email,
+					UniqueID: uniqueID,
+					FirstName: firstName,
+					LastName: lastName,
+					Organization: org,
+	
+					//uid:user.uid
+				};
+	
+				setCurrentUser({
+					hostEmail: email,
+					hostFirstName: firstName,
+					hostLastName: lastName,
+					hostOrg: org,
+					hostUniqueID: uniqueID,
+				});
+				//console.log(data)
+				props.navigation.navigate('MainHost');
+				alert('Successfuly registered.');
+				return db.collection('Host').doc(email).set(data);
+				// ...
+			})
+			.catch((error) => {
+				console.warn(error)
+				var errorCode = error.code;
+				var errorMessage = validate_Field(email, password, verifypass);
+				//validate_Field(email,password,verifypass)
+				// ..
+			});
+		// [END auth_signup_password]
+	};
+	
+	// const createUser = async (token)=>{
+	//     var firestore = Firebase.firestore();
+	//     const data = {
+	//         name: 'void',
+	//         email: token.user.email
+	//     }
+	//     await firestore.collection('Users').doc(token.user.uid).set(userData);
+	// }
+	
+	const validate_Field = (email, password, verifypass) => {
+		if (email == '') {
+			alert('Please enter an email address');
+			return false;
+		} else if (password != verifypass) {
+			alert('The password you entered does not match');
+			return false;
+		} else if (password == '') {
+			alert('Please enter a password');
+			return false;
+		} else if (verifypass == '') {
+			alert('Please re-enter password');
+			return false;
+		}
+		return true;
+	};
 
 	return (
 		<View style={styles.contentContainer}>
@@ -180,77 +262,6 @@ const RegisterHost = (props) => {
 };
 
 //onPress={()=>correct(email,password,verifypass)}
-
-const signUpWithEmailPassword = (
-	email,
-	password,
-	props,
-	verifypass,
-	uniqueID,
-	firstName,
-	lastName,
-	org
-) => {
-	//var email = "test@example.com";
-	//var password = "hunter2";
-	// [START auth_signup_password]
-	firebase
-		.auth()
-		.createUserWithEmailAndPassword(email, password)
-		.then((userCredential) => {
-			// Signed in
-			var user = userCredential.user;
-
-			const data = {
-				email: user.email,
-				UniqueID: uniqueID,
-				Firstname: firstName,
-				Lastname: lastName,
-				Organization: org,
-
-				//uid:user.uid
-			};
-			//console.log(data)
-			props.navigation.navigate('MainHost');
-			alert('Successfuly registered.');
-			return db.collection('Host').doc(email).set(data);
-			// ...
-		})
-		.catch((error) => {
-			var errorCode = error.code;
-			var errorMessage = validate_Field(email, password, verifypass);
-			//validate_Field(email,password,verifypass)
-			// ..
-		});
-	// [END auth_signup_password]
-};
-
-// const createUser = async (token)=>{
-//     var firestore = Firebase.firestore();
-//     const data = {
-//         name: 'void',
-//         email: token.user.email
-//     }
-//     await firestore.collection('Users').doc(token.user.uid).set(userData);
-// }
-
-const validate_Field = (email, password, verifypass) => {
-	if (email == '') {
-		alert('Please enter an email address');
-		return false;
-	} else if (password != verifypass) {
-		alert('The password you entered does not match');
-		return false;
-	} else if (password == '') {
-		alert('Please enter a password');
-		return false;
-	} else if (verifypass == '') {
-		alert('Please re-enter password');
-		return false;
-	}
-	return true;
-};
-
 const styles = StyleSheet.create({
 	contentContainer: {
 		backgroundColor: '#fff7d5',

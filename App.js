@@ -5,7 +5,7 @@ import AppNavigator from './src/navigations/Navigator';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import viewHost from './src/screens/ViewAccount_Host.js';
-import { UserProvider } from './src/context/UserContext.js'
+import { UserProvider } from './src/context/UserContext.js';
 
 export default class App extends React.Component {
 	state = {
@@ -25,7 +25,6 @@ export default class App extends React.Component {
 	render() {
 		return this.state.isFontLoaded === true ? (
 			<UserProvider>
-			
 				<AppNavigator />
 			</UserProvider>
 		) : (

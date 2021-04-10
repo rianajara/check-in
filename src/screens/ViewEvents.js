@@ -3,8 +3,11 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
 import Firebase from '../components/Firebase';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 const ViewEvents = (props) => {
+	const { currentUser, setCurrentUser } = useContext(UserContext);
 	const [eventArray, setEventArray] = useState([]);
 
 	const colorPicker = (buttonNum) => {
@@ -39,7 +42,7 @@ const ViewEvents = (props) => {
 	async function getAllEvents(db) {
 		const aesbEvents = db
 			.collection('OrgEvents')
-			.doc('AESB')
+			.doc(currentUser['hostOrg'])
 			.collection('Events');
 		const snapshot = await aesbEvents.get();
 		const tempEventArray = [];
@@ -47,6 +50,7 @@ const ViewEvents = (props) => {
 			console.log(collection.id, ':', collection.data());
 			tempEventArray.push(collection.data());
 		});
+
 
 		setEventArray(tempEventArray);
 	}

@@ -16,6 +16,8 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Firebase from '../components/Firebase';
 import PopUpModal from '../components/PopUpModal';
 import InfoDropDown from '../components/InfoDropDown';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -36,6 +38,7 @@ const months = [
 ];
 
 const CreateEvent = (props) => {
+	const { currentUser, setCurrentUser } = useContext(UserContext);
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 	const [isEventTypeVisible, setEventTypeVisibility] = useState(false);

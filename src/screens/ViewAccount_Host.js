@@ -16,14 +16,18 @@ import * as firebase from 'firebase';
 import PopUpModal from '../components/PopUpModal';
 import InfoDropDown from '../components/InfoDropDown';
 import { ScrollView } from 'react-native-gesture-handler';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 const viewHost = (props) => {
-
+	const { currentUser, setCurrentUser } = useContext(UserContext);
 	//connect to firebase somehow (?)
-	const firstName = 'First';
-	const lastName = 'Last';
-	const email = 'Test@email.com';
-	const organization = 'SAMPLE CLUB NAME'
+	const firstName = currentUser['hostFirstName'];
+	const lastName = currentUser['hostLastName'];
+	const email = currentUser['hostEmail'];
+	const organization = currentUser['hostOrganization']
+	const uniqueID = currentUser['hostUniqueID']
+
 
 	const switchPage = () => {
 		setTimeout(() => {
@@ -50,7 +54,7 @@ const viewHost = (props) => {
 
 				<View style={styles.textContainer}>
 
-					<Text style ={styles.biggerFont}> {'Email:'} </Text>
+					<Text style ={styles.biggerFont}> {'Organization:'} </Text>
 
 			
 					<Text styles = {styles.smallerFont}>
@@ -62,12 +66,12 @@ const viewHost = (props) => {
                			    	style={styles.icon}
 							/>
                     
-						{ ' '+ email + '\n' }
+						{ ' '+ organization + '\n' }
 					</Text>
 				
 			
 
-					<Text style ={styles.biggerFont}> {'Organization:'} </Text>
+					<Text style ={styles.biggerFont}> {'First Name:'} </Text>
 
 					<Text styles = {styles.smallerFont}>
 							{'  '}
@@ -78,7 +82,49 @@ const viewHost = (props) => {
                			    	style={styles.icon}
 							/>
                     
-						{ ' '+ organization + '\n' }
+						{ ' '+ firstName + '\n' }
+					</Text>
+
+					<Text style ={styles.biggerFont}> {'Last Name:'} </Text>
+
+					<Text styles = {styles.smallerFont}>
+							{'  '}
+           					<Icon // organization text
+               			 		name='addusergroup'  
+                				size={20}
+               			   		color='black'
+               			    	style={styles.icon}
+							/>
+                    
+						{ ' '+ lastName + '\n' }
+					</Text>
+
+					<Text style ={styles.biggerFont}> {'Unique ID:'} </Text>
+
+					<Text styles = {styles.smallerFont}>
+							{'  '}
+           					<Icon // organization text
+               			 		name='addusergroup'  
+                				size={20}
+               			   		color='black'
+               			    	style={styles.icon}
+							/>
+                    
+						{ ' '+ uniqueID + '\n' }
+					</Text>
+
+					<Text style ={styles.biggerFont}> {'Email:'} </Text>
+
+					<Text styles = {styles.smallerFont}>
+							{'  '}
+           					<Icon // organization text
+               			 		name='addusergroup'  
+                				size={20}
+               			   		color='black'
+               			    	style={styles.icon}
+							/>
+                    
+						{ ' '+ email + '\n' }
 					</Text>
 
 
