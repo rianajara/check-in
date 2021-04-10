@@ -117,7 +117,7 @@ const signInWithEmailPassword = async(email,password,props,uniqueID)=> {
                         props.navigation.navigate('MainHost')
                     }
                     else{
-                        alert("Check your unique ID or email and try again.")
+                        alert("Check your unique IDDDD or email and try again.")
                       }
                 });
             });

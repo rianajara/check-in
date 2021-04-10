@@ -402,8 +402,7 @@ const CreateEvent = (props) => {
 					</ScrollView>
 					
 				</View>
-
-				<View />
+				
 			</KeyboardAvoidingView>
 
 			<View style={styles.buttonContainer}>

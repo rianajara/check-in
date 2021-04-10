@@ -15,7 +15,7 @@ import Firebase from '../components/Firebase';
 import * as firebase from 'firebase';
 import PopUpModal from '../components/PopUpModal';
 
-const RegisterHost = (props) => {
+const ModifyHost = (props) => {
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [verifypass, verifyPassword] = React.useState('');
@@ -226,4 +226,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default RegisterHost;
+export default ModifyHost;
