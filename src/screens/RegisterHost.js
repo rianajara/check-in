@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Text,
 	View,
@@ -12,11 +12,13 @@ import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import { NavigationEvents } from 'react-navigation';
 import MainHost from './MainHost';
+import PopUpModal from '../components/PopUpModal';
 import Firebase from '../components/Firebase';
 import * as firebase from 'firebase';
 import { ScrollView } from 'react-native-gesture-handler';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
+import { Platform } from 'react-native';
 
 const db = Firebase.firestore();
 
@@ -29,8 +31,18 @@ const RegisterHost = (props) => {
 	const [firstName, setfirstName] = React.useState('');
 	const [lastName, setlastName] = React.useState('');
 	const [org, setOrg] = React.useState('');
+	const [updateClickCount, setUpdateClickCount] = useState(0);
+	const [popUpText, setPopUpText] = useState(null);
+	const [registered, setRegistered] = useState(false);
 
 	const image = require('../images/image.png');
+
+	const switchPage = () => {
+		if(registered === true){
+			props.navigation.navigate('MainHost')
+		}
+		
+   }
 
 	const signUpWithEmailPassword = (
 		email,
@@ -48,20 +60,20 @@ const RegisterHost = (props) => {
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
-			.then((userCredential) => {
+			.then(async (userCredential) => {
 				// Signed in
 				var user = userCredential.user;
-	
+
 				const data = {
 					Email: user.email,
 					UniqueID: uniqueID,
 					FirstName: firstName,
 					LastName: lastName,
 					Organization: org,
-	
+
 					//uid:user.uid
 				};
-	
+
 				setCurrentUser({
 					hostEmail: email,
 					hostFirstName: firstName,
@@ -70,13 +82,30 @@ const RegisterHost = (props) => {
 					hostUniqueID: uniqueID,
 				});
 				//console.log(data)
-				props.navigation.navigate('MainHost');
-				alert('Successfuly registered.');
+
+				const orgRef = db.collection('OrgEvents').doc(org);
+				const doc = await orgRef.get();
+				if (!doc.exists) {
+					setPopUpText('Host Registered');
+					
+
+					// Add an club name based on information given
+					db.collection('OrgEvents').doc(org).set(
+						{
+							ClubName: org,
+						},
+						{ merge: true }
+					);
+					props.navigation.navigate('MainHost');
+					//alert('Successfuly registered.');	
+					setUpdateClickCount(updateClickCount + 1);
+				} 
+
 				return db.collection('Host').doc(email).set(data);
 				// ...
 			})
 			.catch((error) => {
-				console.warn(error)
+				console.warn(error);
 				var errorCode = error.code;
 				var errorMessage = validate_Field(email, password, verifypass);
 				//validate_Field(email,password,verifypass)
@@ -84,7 +113,7 @@ const RegisterHost = (props) => {
 			});
 		// [END auth_signup_password]
 	};
-	
+
 	// const createUser = async (token)=>{
 	//     var firestore = Firebase.firestore();
 	//     const data = {
@@ -93,7 +122,7 @@ const RegisterHost = (props) => {
 	//     }
 	//     await firestore.collection('Users').doc(token.user.uid).set(userData);
 	// }
-	
+
 	const validate_Field = (email, password, verifypass) => {
 		if (email == '') {
 			alert('Please enter an email address');
@@ -119,16 +148,18 @@ const RegisterHost = (props) => {
 					fontFamily: 'Bold',
 					alignSelf: 'center',
 					marginTop: 50,
-                    marginBottom: 65,
+					marginBottom: 65,
+					paddingTop: 10
 				}}>
 				Register Organization Host{' '}
 			</Text>
 
 			<KeyboardAvoidingView
 				style={styles.inputContainer}
-				behavior='padding'>
-				<View >
-					<ScrollView>
+				behavior={Platform.OS === 'ios' ? "padding" : null}
+				>
+				<View>
+					<ScrollView style={{paddingBottom: 50, paddingTop: 15}}>
 						<Input
 							label='Enter host first name:'
 							placeholder='First Name'
@@ -237,6 +268,11 @@ const RegisterHost = (props) => {
 						/>
 					</ScrollView>
 				</View>
+				<PopUpModal
+							style={{ height: 0, padding: 0, margin: 0 }}
+							popUpText={popUpText}
+							updateClickCount={updateClickCount}
+							switchPage={() => switchPage()}></PopUpModal>
 			</KeyboardAvoidingView>
 
 			<View style={styles.buttonContainer}>
@@ -257,6 +293,7 @@ const RegisterHost = (props) => {
 					}
 				/>
 			</View>
+			
 		</View>
 	);
 };
@@ -268,7 +305,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'space-evenly',
-        paddingTop: 95,
+		paddingTop: 95,
 	},
 	smallImage: {
 		marginTop: 60,
