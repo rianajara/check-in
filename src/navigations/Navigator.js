@@ -19,6 +19,7 @@ import CameraScan from '../screens/CameraScan';
 import ViewAccount_Attendee from '../screens/ViewAccount_Attendee';
 import ViewAccount_Host from '../screens/ViewAccount_Host';
 import { UserProvider } from '../context/UserContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const stackNavigatorOptions = {
 	headerShown: false,
@@ -26,25 +27,24 @@ const stackNavigatorOptions = {
 
 const AppNavigator = createStackNavigator(
 	{
-		
-		Welcome: { screen: Welcome },
+		Welcome: Welcome,
 		Register: Register,
 		LoginHost: LoginHost,
 		LoginAttendee: LoginAttendee,
 		RegisterHost: RegisterHost,
 		RegisterAttendee: RegisterAttendee,
 		MainAttendee: MainAttendee,
-		ViewAccount_Attendee:ViewAccount_Attendee,
+		ViewAccount_Attendee: ViewAccount_Attendee,
 		MainHost: MainHost,
-		ViewAccount_Host:ViewAccount_Host,
+		ViewAccount_Host: ViewAccount_Host,
 		CreateEvent: CreateEvent,
 		ViewEvents: ViewEvents,
 		ViewEvent: ViewEvent,
-        ModifyEvent: ModifyEvent,
-		ModifyHost:ModifyHost,
-        ModifyAttendee: ModifyAttendee,
-		CheckInAttendees:CheckInAttendees,
-    	CameraScan:CameraScan
+		ModifyEvent: ModifyEvent,
+		ModifyHost: ModifyHost,
+		ModifyAttendee: ModifyAttendee,
+		CheckInAttendees: CheckInAttendees,
+		CameraScan: CameraScan,
 	},
 	{
 		defaultNavigationOptions: stackNavigatorOptions,

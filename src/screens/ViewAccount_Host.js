@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Text,
 	View,
@@ -22,11 +22,12 @@ import { useContext } from 'react';
 const viewHost = (props) => {
 	const { currentUser, setCurrentUser } = useContext(UserContext);
 	//connect to firebase somehow (?)
-	const firstName = currentUser['hostFirstName'];
-	const lastName = currentUser['hostLastName'];
-	const email = currentUser['hostEmail'];
-	const organization = currentUser['hostOrganization']
-	const uniqueID = currentUser['hostUniqueID']
+	const [firstName, setFirstName] = useState('')
+	const [lastName, setLastName] = useState('')
+	const [email, setEmail] = useState('')
+	const [organization, setOrganization] = useState('')
+	const [uniqueID, setUniqueID] = useState('')
+	
 
 
 	const switchPage = () => {
@@ -34,6 +35,21 @@ const viewHost = (props) => {
 			props.navigation.navigate('ViewAccount_Attendee');
 		}, 750);
 	};
+
+	
+
+	useEffect(() => {
+		if(currentUser === null){
+			props.navigation.navigate("Welcome")
+		}else{
+			setFirstName(currentUser['hostFirstName']);
+			setLastName(currentUser['hostLastName']);
+			setEmail(currentUser['hostEmail']);
+			setOrganization(currentUser['hostOrg']);
+			setUniqueID(currentUser['hostUniqueID']);
+		}
+	}, [])
+	
 
 	return (
       

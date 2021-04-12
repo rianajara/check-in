@@ -1,4 +1,7 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 // Context or Information that will be passed down to needed components
 export const UserContext = createContext({
@@ -8,8 +11,24 @@ export const UserContext = createContext({
 
 //Provides the other components with the UserContext information
 export const UserProvider = (props) => {
-	const [currentUser, setCurrentUser] = useState("noone");
+	const [currentUser, setCurrentUser] = useState();
 
+	const loadData = async () => {
+		let user = await AsyncStorage.getItem('currentUser')
+		if(user === null){// completely logged out
+			//console.warn("no logged in user ")
+		}else if(user !== null){
+		
+			setCurrentUser(JSON.parse(user))
+		}
+		
+	}
+
+	useEffect(() => {
+		
+		loadData()
+		
+	}, [])
 	return (
 		<UserContext.Provider value={{currentUser, setCurrentUser}}>
 			{props.children}

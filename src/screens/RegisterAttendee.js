@@ -16,6 +16,7 @@ import Firebase from '../components/Firebase';
 import * as firebase from 'firebase';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //const admin = require('firebase-admin')
 const db = Firebase.firestore();
@@ -48,13 +49,13 @@ const RegisterAttendee = (props) => {
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                
                 // Signed in
                 var user = userCredential.user;
                 //console.log(user)
                 const data = {
-                    email: user.email,
+                    Email: user.email,
                     Firstname: firstName,
                     Lastname: lastName,
                     Major: major,
@@ -63,14 +64,18 @@ const RegisterAttendee = (props) => {
                 };
                 //console.log(data)
                 //console.log(uid)
-                
-                setCurrentUser({
+
+				let userData = {
                     attendeeEmail: email,
                     attendeeFirstName: firstName,
                     attendeeLastName: lastName,
                     attendeeMajor: major,
                     attendeeYearLevel: yearlevel,
-                });
+					userType: "attendee"
+                }
+                
+                setCurrentUser(userData);
+				await AsyncStorage.setItem('currentUser', JSON.stringify(userData))
                 props.navigation.navigate('MainAttendee');
                 alert('Successfuly registered.');
                 return db.collection('Attendee').doc(email).set(data);

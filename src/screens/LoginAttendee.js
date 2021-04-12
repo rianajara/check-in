@@ -5,6 +5,7 @@ import { Input } from 'react-native-elements';
 import Icon from '@expo/vector-icons/AntDesign';
 import Firebase from '../components/Firebase'
 import * as firebase from 'firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginAttendee = (props) => {
     const [email, setEmail] = React.useState("");
@@ -65,11 +66,48 @@ const signInWithEmailPassword = async(email,password,props)=> {
   //var password = "hunter2";
   // [START auth_signin_password]
   firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
+    .then( async (userCredential) => {
       // Signed in
-      var user = userCredential.user;
-      alert("Successfuly logged in.")
-      props.navigation.navigate('MainAttendee')
+    var user = userCredential.user;
+
+    const check = db
+					.collection('Attendee')
+					.where('Email', '==', email)
+					.get()
+					.then((snap) => {
+						snap.forEach(async (doc) => {
+							if (
+								
+								doc.data().Email == email
+							) {
+								let userData = {
+									attendeeEmail: doc.data().Email,
+									attendeeFirstName: doc.data().FirstName,
+									attendeeLastName: doc.data().LastName,
+									attendeeYearLevel: doc.data().YearLevel,
+									attendeeMajor: doc.data().Major,
+									userType: 'host',
+								};
+
+								
+								setCurrentUser(userData);
+								await AsyncStorage.setItem(
+									'currentUser',
+									JSON.stringify(userData)
+								);
+								alert('Successfuly logged in.');
+								props.navigation.navigate('MainHost');
+							} else {
+								
+								alert(
+									'Check your unique ID or email and try again.'
+								);
+							}
+						});
+					});
+
+    alert("Successfuly logged in.")
+    props.navigation.navigate('MainAttendee')
       // ...
     })
     .catch((error) => {

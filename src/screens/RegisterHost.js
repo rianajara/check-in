@@ -19,6 +19,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import { Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const db = Firebase.firestore();
 
@@ -73,16 +74,17 @@ const RegisterHost = (props) => {
 
 					//uid:user.uid
 				};
-
-				setCurrentUser({
+				let userData = {
 					hostEmail: email,
 					hostFirstName: firstName,
 					hostLastName: lastName,
 					hostOrg: org,
 					hostUniqueID: uniqueID,
-				});
+					userType: "host"
+				}
+				setCurrentUser(userData);
 				//console.log(data)
-
+				await AsyncStorage.setItem('currentUser', JSON.stringify(userData))
 				const orgRef = db.collection('OrgEvents').doc(org);
 				const doc = await orgRef.get();
 				if (!doc.exists) {
@@ -105,7 +107,7 @@ const RegisterHost = (props) => {
 				// ...
 			})
 			.catch((error) => {
-				console.warn(error);
+				
 				var errorCode = error.code;
 				var errorMessage = validate_Field(email, password, verifypass);
 				//validate_Field(email,password,verifypass)
