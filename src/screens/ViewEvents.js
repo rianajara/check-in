@@ -51,8 +51,11 @@ const ViewEvents = (props) => {
 			tempEventArray.push(collection.data());
 		});
 
+		
 
 		setEventArray(tempEventArray);
+
+		
 	}
 
 	useEffect(() => {
@@ -80,14 +83,16 @@ const ViewEvents = (props) => {
 								]}
 								key={key}>
 								<Text style={styles.buttonTitleText}>
-									{data['Details']['Event Title']}
+									{Object.keys(data)[0]}
+									
+									
 								</Text>
 								<Text style={styles.buttonDetailText}>
-									{data['Details']['Date']},{' '}
-									{data['Details']['Time']}
+									{data[Object.keys(data)[0]]['Date']},{' '}{data[Object.keys(data)[0]]['Time']}
+									
 								</Text>
 								<Text style={styles.buttonDetailText}>
-									{data['Details']['Location']}
+									{data[Object.keys(data)[0]]['Location']}
 								</Text>
 							</TouchableOpacity>
 						</View>

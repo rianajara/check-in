@@ -41,7 +41,9 @@ export default class InfoDropDown extends React.Component {
 
 		const dropDownText = this.props.defaultEventType;
 		
-
+		InfoDropDown.defaultProps = {
+			defaultEventType: ""
+		}
 		
 
 		return (
@@ -69,7 +71,7 @@ export default class InfoDropDown extends React.Component {
 						}}
 					/>
 					<RNPickerSelect
-						//value={dropDownText}
+						value={this.props.defaultEventType}
 						placeholder={placeholder}
 						placeholderTextColor='black'
 						items={dataTypes()}
@@ -115,6 +117,3 @@ const pickerSelectStyles = StyleSheet.create({
 	},
 });
 
-InfoDropDown.defaultProps = {
-	defaultEventType: ""
-}

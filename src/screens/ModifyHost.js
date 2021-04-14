@@ -28,7 +28,6 @@ const ModifyHost = (props) => {
 	const [lastName, setLastName] = React.useState(currentUser['hostLastName']);
 	const [org, setOrg] = React.useState(currentUser['hostOrg']);
 
-
     const switchPage = () => {
 		setTimeout(() => {
 			props.navigation.navigate('ViewAccount_Host');

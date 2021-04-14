@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Firebase from '../components/Firebase';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 
 const db = Firebase.firestore();
@@ -19,25 +21,28 @@ db.settings({ timestampsInSnapshots: true });
 
 
 const ViewEvent = (props) => {
-	const eventInfo = props.navigation.state.params.data["Details"];
+	const eventInfo = props.navigation.state.params.data;
 	const [eventData, setEventData] = useState(eventInfo)
+	const { currentUser, setCurrentUser } = useContext(UserContext);
+	
 
 	const deleteEvent = async () => {
 		db.collection('OrgEvents')
-			.doc('New Club')
+			.doc(currentUser['hostOrg'])
 			.collection('Events')
-			.doc('Temp')
+			.doc(eventInfo[Object.keys(eventInfo)[0]]['Title'])
 			.collection('Attendees')
 			.doc('Attendees List')
-			.delete()
+			.delete().then(
 
 		db.collection('OrgEvents')
-			.doc('New Club')
+			.doc(currentUser['hostOrg'])
 			.collection('Events')
-			.doc('Temp')
+			.doc(eventInfo[Object.keys(eventInfo)[0]]['Title'])
 			.delete()
+			)
 			
-
+			props.navigation.navigate('MainHost')
 			
 	}
 
@@ -48,36 +53,40 @@ const ViewEvent = (props) => {
 				<ScrollView style={styles.scrollView}>
 					<View style={styles.eventHeaderTextView}>
 						<Text style={styles.eventHeaderText}>
-							{eventInfo['Event Title']}
+							{eventInfo[Object.keys(eventInfo)[0]]['Title']}
 						</Text>
 					</View>
 					<Text style={styles.eventInfoText}>
+						<Text style={styles.boldText}>Event Type: </Text>
+						{eventInfo[Object.keys(eventInfo)[0]]['Event Type']}
+					</Text>
+					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Date: </Text>
-						{eventInfo['Date']}
+						{eventInfo[Object.keys(eventInfo)[0]]['Date']}
 					</Text>
 					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Time: </Text>
-						{eventInfo['Time']}
+						{eventInfo[Object.keys(eventInfo)[0]]['Time']}
 					</Text>
 					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Location: </Text>
-						{eventInfo['Location']}
+						{eventInfo[Object.keys(eventInfo)[0]]['Location']}
 					</Text>
 					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Primary Contact: </Text>{' '}
-						{eventInfo['Primary Contact']}
+						{eventInfo[Object.keys(eventInfo)[0]]['Primary Contact']}
 					</Text>
 					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Email: </Text>
-						{eventInfo['Contact Email']}
+						{eventInfo[Object.keys(eventInfo)[0]]['Contact Email']}
 					</Text>
 					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Description:</Text>{' '}
-						{eventInfo['Description']}
+						{eventInfo[Object.keys(eventInfo)[0]]['Description']}
 					</Text>
 					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Max Capacity: </Text>
-						{eventInfo['Max Capacity']}
+						{eventInfo[Object.keys(eventInfo)[0]]['Max Capacity']}
 					</Text>
 				</ScrollView>
 			</View>
@@ -96,7 +105,10 @@ const ViewEvent = (props) => {
 						styles.viewEventButton,
 						{ backgroundColor: '#a3d4d8' },
 						{ borderColor: '#65b6be' },
-					]}>
+					]}
+					onPress={() => props.navigation.navigate('CameraScan', {
+						eventInfo: eventInfo,
+					})}>
 					<Text style={styles.viewEventButtonText}>
 						Check In Attendees
 					</Text>

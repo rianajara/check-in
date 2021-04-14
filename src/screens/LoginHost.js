@@ -165,11 +165,7 @@ const LoginHost = (props) => {
 					type='clear'
 					title='Forgot Password'
 				/>
-				<Button
-					style={[styles.smallButton, styles.devButton]}
-					title='Dev'
-					onPress={() => props.navigation.navigate('MainHost')}
-				/>
+				
 			</View>
 		</View>
 	);

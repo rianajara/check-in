@@ -1,283 +1,3 @@
-/*import React, { useEffect, useState } from 'react';
-import {
-	Text,
-	View,
-	Image,
-	TextInput,
-	KeyboardAvoidingView,
-	StyleSheet,
-} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Button } from 'react-native-elements';
-import { Input } from 'react-native-elements';
-import Icon from '@expo/vector-icons/AntDesign';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import InfoDropDown from '../components/InfoDropDown';
-
-const months = [
-	'January',
-	'February',
-	'March',
-	'April',
-	'May',
-	'June',
-	'July',
-	'August',
-	'September',
-	'October',
-	'November',
-	'December',
-];
-
-const ModifyEvent = (props) => {
-	const eventInfo = props.navigation.state.params.eventInfo
-	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-	const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
-	const [dateSelected, setDateSelected] = useState('');
-	const [timeSelected, setTimeSelected] = useState('');
-
-	const createTime = (time) => {
-		const hour =
-			time.getHours() > 12 ? time.getHours() - 12 : time.getHours();
-		const minute =
-			time.getMinutes() < 10
-				? '0' + time.getMinutes()
-				: time.getMinutes();
-		const ampm = time.getHours() > 11 ? 'pm' : 'am';
-		return hour + ':' + minute + ' ' + ampm;
-	};
-
-	const createDate = (date) => {
-		return (
-			months[date.getMonth().toString()] +
-			' ' +
-			date.getDate() +
-			', ' +
-			date.getFullYear()
-		);
-	};
-
-	// SHOWING DATE PICKER 
-	const showDatePicker = () => {
-		setDatePickerVisibility(true);
-	};
-
-	const hideDatePicker = () => {
-		setDatePickerVisibility(false);
-	};
-
-	const handleDateConfirm = (date) => {
-		setDateSelected(createDate(date));
-		hideDatePicker();
-	};
-
-	useEffect(() => {
-		setDateSelected(dateSelected);
-	}, [dateSelected]);
-
-	// SHOWING TIME PICKER 
-	const showTimePicker = () => {
-		setTimePickerVisibility(true);
-	};
-
-	const hideTimePicker = () => {
-		setTimePickerVisibility(false);
-	};
-
-	const handleTimeConfirm = (time) => {
-		setTimeSelected(createTime(time));
-		hideTimePicker();
-	};
-
-	useEffect(() => {
-		setTimeSelected(timeSelected);
-	}, [timeSelected]);
-
-	const image = require('../images/image.png');
-
-	return (
-		<View style={styles.contentContainer}>
-			<Text
-				style={{
-					fontSize: 20,
-					fontFamily: 'Bold',
-					alignSelf: 'center',
-					marginTop: 60,
-					marginBottom: 50,
-				}}>
-				Modify Event{' '}
-			</Text>
-			<View style={styles.inputContainer}>
-				<Input
-					label='Event Title:'
-					placeholder='Name of Event'
-					value={eventInfo['Event Name']}
-					leftIcon={
-						<Icon
-							name='mail'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-				/>
-
-
-				<View>
-				<InfoDropDown
-							setDataType={(value) => setEventType(value)}
-							dropDownType={'event'}
-							labelInfo="Event Type"></InfoDropDown>
-				</View>
-
-
-				<Input
-					label='Location:'
-					placeholder='Event Location'
-					value={eventInfo['Location']}
-					leftIcon={
-						<Icon
-							name='enviromento'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-				/>
-
-				<Input
-					label='Primary Contact:'
-					placeholder="Contact's name"
-					value={eventInfo['Primary Contact']}
-					leftIcon={
-						<Icon
-							name='user'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-				/>
-
-				<Input
-					label='Contact Email:'
-					placeholder=" Primary Contact's email"
-					value={eventInfo['Email']}
-					leftIcon={
-						<Icon
-							name='user'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-				/>
-
-				
-
-				<TouchableOpacity onPress={() => [showDatePicker()]}>
-					<Input
-						label='Date:'
-						placeholder='Event Date'
-						editable={false}
-						value={eventInfo['Date']}
-						leftIcon={
-							<Icon
-								name='calendar'
-								size={24}
-								color='black'
-								style={styles.icon}
-							/>
-						}
-					/>
-				</TouchableOpacity>
-
-				<DateTimePickerModal
-					isVisible={isDatePickerVisible}
-					mode='date'
-					onConfirm={handleDateConfirm}
-					onCancel={hideDatePicker}
-				/>
-
-				<DateTimePickerModal
-					isVisible={isTimePickerVisible}
-					mode='time'
-					onConfirm={handleTimeConfirm}
-					onCancel={hideTimePicker}
-					headerTextIOS='Pick a time'
-				/>
-
-				<TouchableOpacity onPress={() => [showTimePicker()]}>
-					<Input
-						label='Time:'
-						placeholder='Event Start Time'
-						editable={false}
-						value={eventInfo['Time']}
-						leftIcon={
-							<Icon
-								name='clockcircleo'
-								size={24}
-								color='black'
-								style={styles.icon}
-							/>
-						}
-					/>
-				</TouchableOpacity>
-
-				<Input
-					label='Description:'
-					placeholder='Event Description'
-					value={eventInfo['Description']}
-					leftIcon={
-						<Icon
-							name='info'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-				/>
-			</View>
-			<View style={styles.buttonContainer}>
-				<Button style={styles.smallButton} title='Update Event' />
-			</View>
-		</View>
-	);
-};
-
-
-const styles = StyleSheet.create({
-	contentContainer: {
-		backgroundColor: '#fff7d5',
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'space-evenly',
-		paddingTop: 75,
-	},
-	smallImage: {
-		marginTop: 60,
-		width: 200,
-		height: 200,
-	},
-	inputContainer: {
-		width: '90%',
-		marginTop: 50,
-		justifyContent: 'space-evenly',
-	},
-	buttonContainer: {
-		justifyContent: 'space-around',
-		height: '40%',
-	},
-	smallButton: {},
-	icon: {
-		marginRight: 15,
-	},
-});
-
-export default ModifyEvent;
-// https://www.npmjs.com/package/react-native-modal-datetime-picker
-*/
-
 import React, { useEffect, useState } from 'react';
 import {
 	Text,
@@ -296,7 +16,8 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Firebase from '../components/Firebase';
 import PopUpModal from '../components/PopUpModal';
 import InfoDropDown from '../components/InfoDropDown';
-import { max } from 'react-native-reanimated';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -318,20 +39,24 @@ const months = [
 
 const ModifyEvent = (props) => {
 	const eventInfo = props.navigation.state.params.eventInfo
+	const { currentUser, setCurrentUser } = useContext(UserContext);
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 	const [isEventTypeVisible, setEventTypeVisibility] = useState(false);
-	const [title, setTitle] = useState(eventInfo['Event Name']);
-	const [eventType, setEventType] = useState(eventInfo['Event Type']);
-	const [location, setLocation] = useState(eventInfo['Location']);
-	const [primaryContact, setPrimaryContact] = useState(eventInfo['Primary Contact']);
-	const [contactEmail, setContactEmail] = useState(eventInfo['Email']);
-	const [dateSelected, setDateSelected] = useState(eventInfo['Date']);
-	const [timeSelected, setTimeSelected] = useState(eventInfo['Time']);
-	const [description, setDescription] = useState(eventInfo['Description']);
-	const [maxCapacity, setMaxCapacity] = useState(eventInfo['Max Capacity'].toString());
+
+	const [title, setTitle] = useState(eventInfo[Object.keys(eventInfo)[0]]['Title']);
+	const [eventType, setEventType] = useState(eventInfo[Object.keys(eventInfo)[0]]['Event Type']);
+	const [location, setLocation] = useState(eventInfo[Object.keys(eventInfo)[0]]['Location']);
+	const [primaryContact, setPrimaryContact] = useState(eventInfo[Object.keys(eventInfo)[0]]['Primary Contact']);
+	const [contactEmail, setContactEmail] = useState(eventInfo[Object.keys(eventInfo)[0]]['Contact Email']);
+	const [dateSelected, setDateSelected] = useState(eventInfo[Object.keys(eventInfo)[0]]['Date']);
+	const [timeSelected, setTimeSelected] = useState(eventInfo[Object.keys(eventInfo)[0]]['Time']);
+	const [description, setDescription] = useState(eventInfo[Object.keys(eventInfo)[0]]['Description']);
+	const [maxCapacity, setMaxCapacity] = useState(eventInfo[Object.keys(eventInfo)[0]]['Max Capacity']);
 	const [updateClickCount, setUpdateClickCount] = useState(0);
 	const [popUpText, setPopUpText] = useState(null);
+
+
 
 	const inputChecker = () => {
 		if (
@@ -349,7 +74,7 @@ const ModifyEvent = (props) => {
 			setPopUpText('Please fill out all fields');
 		} else {
 			setPopUpText('Added');
-			addNewEvent(title);
+			modifyCurrentEvent(title);
 		}
 
 		setUpdateClickCount(updateClickCount + 1);
@@ -359,22 +84,14 @@ const ModifyEvent = (props) => {
 		 props.navigation.navigate('MainHost')
 	}
 
-	const addNewEvent = () => {
-		// Add an club name (probably will be used in the creation of a user)
-		db.collection('OrgEvents')
-			.doc('New Club')
-			.set(
-				{
-					ClubName: "New Club"
-				},
-				{ merge: true }
-			);
+	const modifyCurrentEvent = () => {
+		
 
 			// Event Document (temp set to RHa until we get an actual user that is logged in) added to the 
 			db.collection('OrgEvents')
-			.doc('New Club')
+			.doc(currentUser['hostOrg'])
 			.collection('Events')
-			.doc('Temp')
+			.doc(eventInfo[Object.keys(eventInfo)[0]]['Title'])
 			.set(
 				{
 					[title]: {
@@ -389,11 +106,12 @@ const ModifyEvent = (props) => {
 						'Event Type': eventType,
 					},
 				},
-				{ merge: true }
+				{ merge: false }
 			);
 
 
 		// used to add an attendee to the event
+		/*
 		db.collection('OrgEvents')
 			.doc('New Club')
 			.collection('Events')
@@ -411,52 +129,8 @@ const ModifyEvent = (props) => {
 				},
 				{ merge: true }
 			);
+			*/
 
-		//Trying new method with new object (temp)
-		/*
-				db.collection('OrgEvents')
-			.doc('RHA')
-			.set(
-				{
-					[title]: {
-						Title: title,
-						Location: location,
-						'Primary Contact': primaryContact,
-						'Contact Email': contactEmail,
-						Date: dateSelected,
-						Time: timeSelected,
-						Description: description,
-						'Max Capacity': maxCapacity,
-						'Event Type': eventType,
-					},
-				},
-				{ merge: true }
-			);
-		
-		*/
-
-		//OG code for emergency
-		/*
-				db.collection('OrgEvents')
-			.doc('RHA')
-			.set(
-				{
-					[title]: {
-						Title: title,
-						Location: location,
-						'Primary Contact': primaryContact,
-						'Contact Email': contactEmail,
-						Date: dateSelected,
-						Time: timeSelected,
-						Description: description,
-						'Max Capacity': maxCapacity,
-						'Event Type': eventType,
-					},
-				},
-				{ merge: true }
-			);
-		
-		*/	
 	};
 
 	const createTime = (time) => {
@@ -672,7 +346,7 @@ const ModifyEvent = (props) => {
 							label='Max Capacity:'
 							placeholder='Max Capacity'
 							keyboardType={'number-pad'}
-							onChange={setMaxCapacity}
+							onChangeText={setMaxCapacity}
 							value={maxCapacity}
 							returnKeyType={'done'}
 							leftIcon={
@@ -702,7 +376,7 @@ const ModifyEvent = (props) => {
 						inputChecker();
 					}}
 					style={styles.smallButton}
-					title='Create Event'
+					title='Modify Event'
 				/>
 			</View>
 		</View>
