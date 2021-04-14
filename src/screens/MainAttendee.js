@@ -27,6 +27,8 @@ const MainAttendee = (props) => {
         await AsyncStorage.removeItem('currentUser')
 	};
 
+	console.warn(currentUser)
+
 	
 
 	return (

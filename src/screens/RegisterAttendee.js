@@ -56,8 +56,8 @@ const RegisterAttendee = (props) => {
                 //console.log(user)
                 const data = {
                     Email: user.email,
-                    Firstname: firstName,
-                    Lastname: lastName,
+                    FirstName: firstName,
+                    LastName: lastName,
                     Major: major,
                     YearLevel: yearlevel,
                     //uid:user.uid

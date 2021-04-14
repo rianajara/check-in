@@ -153,7 +153,7 @@ const LoginHost = (props) => {
 					title='Log In'
 					onPress={() =>
 						signInWithEmailPassword(
-							email,
+							email.toLowerCase(),
 							password,
 							props,
 							uniqueID
