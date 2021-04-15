@@ -21,6 +21,10 @@ import { eventTypes } from '../json/eventTypes.json';
 export default class InfoDropDown extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			item: this.props.defaultEventType
+		}
+		
 	}
 
 	
@@ -41,14 +45,13 @@ export default class InfoDropDown extends React.Component {
 
 		const dropDownText = this.props.defaultEventType;
 		
-		InfoDropDown.defaultProps = {
-			defaultEventType: ""
-		}
+		
 		
 
 		return (
 			
 			<View style={{ paddingLeft: 10 }}>
+				
 				<Text
 					style={{
 						color: '#8691a0',
@@ -71,12 +74,17 @@ export default class InfoDropDown extends React.Component {
 						}}
 					/>
 					<RNPickerSelect
-						value={this.props.defaultEventType}
+						
+						value={this.state.item}
 						placeholder={placeholder}
 						placeholderTextColor='black'
 						items={dataTypes()}
 						onValueChange={(value) => {
-							this.props.setDataType(value); 
+							this.props.setDataType(value),
+							this.setState({item: value})
+							
+							
+
 						}}
 						style={pickerSelectStyles}
 					/>
@@ -84,6 +92,15 @@ export default class InfoDropDown extends React.Component {
 			</View>
 		);
 	}
+}
+InfoDropDown.defaultProps = {
+			
+	defaultEventType: "",
+	
+
+	
+
+
 }
 
 const styles = StyleSheet.create({

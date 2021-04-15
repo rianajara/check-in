@@ -133,52 +133,7 @@ const CreateEvent = (props) => {
 				{ merge: true }
 			)
 			)
-
-		//Trying new method with new object (temp)
-		/*
-				db.collection('OrgEvents')
-			.doc('RHA')
-			.set(
-				{
-					[title]: {
-						Title: title,
-						Location: location,
-						'Primary Contact': primaryContact,
-						'Contact Email': contactEmail,
-						Date: dateSelected,
-						Time: timeSelected,
-						Description: description,
-						'Max Capacity': maxCapacity,
-						'Event Type': eventType,
-					},
-				},
-				{ merge: true }
-			);
-		
-		*/
-
-		//OG code for emergency
-		/*
-				db.collection('OrgEvents')
-			.doc('RHA')
-			.set(
-				{
-					[title]: {
-						Title: title,
-						Location: location,
-						'Primary Contact': primaryContact,
-						'Contact Email': contactEmail,
-						Date: dateSelected,
-						Time: timeSelected,
-						Description: description,
-						'Max Capacity': maxCapacity,
-						'Event Type': eventType,
-					},
-				},
-				{ merge: true }
-			);
-		
-		*/	
+	
 	};
 
 	const createTime = (time) => {

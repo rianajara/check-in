@@ -110,26 +110,7 @@ const ModifyEvent = (props) => {
 			);
 
 
-		// used to add an attendee to the event
-		/*
-		db.collection('OrgEvents')
-			.doc('New Club')
-			.collection('Events')
-			.doc('Temp')
-			.collection('Attendees')
-			.doc('Attendees List')
-			.set(
-				{
-					'ghost Summers': {
-						firstName: 'Joanne',
-						lastName: 'Summers'
-					},
-
-					
-				},
-				{ merge: true }
-			);
-			*/
+		
 
 	};
 
