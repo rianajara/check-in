@@ -135,7 +135,7 @@ const RegisterAttendee = (props) => {
 			</Text>
 			<KeyboardAvoidingView
 				style={styles.inputContainer}
-				behavior='padding'>
+				behavior={Platform.OS === 'ios' ? "padding" : null}>
 				<View>
 					<ScrollView>
 						<Input

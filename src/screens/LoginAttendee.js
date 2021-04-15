@@ -87,6 +87,7 @@ const LoginAttendee = (props) => {
 					fontFamily: 'Bold',
 					alignSelf: 'center',
 					marginTop: 50,
+					marginBottom: 10
 				}}>
 				Attendee Sign In
 			</Text>
@@ -149,15 +150,18 @@ const styles = StyleSheet.create({
 		marginTop: 60,
 		width: 200,
 		height: 200,
+		marginBottom: 15
 	},
 	inputContainer: {
 		width: '90%',
 		marginTop: 50,
 		justifyContent: 'space-evenly',
+		marginBottom: 20
 	},
 	buttonContainer: {
 		justifyContent: 'space-around',
 		height: '40%',
+		padding: 30
 	},
 	smallButton: {},
 	icon: {
