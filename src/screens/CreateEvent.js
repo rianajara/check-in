@@ -208,7 +208,7 @@ const CreateEvent = (props) => {
 
 			<KeyboardAvoidingView
 				style={styles.inputContainer}
-				behavior='padding'>
+				behavior={Platform.OS === "ios" ? "padding" : "height"}>
 				<View>
 					<ScrollView>
 						<Input
@@ -394,10 +394,13 @@ const styles = StyleSheet.create({
 		width: '90%',
 		marginTop: 50,
 		justifyContent: 'space-evenly',
+		marginBottom: 15
+		
 	},
 	buttonContainer: {
 		justifyContent: 'space-around',
 		height: '40%',
+		padding: 5
 	},
 	smallButton: {},
 	icon: {

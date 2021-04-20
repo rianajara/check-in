@@ -19,6 +19,7 @@ import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 const db = Firebase.firestore();
 
 const LoginHost = (props) => {
@@ -100,10 +101,13 @@ const LoginHost = (props) => {
 					fontFamily: 'Bold',
 					alignSelf: 'center',
 					marginTop: 50,
+					marginBottom: 10
 				}}>
 				Organization Host Sign In
 			</Text>
-			<View style={styles.inputContainer}>
+			<KeyboardAvoidingView
+				style={styles.inputContainer}
+				behavior={Platform.OS === "ios" ? "padding" : "height"}>
 				<Input
 					placeholder='Host Email'
 					leftIcon={
@@ -146,7 +150,7 @@ const LoginHost = (props) => {
 					onChangeText={(text) => setUniqueID(text)}
 					value={uniqueID}
 				/>
-			</View>
+			</KeyboardAvoidingView>
 			<View style={styles.buttonContainer}>
 				<Button
 					style={styles.smallButton}
@@ -177,6 +181,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'space-evenly',
+		
 	},
 	smallImage: {
 		marginTop: 60,
@@ -185,16 +190,21 @@ const styles = StyleSheet.create({
 	},
 	inputContainer: {
 		width: '90%',
-		marginTop: 50,
+		margin: 50,
 		justifyContent: 'space-evenly',
+		padding: 10
+		
 	},
 	buttonContainer: {
-		marginTop: 15,
+		
 		justifyContent: 'space-around',
 		height: '35%',
-		marginBottom: 50,
+		marginBottom: 0,
+		padding: 30
 	},
-	smallButton: {},
+	smallButton: {
+		marginBottom: 100
+	},
 	icon: {
 		marginRight: 15,
 	},

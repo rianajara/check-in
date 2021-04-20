@@ -42,11 +42,10 @@ const MainAttendee = (props) => {
 				}}>
 				Attendee Main Page
 			</Text>
-
+			
 			<QRCode value='Just some string value' size={300} />
 
 			<View style={styles.buttonContainer}>
-				<Button style={styles.smallButton} title='RSVP to an event' />
 				<Button
 					style={styles.smallButton}
 					title='Account'

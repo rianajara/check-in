@@ -463,7 +463,9 @@ const styles = StyleSheet.create({
 	},
 	buttonContainer: {
 		justifyContent: 'space-around',
+		marginTop: 40,
 		height: '40%',
+		paddingBottom: 30
 	},
 	smallButton: {},
 	icon: {

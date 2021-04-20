@@ -191,6 +191,7 @@ const ModifyEvent = (props) => {
 				<View>
 					<ScrollView>
 						<Input
+							disabled={true}
 							label='Event Title:'
 							placeholder='Name of Event'
 							onChangeText={setTitle}
