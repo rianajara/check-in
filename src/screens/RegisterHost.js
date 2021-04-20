@@ -24,7 +24,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const db = Firebase.firestore();
 
 const RegisterHost = (props) => {
-<<<<<<< HEAD
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [verifypass, verifyPassword] = React.useState("");
@@ -164,7 +163,7 @@ const RegisterHost = (props) => {
         
     )
 }
-=======
+
 	const { currentUser, setCurrentUser } = useContext(UserContext);
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
@@ -176,7 +175,7 @@ const RegisterHost = (props) => {
 	const [updateClickCount, setUpdateClickCount] = useState(0);
 	const [popUpText, setPopUpText] = useState(null);
 	const [registered, setRegistered] = useState(false);
->>>>>>> 6642d160f13e84045e322eac1c231a4f3ffde360
+
 
 	const image = require('../images/image.png');
 
@@ -284,163 +283,163 @@ const RegisterHost = (props) => {
 		return true;
 	};
 
-	return (
-		<View style={styles.contentContainer}>
-			<Text
-				style={{
-					fontSize: 20,
-					fontFamily: 'Bold',
-					alignSelf: 'center',
-					marginTop: 50,
-					marginBottom: 65,
-					paddingTop: 10
-				}}>
-				Register Organization Host{' '}
-			</Text>
+// 		return (
+// 			<View style={styles.contentContainer}>
+// 				<Text
+// 					style={{
+// 						fontSize: 20,
+// 						fontFamily: 'Bold',
+// 						alignSelf: 'center',
+// 						marginTop: 50,
+// 						marginBottom: 65,
+// 						paddingTop: 10
+// 					}}>
+// 					Register Organization Host{' '}
+// 				</Text>
 
-			<KeyboardAvoidingView
-				style={styles.inputContainer}
-				behavior={Platform.OS === 'ios' ? "padding" : null}
-				>
-				<View>
-					<ScrollView style={{paddingBottom: 50, paddingTop: 15}}>
-						<Input
-							label='Enter host first name:'
-							placeholder='First Name'
-							leftIcon={
-								<Icon
-									name='mail'
-									size={24}
-									color='black'
-									style={styles.icon}
-								/>
-							}
-							onChangeText={(text) => setfirstName(text)}
-							value={firstName}
-						/>
+// 				<KeyboardAvoidingView
+// 					style={styles.inputContainer}
+// 					behavior={Platform.OS === 'ios' ? "padding" : null}
+// 					>
+// 					<View>
+// 						<ScrollView style={{paddingBottom: 50, paddingTop: 15}}>
+// 							<Input
+// 								label='Enter host first name:'
+// 								placeholder='First Name'
+// 								leftIcon={
+// 									<Icon
+// 										name='mail'
+// 										size={24}
+// 										color='black'
+// 										style={styles.icon}
+// 									/>
+// 								}
+// 								onChangeText={(text) => setfirstName(text)}
+// 								value={firstName}
+// 							/>
 
-						<Input
-							label='Enter host last name:'
-							placeholder='Last Name'
-							leftIcon={
-								<Icon
-									name='mail'
-									size={24}
-									color='black'
-									style={styles.icon}
-								/>
-							}
-							onChangeText={(text) => setlastName(text)}
-							value={lastName}
-						/>
+// 							<Input
+// 								label='Enter host last name:'
+// 								placeholder='Last Name'
+// 								leftIcon={
+// 									<Icon
+// 										name='mail'
+// 										size={24}
+// 										color='black'
+// 										style={styles.icon}
+// 									/>
+// 								}
+// 								onChangeText={(text) => setlastName(text)}
+// 								value={lastName}
+// 							/>
 
-						<Input
-							label='Enter the name of the organization:'
-							placeholder='Organization Name'
-							leftIcon={
-								<Icon
-									name='mail'
-									size={24}
-									color='black'
-									style={styles.icon}
-								/>
-							}
-							onChangeText={(text) => setOrg(text)}
-							value={org}
-						/>
-						<Input
-							label='Enter host email associated to organization:'
-							placeholder='youremail@address.com'
-							leftIcon={
-								<Icon
-									name='mail'
-									size={24}
-									color='black'
-									style={styles.icon}
-								/>
-							}
-							onChangeText={(text) => setEmail(text)}
-							value={email}
-						/>
+// 							<Input
+// 								label='Enter the name of the organization:'
+// 								placeholder='Organization Name'
+// 								leftIcon={
+// 									<Icon
+// 										name='mail'
+// 										size={24}
+// 										color='black'
+// 										style={styles.icon}
+// 									/>
+// 								}
+// 								onChangeText={(text) => setOrg(text)}
+// 								value={org}
+// 							/>
+// 							<Input
+// 								label='Enter host email associated to organization:'
+// 								placeholder='youremail@address.com'
+// 								leftIcon={
+// 									<Icon
+// 										name='mail'
+// 										size={24}
+// 										color='black'
+// 										style={styles.icon}
+// 									/>
+// 								}
+// 								onChangeText={(text) => setEmail(text)}
+// 								value={email}
+// 							/>
 
-						<Input
-							label='Enter password:'
-							placeholder='password'
-							secureTextEntry={true}
-							leftIcon={
-								<Icon
-									name='lock'
-									size={24}
-									color='black'
-									style={styles.icon}
-								/>
-							}
-							onChangeText={(text) => setPassword(text)}
-							value={password}
-						/>
+// 							<Input
+// 								label='Enter password:'
+// 								placeholder='password'
+// 								secureTextEntry={true}
+// 								leftIcon={
+// 									<Icon
+// 										name='lock'
+// 										size={24}
+// 										color='black'
+// 										style={styles.icon}
+// 									/>
+// 								}
+// 								onChangeText={(text) => setPassword(text)}
+// 								value={password}
+// 							/>
 
-						<Input
-							label='Re-type password:'
-							placeholder='confirm password'
-							secureTextEntry={true}
-							leftIcon={
-								<Icon
-									name='lock'
-									size={24}
-									color='black'
-									style={styles.icon}
-								/>
-							}
-							onChangeText={(text) => verifyPassword(text)}
-							value={verifypass}
-						/>
+// 							<Input
+// 								label='Re-type password:'
+// 								placeholder='confirm password'
+// 								secureTextEntry={true}
+// 								leftIcon={
+// 									<Icon
+// 										name='lock'
+// 										size={24}
+// 										color='black'
+// 										style={styles.icon}
+// 									/>
+// 								}
+// 								onChangeText={(text) => verifyPassword(text)}
+// 								value={verifypass}
+// 							/>
 
-						<Input
-							label='Enter your 6 digit code'
-							placeholder='Unique ID'
-							//secureTextEntry={true}
-							leftIcon={
-								<Icon
-									name='lock'
-									size={24}
-									color='black'
-									style={styles.icon}
-								/>
-							}
-							onChangeText={(text) => setUniqueID(text)}
-							value={uniqueID}
-						/>
-					</ScrollView>
-				</View>
-				<PopUpModal
-							style={{ height: 0, padding: 0, margin: 0 }}
-							popUpText={popUpText}
-							updateClickCount={updateClickCount}
-							switchPage={() => switchPage()}></PopUpModal>
-			</KeyboardAvoidingView>
+// 							<Input
+// 								label='Enter your 6 digit code'
+// 								placeholder='Unique ID'
+// 								//secureTextEntry={true}
+// 								leftIcon={
+// 									<Icon
+// 										name='lock'
+// 										size={24}
+// 										color='black'
+// 										style={styles.icon}
+// 									/>
+// 								}
+// 								onChangeText={(text) => setUniqueID(text)}
+// 								value={uniqueID}
+// 							/>
+// 						</ScrollView>
+// 					</View>
+// 					<PopUpModal
+// 								style={{ height: 0, padding: 0, margin: 0 }}
+// 								popUpText={popUpText}
+// 								updateClickCount={updateClickCount}
+// 								switchPage={() => switchPage()}></PopUpModal>
+// 				</KeyboardAvoidingView>
 
-			<View style={styles.buttonContainer}>
-				<Button
-					style={styles.smallButton}
-					title='Sign Up'
-					onPress={() =>
-						signUpWithEmailPassword(
-							email,
-							password,
-							props,
-							verifypass,
-							uniqueID,
-							firstName,
-							lastName,
-							org
-						)
-					}
-				/>
-			</View>
-			
-		</View>
-	);
-};
+// 				<View style={styles.buttonContainer}>
+// 					<Button
+// 						style={styles.smallButton}
+// 						title='Sign Up'
+// 						onPress={() =>
+// 							signUpWithEmailPassword(
+// 								email,
+// 								password,
+// 								props,
+// 								verifypass,
+// 								uniqueID,
+// 								firstName,
+// 								lastName,
+// 								org
+// 							)
+// 						}
+// 					/>
+// 				</View>
+				
+// 			</View>
+// 		);
+// };
 
 //onPress={()=>correct(email,password,verifypass)}
 const styles = StyleSheet.create({
