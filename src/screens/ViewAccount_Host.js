@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Text,
 	View,
@@ -16,20 +16,40 @@ import * as firebase from 'firebase';
 import PopUpModal from '../components/PopUpModal';
 import InfoDropDown from '../components/InfoDropDown';
 import { ScrollView } from 'react-native-gesture-handler';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 const viewHost = (props) => {
-
+	const { currentUser, setCurrentUser } = useContext(UserContext);
 	//connect to firebase somehow (?)
-	const firstName = 'First';
-	const lastName = 'Last';
-	const email = 'Test@email.com';
-	const organization = 'SAMPLE CLUB NAME'
+	const [firstName, setFirstName] = useState('')
+	const [lastName, setLastName] = useState('')
+	const [email, setEmail] = useState('')
+	const [organization, setOrganization] = useState('')
+	const [uniqueID, setUniqueID] = useState('')
+	
+
 
 	const switchPage = () => {
 		setTimeout(() => {
 			props.navigation.navigate('ViewAccount_Attendee');
 		}, 750);
 	};
+
+	
+
+	useEffect(() => {
+		if(currentUser === null){
+			props.navigation.navigate("Welcome")
+		}else{
+			setFirstName(currentUser['hostFirstName']);
+			setLastName(currentUser['hostLastName']);
+			setEmail(currentUser['hostEmail']);
+			setOrganization(currentUser['hostOrg']);
+			setUniqueID(currentUser['hostUniqueID']);
+		}
+	}, [])
+	
 
 	return (
       
@@ -50,7 +70,7 @@ const viewHost = (props) => {
 
 				<View style={styles.textContainer}>
 
-					<Text style ={styles.biggerFont}> {'Email:'} </Text>
+					<Text style ={styles.biggerFont}> {'Organization:'} </Text>
 
 			
 					<Text styles = {styles.smallerFont}>
@@ -62,12 +82,12 @@ const viewHost = (props) => {
                			    	style={styles.icon}
 							/>
                     
-						{ ' '+ email + '\n' }
+						{ ' '+ organization + '\n' }
 					</Text>
 				
 			
 
-					<Text style ={styles.biggerFont}> {'Organization:'} </Text>
+					<Text style ={styles.biggerFont}> {'First Name:'} </Text>
 
 					<Text styles = {styles.smallerFont}>
 							{'  '}
@@ -78,7 +98,49 @@ const viewHost = (props) => {
                			    	style={styles.icon}
 							/>
                     
-						{ ' '+ organization + '\n' }
+						{ ' '+ firstName + '\n' }
+					</Text>
+
+					<Text style ={styles.biggerFont}> {'Last Name:'} </Text>
+
+					<Text styles = {styles.smallerFont}>
+							{'  '}
+           					<Icon // organization text
+               			 		name='addusergroup'  
+                				size={20}
+               			   		color='black'
+               			    	style={styles.icon}
+							/>
+                    
+						{ ' '+ lastName + '\n' }
+					</Text>
+
+					<Text style ={styles.biggerFont}> {'Unique ID:'} </Text>
+
+					<Text styles = {styles.smallerFont}>
+							{'  '}
+           					<Icon // organization text
+               			 		name='addusergroup'  
+                				size={20}
+               			   		color='black'
+               			    	style={styles.icon}
+							/>
+                    
+						{ ' '+ uniqueID + '\n' }
+					</Text>
+
+					<Text style ={styles.biggerFont}> {'Email:'} </Text>
+
+					<Text styles = {styles.smallerFont}>
+							{'  '}
+           					<Icon // organization text
+               			 		name='addusergroup'  
+                				size={20}
+               			   		color='black'
+               			    	style={styles.icon}
+							/>
+                    
+						{ ' '+ email + '\n' }
 					</Text>
 
 

@@ -16,6 +16,8 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Firebase from '../components/Firebase';
 import PopUpModal from '../components/PopUpModal';
 import InfoDropDown from '../components/InfoDropDown';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -36,6 +38,7 @@ const months = [
 ];
 
 const CreateEvent = (props) => {
+	const { currentUser, setCurrentUser } = useContext(UserContext);
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 	const [isEventTypeVisible, setEventTypeVisibility] = useState(false);
@@ -80,19 +83,19 @@ const CreateEvent = (props) => {
 	const addNewEvent = () => {
 		// Add an club name (probably will be used in the creation of a user)
 		db.collection('OrgEvents')
-			.doc('New Club')
+			.doc(currentUser['hostOrg'])
 			.set(
 				{
-					ClubName: "New Club"
+					ClubName: currentUser['hostOrg']
 				},
 				{ merge: true }
-			);
+			).then(
 
 			// Event Document (temp set to RHa until we get an actual user that is logged in) added to the 
 			db.collection('OrgEvents')
-			.doc('New Club')
+			.doc(currentUser['hostOrg'])
 			.collection('Events')
-			.doc('Temp')
+			.doc(title)
 			.set(
 				{
 					[title]: {
@@ -108,73 +111,29 @@ const CreateEvent = (props) => {
 					},
 				},
 				{ merge: true }
-			);
+			)).then(
 
 
 		// used to add an attendee to the event
 		db.collection('OrgEvents')
-			.doc('New Club')
+			.doc(currentUser['hostOrg'])
 			.collection('Events')
-			.doc('Temp')
+			.doc(title)
 			.collection('Attendees')
 			.doc('Attendees List')
 			.set(
 				{
-					'ghost Summers': {
-						firstName: 'Joanne',
-						lastName: 'Summers'
+					'Attendees': {
+						firstName: '',
+						lastName: ''
 					},
 
 					
 				},
 				{ merge: true }
-			);
-
-		//Trying new method with new object (temp)
-		/*
-				db.collection('OrgEvents')
-			.doc('RHA')
-			.set(
-				{
-					[title]: {
-						Title: title,
-						Location: location,
-						'Primary Contact': primaryContact,
-						'Contact Email': contactEmail,
-						Date: dateSelected,
-						Time: timeSelected,
-						Description: description,
-						'Max Capacity': maxCapacity,
-						'Event Type': eventType,
-					},
-				},
-				{ merge: true }
-			);
-		
-		*/
-
-		//OG code for emergency
-		/*
-				db.collection('OrgEvents')
-			.doc('RHA')
-			.set(
-				{
-					[title]: {
-						Title: title,
-						Location: location,
-						'Primary Contact': primaryContact,
-						'Contact Email': contactEmail,
-						Date: dateSelected,
-						Time: timeSelected,
-						Description: description,
-						'Max Capacity': maxCapacity,
-						'Event Type': eventType,
-					},
-				},
-				{ merge: true }
-			);
-		
-		*/	
+			)
+			)
+	
 	};
 
 	const createTime = (time) => {
@@ -402,8 +361,7 @@ const CreateEvent = (props) => {
 					</ScrollView>
 					
 				</View>
-
-				<View />
+				
 			</KeyboardAvoidingView>
 
 			<View style={styles.buttonContainer}>

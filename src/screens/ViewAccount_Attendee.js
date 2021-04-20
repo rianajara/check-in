@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Text,
 	View,
@@ -16,22 +16,37 @@ import * as firebase from 'firebase';
 import PopUpModal from '../components/PopUpModal';
 import InfoDropDown from '../components/InfoDropDown';
 import { ScrollView } from 'react-native-gesture-handler';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
 const viewAttendee = (props) => {
-
+	const { currentUser, setCurrentUser } = useContext(UserContext);
 	//connect to firebase somehow (?)
-	const firstName = 'First';
-	const lastName = 'Last';
-	const email = 'Test@email.com';
-	const major = 'Computer Science';
-	const yearLevel = 'Junior';
+	const [firstName, setFirstName] = useState('')
+	const [lastName, setLastName] = useState('')
+	const [email, setEmail] = useState('')
+	const [major, setMajor] = useState('')
+	const [yearLevel, setYearLevel] = useState('')
 
+	useEffect(() => {
+		if(currentUser === null){
+			props.navigation.navigate("Welcome")
+		}else{
+			setFirstName(currentUser['attendeeFirstName']);
+			setLastName(currentUser['attendeeLastName']);
+			setEmail(currentUser['attendeeEmail']);
+			setMajor(currentUser['attendeeMajor']);
+			setYearLevel(currentUser['attendeeYearLevel']);
+		}
+	}, [])
+
+/*
 	const switchPage = () => {
 		setTimeout(() => {
 			props.navigation.navigate('ViewAccount_Attendee');
 		}, 750);
 	};
-
+*/
 	return (
       
 		//attendee information

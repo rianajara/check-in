@@ -14,13 +14,19 @@ import ViewAccount_Host from './ViewAccount_Host';
 import Firebase from '../components/Firebase';
 import * as firebase from 'firebase';
 import PopUpModal from '../components/PopUpModal';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
 
-const RegisterHost = (props) => {
-	const [email, setEmail] = React.useState('');
+const ModifyHost = (props) => {
+	const { currentUser, setCurrentUser } = useContext(UserContext);
+	const [email, setEmail] = React.useState(currentUser['hostEmail']);
 	const [password, setPassword] = React.useState('');
 	const [verifypass, verifyPassword] = React.useState('');
 	const [updateClickCount, setUpdateClickCount] = React.useState(0);
-	const [uniqueID, setUniqueID] = React.useState("");
+	const [uniqueID, setUniqueID] = React.useState(currentUser['hostUniqueID']);
+	const [firstName, setFirstName] = React.useState(currentUser['hostFirstName']);
+	const [lastName, setLastName] = React.useState(currentUser['hostLastName']);
+	const [org, setOrg] = React.useState(currentUser['hostOrg']);
 
     const switchPage = () => {
 		setTimeout(() => {
@@ -42,6 +48,20 @@ const RegisterHost = (props) => {
 				Modify Host Account{' '}
 			</Text>
 			<View style={styles.inputContainer}>
+			<Input
+					label="Enter Organization Name:"
+					placeholder='first name'
+					leftIcon={
+						<Icon
+							name='user'
+							size={24}
+							color='black'
+							style={styles.icon}
+						/>
+					}
+					onChangeText={(text) => {setFirstName(text)}}
+					value={org}
+				/>
 				<Input
 					label="Enter host's first name:"
 					placeholder='first name'
@@ -53,7 +73,8 @@ const RegisterHost = (props) => {
 							style={styles.icon}
 						/>
 					}
-					onChangeText={() => {}}
+					onChangeText={(text) => {setFirstName(text)}}
+					value={firstName}
 				/>
 
 				<Input
@@ -67,7 +88,8 @@ const RegisterHost = (props) => {
 							style={styles.icon}
 						/>
 					}
-					onChangeText={() => {}}
+					onChangeText={(text) => {setLastName(text)}}
+					value={lastName}
 				/>
 
 				<Input
@@ -129,7 +151,7 @@ const RegisterHost = (props) => {
                             style={styles.icon}
                         />
                     }
-                    onChangeText={text => setUniqueID(text)}
+                    editable={false}
                     value={uniqueID}
                 />
 			</View>
@@ -205,6 +227,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'space-evenly',
+		marginTop: 10
 	},
 	smallImage: {
 		marginTop: 60,
@@ -215,8 +238,10 @@ const styles = StyleSheet.create({
 		width: '90%',
 		marginTop: 100,
 		justifyContent: 'space-evenly',
+		marginBottom: -50,
 	},
 	buttonContainer: {
+		
 		justifyContent: 'space-around',
 		height: '40%',
 	},
@@ -226,4 +251,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default RegisterHost;
+export default ModifyHost;

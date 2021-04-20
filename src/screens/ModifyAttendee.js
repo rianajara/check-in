@@ -163,7 +163,7 @@ const signUpWithEmailPassword = (email, password, props, verifypass) => {
 			var user = userCredential.user;
 			alert('Successfuly registered.');
 
-			console.warn('successfully registered');
+			//console.warn('successfully registered');
 
 			//props.navigation.navigate('MainAttendee');
 			// ...
@@ -175,7 +175,7 @@ const signUpWithEmailPassword = (email, password, props, verifypass) => {
 			// ..
 		});
 
-	console.warn('checking the firebase');
+	//console.warn('checking the firebase');
 	// [END auth_signup_password]
 };
 
@@ -193,7 +193,7 @@ const validate_Field = (email, password, verifypass) => {
 		alert('Please re-enter password');
 		return false;
 	}
-	console.warn('testing the validation');
+	//console.warn('testing the validation');
 	return true;
 };
 
