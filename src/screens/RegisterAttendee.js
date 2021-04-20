@@ -17,6 +17,8 @@ import * as firebase from 'firebase';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import PopUpModal from '../components/PopUpModal';
+import InfoDropDown from '../components/InfoDropDown';
 
 //const admin = require('firebase-admin')
 const db = Firebase.firestore();
@@ -167,8 +169,11 @@ const RegisterAttendee = (props) => {
 							onChangeText={(text) => setlastName(text)}
 							value={lastName}
 						/>
-
-						<Input
+						<InfoDropDown 
+							setDataType={(value) => setMajor(value)}
+							dropDownType={'major'}
+							labelInfo="Choose a major"></InfoDropDown>
+						{/* <Input
 							label='Enter attendee major:'
 							placeholder='Major'
 							leftIcon={
@@ -181,7 +186,7 @@ const RegisterAttendee = (props) => {
 							}
 							onChangeText={(text) => setMajor(text)}
 							value={major}
-						/>
+						/> */}
 
 						<Input
 							label='Enter attendee year level:'

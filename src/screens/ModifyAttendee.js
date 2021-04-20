@@ -23,6 +23,7 @@ const ModfiyAttendee = (props) => {
 	const [verifypass, verifyPassword] = React.useState('');
 	const [updateClickCount, setUpdateClickCount] = React.useState(0);
 	const [major, setMajor] = React.useState('');
+	const [yearlevel, setyearLevel] = React.useState('');
 
 	const switchPage = () => {
 		setTimeout(() => {
@@ -42,39 +43,93 @@ const ModfiyAttendee = (props) => {
 				Modify Student Attendee{' '}
 			</Text>
 			<ScrollView >
-			<View style={styles.inputContainer}>
-				<Input
-				
-					label='Enter first name:'
-					placeholder='first name'
-					leftIcon={
-						<Icon
-							name='user'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-					onChangeText={() => {}}
-				/>
+				<View style={styles.inputContainer}>
+					<Input
+					
+						label='Enter first name:'
+						placeholder='first name'
+						leftIcon={
+							<Icon
+								name='user'
+								size={24}
+								color='black'
+								style={styles.icon}
+							/>
+						}
+						onChangeText={() => {}}
+					/>
 
-				<Input
-					label='Enter last name:'
-					placeholder='last name'
-					leftIcon={
-						<Icon
-							name='user'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-					onChangeText={() => {}}
-				/>
+					<Input
+						label='Enter last name:'
+						placeholder='last name'
+						leftIcon={
+							<Icon
+								name='user'
+								size={24}
+								color='black'
+								style={styles.icon}
+							/>
+						}
+						onChangeText={() => {}}
+					/>
 
+					<Input
+						label='Enter student email:'
+						placeholder='youremail@address.com'
+						leftIcon={
+							<Icon
+								name='mail'
+								size={24}
+								color='black'
+								style={styles.icon}
+							/>
+						}
+						onChangeText={(text) => setEmail(text)}
+						value={email}
+					/>
+
+					<Input
+						label='Enter password:'
+						placeholder='password'
+						secureTextEntry={true}
+						leftIcon={
+							<Icon
+								name='lock'
+								size={24}
+								color='black'
+								style={styles.icon}
+							/>
+						}
+						onChangeText={(text) => setPassword(text)}
+						value={password}
+					/>
+
+					<Input
+						label='Re-type password:'
+						placeholder='confirm password'
+						secureTextEntry={true}
+						leftIcon={
+							<Icon
+								name='lock'
+								size={24}
+								color='black'
+								style={styles.icon}
+							/>
+						}
+						onChangeText={(text) => verifyPassword(text)}
+						value={verifypass}
+					/>
+				</View>
+
+				<View >
+					<InfoDropDown 
+						setDataType={(value) => setMajor(value)}
+						dropDownType={'major'}
+						labelInfo="Choose a major"></InfoDropDown>
+				</View>
 				<Input
-					label='Enter student email:'
-					placeholder='youremail@address.com'
+					label='Enter attendee year level:'
+					placeholder='Year Level'
 					leftIcon={
 						<Icon
 							name='mail'
@@ -83,49 +138,10 @@ const ModfiyAttendee = (props) => {
 							style={styles.icon}
 						/>
 					}
-					onChangeText={(text) => setEmail(text)}
-					value={email}
+					onChangeText={(text) => setyearLevel(text)}
+					value={yearlevel}
 				/>
 
-				<Input
-					label='Enter password:'
-					placeholder='password'
-					secureTextEntry={true}
-					leftIcon={
-						<Icon
-							name='lock'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-					onChangeText={(text) => setPassword(text)}
-					value={password}
-				/>
-
-				<Input
-					label='Re-type password:'
-					placeholder='confirm password'
-					secureTextEntry={true}
-					leftIcon={
-						<Icon
-							name='lock'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-					onChangeText={(text) => verifyPassword(text)}
-					value={verifypass}
-				/>
-			</View>
-
-			<View >
-				<InfoDropDown 
-					setDataType={(value) => setMajor(value)}
-					dropDownType={'major'}
-					labelInfo="Choose a major"></InfoDropDown>
-			</View>
 			
 			</ScrollView>
 			<View style={styles.buttonContainer}>
@@ -203,6 +219,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'space-evenly',
+		
 	},
 	smallImage: {
 		marginTop: 60,
