@@ -158,7 +158,14 @@ const ModfiyAttendee = (props) => {
 						setUpdateClickCount(updateClickCount + 1);
 					}}
 				/>
+
+				<Button
+					title = 'Delete Account'
+					type = 'clear'
+				/>
 			</View>
+
+			
 			<PopUpModal
 				popUpText={'Information Saved!'}
 				updateClickCount={updateClickCount}
@@ -232,7 +239,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-evenly',
 	},
 	buttonContainer: {
-		justifyContent: 'space-around',
+		justifyContent: 'space-evenly',
 		height: '17%',
 	},
 	smallButton: {},
