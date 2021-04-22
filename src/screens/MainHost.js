@@ -43,13 +43,6 @@ const MainHost = (props) => {
 			<View style={styles.buttonContainer}>
 				<Button
 					style={styles.smallButton}
-					title='Check In Attendees'
-					onPress={() =>
-						props.navigation.navigate('CheckInAttendees')
-					}
-				/>
-				<Button
-					style={styles.smallButton}
 					title='Create an Event'
 					onPress={() => props.navigation.navigate('CreateEvent')}
 				/>
