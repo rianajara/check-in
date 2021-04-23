@@ -43,7 +43,10 @@ const MainAttendee = (props) => {
 				Attendee Main Page
 			</Text>
 			
-			<QRCode value='Just some string value' size={300} />
+			<QRCode 
+				value= {currentUser['attendeeEmail']}
+				size={300} 
+			/>
 
 			<View style={styles.buttonContainer}>
 				<Button
