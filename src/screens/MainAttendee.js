@@ -28,7 +28,6 @@ const MainAttendee = (props) => {
 	};
 
 	console.warn(currentUser)
-
 	
 
 	return (
