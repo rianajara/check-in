@@ -2,12 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import QRCode from 'react-native-qrcode-svg';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
+import Firebase from '../components/Firebase';
+
+const db = Firebase.firestore();
+db.settings({ timestampsInSnapshots: true });
+
 const CameraScan= (props) => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const image = require('../images/image.png');
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
+    const { currentUser, setCurrentUser } = useContext(UserContext);
+
 
     useEffect(() => {
         (async () => {
@@ -15,10 +24,26 @@ const CameraScan= (props) => {
           setHasPermission(status === 'granted');
         })();
       }, []);
+
+      const addAttendee= () => { 
+        db.collection('OrgEvents')
+            .doc(currentUser['hostOrg'])
+            .collection('Events')
+            .doc(title)
+            .collection('Attendees')
+            .doc({data})
+            .set(
+                {
+                      'Attendees': ""
+                    },
+                { merge: true }
+            )
+      };
     
       const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
-        alert(`${data}`);
+        // alert(`${data}`);
+        console.warn({data});
       };
     
       if (hasPermission === null) {
@@ -28,10 +53,10 @@ const CameraScan= (props) => {
         return <Text>No access to camera</Text>;
       }
     
-    return (
+    return ( 
         <View style={styles.container}>
       <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned, addAttendee}
         style={StyleSheet.absoluteFillObject}
       />
       {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
