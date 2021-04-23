@@ -5,10 +5,21 @@ import { Button } from 'react-native-elements';
 import Firebase from '../components/Firebase';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
+import { eventTypes } from '../json/eventTypes.json';
+
+import RNPickerSelect from 'react-native-picker-select';//dropdown
 
 const ViewEvents = (props) => {
 	const { currentUser, setCurrentUser } = useContext(UserContext);
+
 	const [eventArray, setEventArray] = useState([]);
+
+	//alert(eventArray);
+
+
+
+
+	
 
 	const colorPicker = (buttonNum) => {
 		if (buttonNum % 4 == 1) {
@@ -57,6 +68,36 @@ const ViewEvents = (props) => {
 
 		
 	}
+
+	// Help here
+	async function filterEvents(db, filter) {
+
+			// This confirms filter value is being passed
+			//console.log('filter check:',filter);
+
+			const aesbEvents = db
+			.collection('OrgEvents')
+			.doc(currentUser['hostOrg'])
+			.collection('Events');
+
+			// Not working ????? 
+			// reference, https://cloud.google.com/firestore/docs/query-data/queries#node.js_1
+			const queryRef = aesbEvents.where('Event Type', '==', filter);
+			// seems to return empty
+		
+
+		const snapshot = await queryRef.get();
+		const tempEventArray = [];
+
+		snapshot.forEach((collection) => {
+			console.log('tester: ',collection.id, ':', collection.data());
+			tempEventArray.push(collection.data());
+			
+		});		
+		setEventArray(tempEventArray);
+
+	}
+
 
 	useEffect(() => {
 		getAllEvents(db);
@@ -108,6 +149,21 @@ const ViewEvents = (props) => {
 					]}>
 					<Text style={styles.buttonViewText}>Past Events</Text>
 				</TouchableOpacity>
+
+
+				<RNPickerSelect  //dropdown menu for filter
+						//on value change, call filterEvents with the value
+						//i have confirmed this part is working
+           			 onValueChange={(value) => filterEvents(db,value)}
+           			 items={eventTypes} 
+
+					style={pickerSelectStyles}
+				/>	
+
+
+
+
+
 				<TouchableOpacity
 					style={[
 						styles.buttonView,
@@ -189,6 +245,29 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontWeight: '700',
 	},
+
+	
+});
+
+const pickerSelectStyles = StyleSheet.create({
+	inputIOS: {
+		fontSize: 18,
+		paddingVertical: 12,
+		paddingHorizontal: 10,
+		color: 'black',
+		paddingRight: 30, // to ensure the text is never behind the icon
+		width: 165,
+	},
+	inputAndroid: {
+		fontSize: 18,
+ 
+		paddingVertical: 17,
+ 
+		color: 'black',
+		width: 200,
+	},
+
+
 });
 
 export default ViewEvents;
