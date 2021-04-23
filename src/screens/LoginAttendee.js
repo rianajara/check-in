@@ -47,7 +47,7 @@ const LoginAttendee = (props) => {
 									attendeeLastName: doc.data().LastName,
 									attendeeYearLevel: doc.data().YearLevel,
 									attendeeMajor: doc.data().Major,
-									userType: 'host',
+									userType: 'attendee',
 								};
 
 								setCurrentUser(userData);
