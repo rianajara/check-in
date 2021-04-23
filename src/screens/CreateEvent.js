@@ -111,28 +111,7 @@ const CreateEvent = (props) => {
 					},
 				},
 				{ merge: true }
-			)).then(
-
-
-		// used to add an attendee to the event
-		db.collection('OrgEvents')
-			.doc(currentUser['hostOrg'])
-			.collection('Events')
-			.doc(title)
-			.collection('Attendees')
-			.doc('Attendees List')
-			.set(
-				{
-					'Attendees': {
-						firstName: '',
-						lastName: ''
-					},
-
-					
-				},
-				{ merge: true }
-			)
-			)
+			))
 	
 	};
 

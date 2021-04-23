@@ -29,6 +29,11 @@ const CameraScan = (props) => {
 		})();
 	}, []);
 
+	function isValidEmail( value ) {
+		return /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,5}$/.test( value );
+	}
+	
+
 	const addAttendee = (data) => {
     
 		db.collection('OrgEvents')
@@ -45,10 +50,15 @@ const CameraScan = (props) => {
 	};
 
 	const handleBarCodeScanned = ({ type, data }) => {
-		setScanned(true);
-		// alert(`${data}`);
-		console.warn(data);
-		addAttendee(data);
+
+		if (isValidEmail(data) == false){
+			setScanned(true);
+			alert('Not a valid attendee URL');
+		}
+		else{
+			setScanned(true);
+			addAttendee(data);
+		}
 	};
 
 	if (hasPermission === null) {
