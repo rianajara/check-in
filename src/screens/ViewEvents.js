@@ -7,19 +7,14 @@ import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import { eventTypes } from '../json/eventTypes.json';
 
-import RNPickerSelect from 'react-native-picker-select';//dropdown
+import RNPickerSelect from 'react-native-picker-select'; //dropdown
 
 const ViewEvents = (props) => {
 	const { currentUser, setCurrentUser } = useContext(UserContext);
 
 	const [eventArray, setEventArray] = useState([]);
-
-	//alert(eventArray);
-
-
-
-
-	
+	const [arrayOfEvents, setArrayOfEvents] = useState([]);
+	const [filterChangeCount, setFilterChangeCount] = useState(0)
 
 	const colorPicker = (buttonNum) => {
 		if (buttonNum % 4 == 1) {
@@ -62,84 +57,95 @@ const ViewEvents = (props) => {
 			tempEventArray.push(collection.data());
 		});
 
-		
+		await setEventArray(tempEventArray);
 
-		setEventArray(tempEventArray);
-
-		
+		setArrayList();
 	}
 
 	// Help here
 	async function filterEvents(db, filter) {
-
-			// This confirms filter value is being passed
-			//console.log('filter check:',filter);
-
-			const aesbEvents = db
+		setFilterChangeCount(filterChangeCount + 1)
+		const aesbEvents = db
 			.collection('OrgEvents')
 			.doc(currentUser['hostOrg'])
 			.collection('Events');
 
-			// Not working ????? 
-			// reference, https://cloud.google.com/firestore/docs/query-data/queries#node.js_1
-			const queryRef = aesbEvents.where('Event Type', '==', filter);
-			// seems to return empty
-		
-
-		const snapshot = await queryRef.get();
+		const snapshot = await aesbEvents.get();
 		const tempEventArray = [];
 
-		snapshot.forEach((collection) => {
-			console.log('tester: ',collection.id, ':', collection.data());
-			tempEventArray.push(collection.data());
-			
-		});		
-		setEventArray(tempEventArray);
+		snapshot.forEach(async (collection) => {
+			const eventTitle = await Object.keys(collection.data())[0];
+			console.log('tester: ', collection.id, ':', collection.data());
+			if (collection.data()[eventTitle]['Event Type'] === filter) {
+				await tempEventArray.push(collection.data());
+			}
+		});
 
+		setEventArray(tempEventArray);
 	}
 
+	const setArrayList = () => {
+		setArrayOfEvents(
+			<ScrollView style={styles.scrollView}>
+				{eventArray.map((data, key) => (
+					<View key={key}>
+						<TouchableOpacity
+							onPress={() =>
+								props.navigation.navigate('ViewEvent', {
+									data: data,
+								})
+							}
+							style={[
+								styles.eventButton,
+								{
+									backgroundColor: colorPicker(key),
+									borderColor: borderColorPicker(key),
+								},
+							]}
+							key={key}>
+							<Text style={styles.buttonTitleText}>
+								{Object.keys(data)[0]}
+							</Text>
+							<Text style={styles.buttonDetailText}>
+								{data[Object.keys(data)[0]]['Date']},{' '}
+								{data[Object.keys(data)[0]]['Time']}
+							</Text>
+							<Text style={styles.buttonDetailText}>
+								{data[Object.keys(data)[0]]['Location']}
+							</Text>
+						</TouchableOpacity>
+					</View>
+				))}
+			</ScrollView>
+		);
+	};
 
 	useEffect(() => {
 		getAllEvents(db);
 	}, []);
 
+	useEffect(() => {
+		if (eventArray.length === 0 && filterChangeCount > 0) {
+			setArrayOfEvents(
+				<Text
+					style={{
+						fontSize: 20,
+						fontFamily: 'Bold',
+						alignSelf: 'center',
+						marginTop: 115,
+						textAlign: 'center',
+					}}>
+					No Events of this type. {'\n'}Please try a different filter.{' '}
+				</Text>
+			);
+		} else {
+			setArrayList();
+		}
+	}, [eventArray]);
+
 	return (
 		<View style={styles.contentContainer}>
-			<View style={styles.scrollViewOuterView}>
-				<ScrollView style={styles.scrollView}>
-					{eventArray.map((data, key) => (
-						<View key={key}>
-							<TouchableOpacity
-								onPress={() =>
-									props.navigation.navigate('ViewEvent', {
-										data: data,
-									})
-								}
-								style={[
-									styles.eventButton,
-									{
-										backgroundColor: colorPicker(key),
-										borderColor: borderColorPicker(key),
-									},
-								]}
-								key={key}>
-								<Text style={styles.buttonTitleText}>
-									{Object.keys(data)[0]}
-									
-									
-								</Text>
-								<Text style={styles.buttonDetailText}>
-									{data[Object.keys(data)[0]]['Date']},{' '}{data[Object.keys(data)[0]]['Time']}
-									
-								</Text>
-								<Text style={styles.buttonDetailText}>
-									{data[Object.keys(data)[0]]['Location']}
-								</Text>
-							</TouchableOpacity>
-						</View>
-					))}
-				</ScrollView>
-			</View>
+			<View style={styles.scrollViewOuterView}>{arrayOfEvents}</View>
 			<View style={styles.buttonViewContainer}>
 				<TouchableOpacity
 					style={[
@@ -150,19 +156,13 @@ const ViewEvents = (props) => {
 					<Text style={styles.buttonViewText}>Past Events</Text>
 				</TouchableOpacity>
 
-
-				<RNPickerSelect  //dropdown menu for filter
-						//on value change, call filterEvents with the value
-						//i have confirmed this part is working
-           			 onValueChange={(value) => filterEvents(db,value)}
-           			 items={eventTypes} 
-
+				<RNPickerSelect //dropdown menu for filter
+					//on value change, call filterEvents with the value
+					//i have confirmed this part is working
+					onValueChange={(value) => filterEvents(db, value)}
+					items={eventTypes}
 					style={pickerSelectStyles}
-				/>	
-
-
-
-
+				/>
 
 				<TouchableOpacity
 					style={[
@@ -220,7 +220,6 @@ const styles = StyleSheet.create({
 	},
 	buttonDetailText: {
 		fontSize: 16,
-		
 	},
 	buttonViewContainer: {
 		width: '90%',
@@ -245,8 +244,6 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontWeight: '700',
 	},
-
-	
 });
 
 const pickerSelectStyles = StyleSheet.create({
@@ -260,14 +257,12 @@ const pickerSelectStyles = StyleSheet.create({
 	},
 	inputAndroid: {
 		fontSize: 18,
- 
+
 		paddingVertical: 17,
- 
+
 		color: 'black',
 		width: 200,
 	},
-
-
 });
 
 export default ViewEvents;
