@@ -9,12 +9,15 @@ import { useContext } from 'react';
 
 import RNPickerSelect from 'react-native-picker-select'; //dropdown
 
+
 const ViewEvents = (props) => {
 	const { currentUser, setCurrentUser } = useContext(UserContext);
 
 	const [eventArray, setEventArray] = useState([]);
 	const [arrayOfEvents, setArrayOfEvents] = useState([]);
 	const [filterChangeCount, setFilterChangeCount] = useState(0);
+	const [pastEvents, setPastEvents] = useState(true);
+	const [futureEvents, setFutureEvents] = useState(false)
 
 	const eventTypes =  [
 		{
@@ -69,6 +72,8 @@ const ViewEvents = (props) => {
 		}
 	};
 
+	
+
 	const db = Firebase.firestore();
 
 	//get all events in one org (AESB) --- still need to find a way to pass the host's name
@@ -107,7 +112,21 @@ const ViewEvents = (props) => {
 				const eventTitle = await Object.keys(collection.data())[0];
 				console.log('tester: ', collection.id, ':', collection.data());
 				if (collection.data()[eventTitle]['Event Type'] === filter) {
-					await tempEventArray.push(collection.data());
+					if(pastEvents === false && futureEvents === false){
+						await tempEventArray.push(collection.data());
+						console.warn('regular')
+					}
+					else if(pastEvents === true && (new Date(collection.data()[eventTitle]['Date']) < new Date())){
+						console.warn('past')
+						await tempEventArray.push(collection.data());
+					}else if(futureEvents === true && (new Date(collection.data()[eventTitle]['Date']) > new Date())){
+						console.warn("future")
+						await tempEventArray.push(collection.data());
+					}
+					console.warn("test")
+					console.warn((new Date(collection.data()[eventTitle]['Event Type']) < new Date()))
+					
+					
 				}
 			});
 
@@ -183,6 +202,7 @@ const ViewEvents = (props) => {
 			<View style={styles.scrollViewOuterView}>{arrayOfEvents}</View>
 			<View style={styles.buttonViewContainer}>
 				<TouchableOpacity
+					onPress={() =>{setPastEvents(!pastEvents)}}
 					style={[
 						styles.buttonView,
 						{ backgroundColor: '#d1dfbe' },
@@ -205,6 +225,7 @@ const ViewEvents = (props) => {
 				</TouchableHighlight>
 
 				<TouchableOpacity
+					onPress={() =>{setPastEvents(!pastEvents)}}
 					style={[
 						styles.buttonView,
 						{ backgroundColor: '#d7eef6' },
