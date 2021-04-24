@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TouchableHighlight } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
 import Firebase from '../components/Firebase';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
-import { eventTypes } from '../json/eventTypes.json';
+
 
 import RNPickerSelect from 'react-native-picker-select'; //dropdown
 
@@ -14,7 +14,34 @@ const ViewEvents = (props) => {
 
 	const [eventArray, setEventArray] = useState([]);
 	const [arrayOfEvents, setArrayOfEvents] = useState([]);
-	const [filterChangeCount, setFilterChangeCount] = useState(0)
+	const [filterChangeCount, setFilterChangeCount] = useState(0);
+
+	const eventTypes =  [
+		{
+			"label": "All",
+			"value": "All"
+		},
+		{
+			"label": "Social",
+			"value": "Social"
+		},
+		{
+			"label": "Industry",
+			"value": "Industry"
+		},
+		{
+			"label": "Tabling",
+			"value": "Tabling"
+		},
+		{
+			"label": "Workshop",
+			"value": "Workshop"
+		},
+		{
+			"label": "General Body",
+			"value": "General Body"
+		}
+	]
 
 	const colorPicker = (buttonNum) => {
 		if (buttonNum % 4 == 1) {
@@ -64,7 +91,7 @@ const ViewEvents = (props) => {
 
 	// Help here
 	async function filterEvents(db, filter) {
-		setFilterChangeCount(filterChangeCount + 1)
+		setFilterChangeCount(filterChangeCount + 1);
 		const aesbEvents = db
 			.collection('OrgEvents')
 			.doc(currentUser['hostOrg'])
@@ -73,15 +100,23 @@ const ViewEvents = (props) => {
 		const snapshot = await aesbEvents.get();
 		const tempEventArray = [];
 
-		snapshot.forEach(async (collection) => {
-			const eventTitle = await Object.keys(collection.data())[0];
-			console.log('tester: ', collection.id, ':', collection.data());
-			if (collection.data()[eventTitle]['Event Type'] === filter) {
-				await tempEventArray.push(collection.data());
-			}
-		});
+		if(filter === "All"){
+			getAllEvents(db);
+		}else{
+			snapshot.forEach(async (collection) => {
+				const eventTitle = await Object.keys(collection.data())[0];
+				console.log('tester: ', collection.id, ':', collection.data());
+				if (collection.data()[eventTitle]['Event Type'] === filter) {
+					await tempEventArray.push(collection.data());
+				}
+			});
 
-		setEventArray(tempEventArray);
+			setEventArray(tempEventArray);
+		}
+
+		
+
+		
 	}
 
 	const setArrayList = () => {
@@ -156,13 +191,18 @@ const ViewEvents = (props) => {
 					<Text style={styles.buttonViewText}>Past Events</Text>
 				</TouchableOpacity>
 
-				<RNPickerSelect //dropdown menu for filter
-					//on value change, call filterEvents with the value
-					//i have confirmed this part is working
-					onValueChange={(value) => filterEvents(db, value)}
-					items={eventTypes}
-					style={pickerSelectStyles}
-				/>
+				<TouchableHighlight style={styles.filterButton}>
+					<RNPickerSelect //dropdown menu for filter
+						//on value change, call filterEvents with the value
+						//i have confirmed this part is working
+						onValueChange={(value) => filterEvents(db, value)}
+						items={eventTypes}
+						style={pickerSelectStyles}
+						useNativeAndroidPickerStyle={false}
+						placeholder={{}}
+						
+					/>
+				</TouchableHighlight>
 
 				<TouchableOpacity
 					style={[
@@ -244,24 +284,39 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontWeight: '700',
 	},
+	filterButton: {
+		width: 150,
+		height: 70,
+		backgroundColor: 'rgba(255, 217, 112, 0.55)',
+	
+		justifyContent: 'space-around',
+		borderRadius: 15,
+		borderWidth: 4,
+		borderColor: '#ffcd43',
+		
+		
+	},filterText:{
+		textAlign:"center"
+	}
 });
 
+// https://github.com/lawnstarter/react-native-picker-select/issues/29 sturmenta solution
 const pickerSelectStyles = StyleSheet.create({
 	inputIOS: {
-		fontSize: 18,
-		paddingVertical: 12,
-		paddingHorizontal: 10,
-		color: 'black',
-		paddingRight: 30, // to ensure the text is never behind the icon
-		width: 165,
+		fontSize: 12,
+		textAlign: 'center',
+		fontWeight: '700',
+		width: 150,
+		height: 70,
+		paddingRight: 8
 	},
 	inputAndroid: {
-		fontSize: 18,
-
-		paddingVertical: 17,
-
-		color: 'black',
-		width: 200,
+		fontSize: 12,
+		textAlign: 'center',
+		fontWeight: '700',
+		width: 150,
+		height: 70,
+		paddingRight: 4
 	},
 });
 
