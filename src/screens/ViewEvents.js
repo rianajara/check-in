@@ -129,7 +129,6 @@ const ViewEvents = (props) => {
 		} else {
 			snapshot.forEach(async (collection) => {
 				const eventTitle = await Object.keys(collection.data())[0];
-				console.log('tester: ', collection.id, ':', collection.data());
 				if (collection.data()[eventTitle]['Event Type'] === filter) {
 					if (pastEvents === false && futureEvents === false) {
 						await tempEventArray.push(collection.data());

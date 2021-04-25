@@ -84,7 +84,7 @@ const LoginHost = (props) => {
 					});
 			})
 			.catch((error) => {
-				console.log(error);
+				
 				var errorCode = error.code;
 				var errorMessage = error.message;
 				alert('Check your password and try again.');
