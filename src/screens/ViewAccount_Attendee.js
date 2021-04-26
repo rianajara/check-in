@@ -24,9 +24,9 @@ const viewAttendee = (props) => {
 	//connect to firebase somehow (?)
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
-	const [email, setEmail] = useState('')
-	const [major, setMajor] = useState('')
-	const [yearLevel, setYearLevel] = useState('')
+	const [email, setEmail] = React.useState('');
+	const [major, setMajor] = React.useState('');
+	const [yearlevel, setyearLevel] = React.useState('');
 
 	useEffect(() => {
 		if(currentUser === null){
@@ -36,7 +36,7 @@ const viewAttendee = (props) => {
 			setLastName(currentUser['attendeeLastName']);
 			setEmail(currentUser['attendeeEmail']);
 			setMajor(currentUser['attendeeMajor']);
-			setYearLevel(currentUser['attendeeYearLevel']);
+			setyearLevel(currentUser['attendeeYearLevel']);
 		}
 	}, [])
 
@@ -132,7 +132,7 @@ const viewAttendee = (props) => {
                			    	style={styles.icon}
 							/>
                     
-						{ ' '+ yearLevel + '\n' }
+						{ ' '+ yearlevel + '\n' }
 					</Text>
 
             

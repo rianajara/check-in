@@ -59,6 +59,7 @@ const LoginAttendee = (props) => {
 								
 								alert('Successfuly logged in.');
 								props.navigation.navigate('MainAttendee');
+								console.log(user.uid);
 							} else {
 								alert(
 									'Check your unique ID or email and try again.'

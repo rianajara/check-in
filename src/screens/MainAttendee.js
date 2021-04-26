@@ -14,6 +14,7 @@ import Icon from '@expo/vector-icons/AntDesign';
 import QRCode from 'react-native-qrcode-svg';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
+import * as firebase from 'firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MainAttendee = (props) => {
@@ -29,6 +30,16 @@ const MainAttendee = (props) => {
 
 	console.warn(currentUser);
 	console.warn(currentUser['attendeeEmail']);
+
+	useEffect(() => {
+        var user = firebase.auth().currentUser
+
+        if (user != null) {
+            user.providerData.forEach(function (profile) {
+                //console.warn('provider uid ' + user.uid);
+            });
+        }
+    }, []);
 	
 
 	return (

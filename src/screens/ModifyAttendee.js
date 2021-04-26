@@ -16,6 +16,13 @@ import * as firebase from 'firebase';
 import PopUpModal from '../components/PopUpModal';
 import InfoDropDown from '../components/InfoDropDown';
 import { ScrollView } from 'react-native-gesture-handler';
+import { UserContext } from '../context/UserContext.js';
+import { useContext } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+//import * as admin from 'firebase-admin';
+
+const db = Firebase.firestore();
+//const admin = require('firebase-admin');
 
 const ModfiyAttendee = (props) => {
 	const [email, setEmail] = React.useState('');
@@ -24,12 +31,56 @@ const ModfiyAttendee = (props) => {
 	const [updateClickCount, setUpdateClickCount] = React.useState(0);
 	const [major, setMajor] = React.useState('');
 	const [yearlevel, setyearLevel] = React.useState('');
+	const { currentUser, setCurrentUser } = useContext(UserContext);
 
 	const switchPage = () => {
 		setTimeout(() => {
-			props.navigation.navigate('ViewAccount_Attendee');
+			props.navigation.navigate('MainAttendee');
 		}, 750);
 	};
+
+	const deleteAccount = (props) => {
+        var user = firebase.auth().currentUser
+        if (user != null) {
+            user.providerData.forEach(function (profile) {
+            	user.delete();
+            	var Email = (currentUser['attendeeEmail'])
+            	props.navigation.navigate('Welcome');
+                alert('User deleted.');
+                return db.collection('Attendee').doc(Email).delete();
+            });
+       	 }	
+       	 else{
+       	 	props.navigation.navigate('Welcome');
+       	 }
+	};
+
+	const updateAccount = (major,yearlevel) => {
+		var Email = (currentUser['attendeeEmail'])
+		var data = db.collection('Attendee').doc(Email)
+		var user = firebase.auth().currentUser
+		console.log(user)
+		//console.log(collection)
+		data.update({
+			Major: major,
+			YearLevel: yearlevel
+		})
+		.then(async() => {
+			let userData = {
+                    attendeeEmail: (currentUser['attendeeEmail']),
+                    attendeeFirstName: (currentUser['attendeeFirstName']),
+                    attendeeLastName: (currentUser['attendeeLastName']),
+                    attendeeMajor: major,
+                    attendeeYearLevel: yearlevel,
+					userType: "attendee"
+                }
+                
+                setCurrentUser(userData);
+				AsyncStorage.setItem('currentUser', JSON.stringify(userData))
+		    console.log("Document successfully updated!");
+		})
+	};
+
 
 	return (
 		<View style={styles.contentContainer} >
@@ -56,7 +107,8 @@ const ModfiyAttendee = (props) => {
 								style={styles.icon}
 							/>
 						}
-						onChangeText={() => {}}
+						defaultValue={currentUser['attendeeFirstName']}
+						editable={false}
 					/>
 
 					<Input
@@ -70,7 +122,8 @@ const ModfiyAttendee = (props) => {
 								style={styles.icon}
 							/>
 						}
-						onChangeText={() => {}}
+						defaultValue={currentUser['attendeeLastName']}
+						editable={false}
 					/>
 
 					<Input
@@ -84,8 +137,10 @@ const ModfiyAttendee = (props) => {
 								style={styles.icon}
 							/>
 						}
-						onChangeText={(text) => setEmail(text)}
-						value={email}
+						defaultValue={currentUser['attendeeEmail']}
+						editable={false}
+						// onChangeText={(text) => setEmail(text)}
+						// value={email}
 					/>
 
 					<Input
@@ -119,28 +174,34 @@ const ModfiyAttendee = (props) => {
 						onChangeText={(text) => verifyPassword(text)}
 						value={verifypass}
 					/>
+
+					<Input
+						label='Enter attendee year level:'
+						placeholder='Year Level'
+						leftIcon={
+							<Icon
+								name='mail'
+								size={24}
+								color='black'
+								style={styles.icon}
+							/>
+						}
+						onChangeText={(text) => setyearLevel(text)}
+						defaultValue={currentUser['attendeeYearLevel']}
+						//value={yearlevel}
+					/>
+
 				</View>
 
 				<View >
 					<InfoDropDown 
 						setDataType={(value) => setMajor(value)}
 						dropDownType={'major'}
-						labelInfo="Choose a major"></InfoDropDown>
+						labelInfo="Choose a major">
+						
+					</InfoDropDown>
 				</View>
-				<Input
-					label='Enter attendee year level:'
-					placeholder='Year Level'
-					leftIcon={
-						<Icon
-							name='mail'
-							size={24}
-							color='black'
-							style={styles.icon}
-						/>
-					}
-					onChangeText={(text) => setyearLevel(text)}
-					value={yearlevel}
-				/>
+				
 
 			
 			</ScrollView>
@@ -149,12 +210,7 @@ const ModfiyAttendee = (props) => {
 					style={styles.smallButton}
 					title='Update'
 					onPress={() => {
-						signUpWithEmailPassword(
-							email,
-							password,
-							props,
-							verifypass
-						);
+						updateAccount(major,yearlevel)
 						setUpdateClickCount(updateClickCount + 1);
 					}}
 				/>
@@ -162,6 +218,9 @@ const ModfiyAttendee = (props) => {
 				<Button
 					title = 'Delete Account'
 					type = 'clear'
+					onPress={() => {
+						deleteAccount(props);
+					}}
 				/>
 			</View>
 
@@ -170,36 +229,9 @@ const ModfiyAttendee = (props) => {
 				popUpText={'Information Saved!'}
 				updateClickCount={updateClickCount}
 				switchPage={() => switchPage()}></PopUpModal>
+				
 		</View>
 	);
-};
-
-const signUpWithEmailPassword = (email, password, props, verifypass) => {
-	//var email = "test@example.com";
-	//var password = "hunter2";
-	// [START auth_signup_password]
-	firebase
-		.auth()
-		.createUserWithEmailAndPassword(email, password)
-		.then((userCredential) => {
-			// Signed in
-			var user = userCredential.user;
-			alert('Successfuly registered.');
-
-			//console.warn('successfully registered');
-
-			//props.navigation.navigate('MainAttendee');
-			// ...
-		})
-		.catch((error) => {
-			var errorCode = error.code;
-			var errorMessage = validate_Field(email, password, verifypass);
-			//validate_Field(email,password,verifypass)
-			// ..
-		});
-
-	//console.warn('checking the firebase');
-	// [END auth_signup_password]
 };
 
 const validate_Field = (email, password, verifypass) => {
