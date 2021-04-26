@@ -199,7 +199,7 @@ const ViewEvents = (props) => {
 							</Text>
 							<Text style={styles.buttonDetailText}>
 								<Text style={styles.boldText}>
-									Spots Left:{' '}
+									Spots Left:{' '}{data[Object.keys(data)[0]]['Spots Left']}
 								</Text>
 							</Text>
 							<Text style={styles.buttonDetailText}>

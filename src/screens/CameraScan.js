@@ -7,7 +7,6 @@ import { useContext } from 'react';
 import Firebase from '../components/Firebase';
 import { NavigationActions, StackActions } from 'react-navigation';
 
-
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
 
@@ -22,64 +21,137 @@ const CameraScan = (props) => {
 	const [title, setTitle] = useState(
 		eventInfo[Object.keys(eventInfo)[0]]['Title']
 	);
-	const [spotsLeft, setSpotsLeft] = useState(1)
-
-	
+	const [spotsLeft, setSpotsLeft] = useState(1);
 
 	useEffect(() => {
 		(async () => {
 			const { status } = await BarCodeScanner.requestPermissionsAsync();
 			setHasPermission(status === 'granted');
 		})();
-		
+
+		setSpotsLeft(
+			parseInt(eventInfo[Object.keys(eventInfo)[0]]['Spots Left'])
+		);
 	}, []);
 
 	useEffect(() => {
-		if(spotsLeft === 0){
+		if (spotsLeft === 0) {
 			Alert.alert(
-				"Max Capacity Reached",
-				"There are no spots left in this event",
+				'Max Capacity Reached',
+				'There are no spots left in this event',
 				[
 					{
-						text: "To Events Page",
-						onPress: () => props.navigation.navigate('ViewEvents')
-						
-					}
+						text: 'To Events Page',
+						onPress: () => props.navigation.navigate('MainHost'),
+					},
 				]
-				)
+			);
 		}
-	}, [spotsLeft])
+	}, [spotsLeft]);
 
-	function isValidEmail( value ) {
-		return /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,5}$/.test( value );
+	function isValidEmail(value) {
+		return /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,5}$/.test(value);
 	}
-	
 
-	const addAttendee = (data) => {
-    
-		db.collection('OrgEvents')
+	const addAttendee = async (data) => {
+		// adds attendee to database
+		var docRef = await db
+			.collection('OrgEvents')
 			.doc(currentUser['hostOrg'])
 			.collection('Events')
 			.doc(title)
 			.collection('Attendees')
-			.doc(data)
-			.set(
-				{
+			.doc(data);
+
+		docRef.get().then((doc) => {
+			if (doc.exists) {
+				Alert.alert(
+					'Unable to Scan QR Code',
+					'This attendee has already been scanned to this event.',
+					[
+						{
+							text: 'OK',
+						},
+					]
+				);
+			} else {
+				Alert.alert(
+					'QR Code Accepted',
+					'This attendee has been checked in.',
+					[
+						{
+							text: 'OK',
+						},
+					]
+				);
+
+				docRef.set({
 					Attendees: '',
-        }
-			);
+				});
+
+				//updates Spots left field in database
+				db.collection('OrgEvents')
+					.doc(currentUser['hostOrg'])
+					.collection('Events')
+					.doc(title)
+					.set(
+						{
+							[title]: {
+								Title: title,
+								Location:
+									eventInfo[Object.keys(eventInfo)[0]][
+										'Location'
+									],
+								'Primary Contact':
+									eventInfo[Object.keys(eventInfo)[0]][
+										'Primary Contact'
+									],
+								'Contact Email':
+									eventInfo[Object.keys(eventInfo)[0]][
+										'Contact Email'
+									],
+								Date:
+									eventInfo[Object.keys(eventInfo)[0]][
+										'Date'
+									],
+								Time:
+									eventInfo[Object.keys(eventInfo)[0]][
+										'Time'
+									],
+								Description:
+									eventInfo[Object.keys(eventInfo)[0]][
+										'Description'
+									],
+								'Max Capacity':
+									eventInfo[Object.keys(eventInfo)[0]][
+										'Max Capacity'
+									],
+								'Event Type':
+									eventInfo[Object.keys(eventInfo)[0]][
+										'Event Type'
+									],
+								'Spots Left': spotsLeft - 1,
+							},
+						},
+						{ merge: false }
+					);
+
+				setSpotsLeft(spotsLeft - 1);
+			}
+		});
 	};
 
-	const handleBarCodeScanned = ({ type, data }) => {
+	useEffect(() => {
+		console.warn('how many spots left ' + spotsLeft);
+	}, [spotsLeft]);
 
-		if (isValidEmail(data) == false){
+	const handleBarCodeScanned = ({ type, data }) => {
+		if (isValidEmail(data) == false) {
 			setScanned(true);
 			alert('Not a valid attendee URL');
-		}
-		else{
+		} else {
 			setScanned(true);
 			addAttendee(data);
-			setSpotsLeft(spotsLeft - 1)
 		}
 	};
 
@@ -92,12 +164,11 @@ const CameraScan = (props) => {
 
 	return (
 		<View style={styles.container}>
-			
 			<BarCodeScanner
 				onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
 				style={StyleSheet.absoluteFillObject}
 			/>
-			
+
 			{scanned && (
 				<Button
 					title={'Tap to Scan Again'}

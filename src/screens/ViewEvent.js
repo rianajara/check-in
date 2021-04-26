@@ -15,39 +15,32 @@ import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import { Alert } from 'react-native';
 
-
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
 
-
-
 const ViewEvent = (props) => {
 	const eventInfo = props.navigation.state.params.data;
-	const [eventData, setEventData] = useState(eventInfo)
+	const [eventData, setEventData] = useState(eventInfo);
 	const { currentUser, setCurrentUser } = useContext(UserContext);
-	const [spotsLeft, setSpotsLeft] = useState(1)
-	const [checkInDisabled, setCheckInDisabled] = useState(true)
-	
+	const [spotsLeft, setSpotsLeft] = useState(0);
 
-	handleCheckIn = () => {
-		if(spotsLeft === 0){
+	const handleCheckIn = () => {
+		if (spotsLeft === 0) {
 			Alert.alert(
-				"Max Capacity Reached",
-				"There are no spots left in this event",
+				'Max Capacity Reached',
+				'There are no spots left in this event.',
 				[
 					{
-						text: "OK",
-						
-						
-					}
+						text: 'OK',
+					},
 				]
-			)
-		}else if(spotsLeft > 0){
+			);
+		} else if (spotsLeft > 0) {
 			props.navigation.navigate('CameraScan', {
-				eventInfo: eventInfo, 
-			})
+				eventInfo: eventInfo,
+			});
 		}
-	}
+	};
 
 	const deleteEvent = async () => {
 		db.collection('OrgEvents')
@@ -56,22 +49,27 @@ const ViewEvent = (props) => {
 			.doc(eventInfo[Object.keys(eventInfo)[0]]['Title'])
 			.collection('Attendees')
 			.doc('Attendees List')
-			.delete().then(
-
-		db.collection('OrgEvents')
-			.doc(currentUser['hostOrg'])
-			.collection('Events')
-			.doc(eventInfo[Object.keys(eventInfo)[0]]['Title'])
 			.delete()
-			)
-			
-			props.navigation.navigate('MainHost')
-			
-	}
+			.then(
+				db
+					.collection('OrgEvents')
+					.doc(currentUser['hostOrg'])
+					.collection('Events')
+					.doc(eventInfo[Object.keys(eventInfo)[0]]['Title'])
+					.delete()
+			);
+
+		props.navigation.navigate('MainHost');
+	};
+
+	useEffect(() => {
+		setSpotsLeft(
+			parseInt(eventInfo[Object.keys(eventInfo)[0]]['Spots Left'])
+		);
+	}, []);
 
 	return (
 		<View style={styles.contentContainer}>
-			
 			<View style={styles.eventInfoContainer}>
 				<ScrollView style={styles.scrollView}>
 					<View style={styles.eventHeaderTextView}>
@@ -97,7 +95,11 @@ const ViewEvent = (props) => {
 					</Text>
 					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Primary Contact: </Text>{' '}
-						{eventInfo[Object.keys(eventInfo)[0]]['Primary Contact']}
+						{
+							eventInfo[Object.keys(eventInfo)[0]][
+								'Primary Contact'
+							]
+						}
 					</Text>
 					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Email: </Text>
@@ -113,7 +115,7 @@ const ViewEvent = (props) => {
 					</Text>
 					<Text style={styles.eventInfoText}>
 						<Text style={styles.boldText}>Spots Left: </Text>
-						
+						{eventInfo[Object.keys(eventInfo)[0]]['Spots Left']}
 					</Text>
 				</ScrollView>
 			</View>
@@ -133,19 +135,17 @@ const ViewEvent = (props) => {
 						{ backgroundColor: '#a3d4d8' },
 						{ borderColor: '#65b6be' },
 					]}
-					onPress={() => handleCheckIn()}
-					
-					>
+					onPress={() => handleCheckIn()}>
 					<Text style={styles.viewEventButtonText}>
 						Check In Attendees
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					
-					onPress={
-						() => {props.navigation.navigate('ModifyEvent', {eventInfo: eventInfo})}
-						
-					}
+					onPress={() => {
+						props.navigation.navigate('ModifyEvent', {
+							eventInfo: eventInfo,
+						});
+					}}
 					style={[
 						styles.viewEventButton,
 						{ backgroundColor: '#f8caca' },
