@@ -384,7 +384,10 @@ const pickerSelectStyles = StyleSheet.create({
 		fontWeight: '700',
 		width: 150,
 		height: 70,
-		paddingRight: 4,
+		paddingRight: 8,
+		flexWrap: 'wrap',
+		borderColor: 'blue',
+		borderWidth: 2
 	},
 });
 
