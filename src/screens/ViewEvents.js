@@ -98,7 +98,6 @@ const ViewEvents = (props) => {
 				pastEvents === true &&
 				new Date(collection.data()[eventTitle]['Date']) < new Date()
 			) {
-				
 				await tempEventArray.push(collection.data());
 			} else if (
 				futureEvents === true &&
@@ -197,6 +196,11 @@ const ViewEvents = (props) => {
 							key={key}>
 							<Text style={styles.buttonTitleText}>
 								{Object.keys(data)[0]}
+							</Text>
+							<Text style={styles.buttonDetailText}>
+								<Text style={styles.boldText}>
+									Spots Left:{' '}
+								</Text>
 							</Text>
 							<Text style={styles.buttonDetailText}>
 								{data[Object.keys(data)[0]]['Date']},{' '}
@@ -365,6 +369,9 @@ const styles = StyleSheet.create({
 	filterText: {
 		textAlign: 'center',
 	},
+	boldText: {
+		fontWeight: 'bold',
+	},
 });
 
 // https://github.com/lawnstarter/react-native-picker-select/issues/29 sturmenta solution
@@ -387,7 +394,7 @@ const pickerSelectStyles = StyleSheet.create({
 		paddingRight: 8,
 		flexWrap: 'wrap',
 		borderColor: 'blue',
-		borderWidth: 2
+		borderWidth: 2,
 	},
 });
 

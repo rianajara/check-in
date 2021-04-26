@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import QRCode from 'react-native-qrcode-svg';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import Firebase from '../components/Firebase';
+import { NavigationActions, StackActions } from 'react-navigation';
+
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -20,14 +22,33 @@ const CameraScan = (props) => {
 	const [title, setTitle] = useState(
 		eventInfo[Object.keys(eventInfo)[0]]['Title']
 	);
-  
+	const [spotsLeft, setSpotsLeft] = useState(1)
+
+	
 
 	useEffect(() => {
 		(async () => {
 			const { status } = await BarCodeScanner.requestPermissionsAsync();
 			setHasPermission(status === 'granted');
 		})();
+		
 	}, []);
+
+	useEffect(() => {
+		if(spotsLeft === 0){
+			Alert.alert(
+				"Max Capacity Reached",
+				"There are no spots left in this event",
+				[
+					{
+						text: "To Events Page",
+						onPress: () => props.navigation.navigate('ViewEvents')
+						
+					}
+				]
+				)
+		}
+	}, [spotsLeft])
 
 	function isValidEmail( value ) {
 		return /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,5}$/.test( value );
@@ -58,6 +79,7 @@ const CameraScan = (props) => {
 		else{
 			setScanned(true);
 			addAttendee(data);
+			setSpotsLeft(spotsLeft - 1)
 		}
 	};
 
@@ -70,10 +92,12 @@ const CameraScan = (props) => {
 
 	return (
 		<View style={styles.container}>
+			
 			<BarCodeScanner
 				onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
 				style={StyleSheet.absoluteFillObject}
 			/>
+			
 			{scanned && (
 				<Button
 					title={'Tap to Scan Again'}

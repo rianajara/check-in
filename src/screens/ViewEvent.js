@@ -13,6 +13,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Firebase from '../components/Firebase';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
+import { Alert } from 'react-native';
 
 
 const db = Firebase.firestore();
@@ -24,7 +25,29 @@ const ViewEvent = (props) => {
 	const eventInfo = props.navigation.state.params.data;
 	const [eventData, setEventData] = useState(eventInfo)
 	const { currentUser, setCurrentUser } = useContext(UserContext);
+	const [spotsLeft, setSpotsLeft] = useState(1)
+	const [checkInDisabled, setCheckInDisabled] = useState(true)
 	
+
+	handleCheckIn = () => {
+		if(spotsLeft === 0){
+			Alert.alert(
+				"Max Capacity Reached",
+				"There are no spots left in this event",
+				[
+					{
+						text: "OK",
+						
+						
+					}
+				]
+			)
+		}else if(spotsLeft > 0){
+			props.navigation.navigate('CameraScan', {
+				eventInfo: eventInfo, 
+			})
+		}
+	}
 
 	const deleteEvent = async () => {
 		db.collection('OrgEvents')
@@ -88,6 +111,10 @@ const ViewEvent = (props) => {
 						<Text style={styles.boldText}>Max Capacity: </Text>
 						{eventInfo[Object.keys(eventInfo)[0]]['Max Capacity']}
 					</Text>
+					<Text style={styles.eventInfoText}>
+						<Text style={styles.boldText}>Spots Left: </Text>
+						
+					</Text>
 				</ScrollView>
 			</View>
 
@@ -106,14 +133,15 @@ const ViewEvent = (props) => {
 						{ backgroundColor: '#a3d4d8' },
 						{ borderColor: '#65b6be' },
 					]}
-					onPress={() => props.navigation.navigate('CameraScan', {
-						eventInfo: eventInfo,
-					})}>
+					onPress={() => handleCheckIn()}
+					
+					>
 					<Text style={styles.viewEventButtonText}>
 						Check In Attendees
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
+					
 					onPress={
 						() => {props.navigation.navigate('ModifyEvent', {eventInfo: eventInfo})}
 						
