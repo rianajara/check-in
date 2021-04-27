@@ -18,36 +18,38 @@ import CheckInAttendees from '../screens/CheckInAttendees';
 import CameraScan from '../screens/CameraScan';
 import ViewAccount_Attendee from '../screens/ViewAccount_Attendee';
 import ViewAccount_Host from '../screens/ViewAccount_Host';
+import ForgotPassword from '../screens/ForgotPassword';
 import { UserProvider } from '../context/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const stackNavigatorOptions = {
-	headerShown: false,
+  headerShown: false,
 };
 
 const AppNavigator = createStackNavigator(
-	{
-		Welcome: Welcome,
-		Register: Register,
-		LoginHost: LoginHost,
-		LoginAttendee: LoginAttendee,
-		RegisterHost: RegisterHost,
-		RegisterAttendee: RegisterAttendee,
-		MainAttendee: MainAttendee,
-		ViewAccount_Attendee: ViewAccount_Attendee,
-		MainHost: MainHost,
-		ViewAccount_Host: ViewAccount_Host,
-		CreateEvent: CreateEvent,
-		ViewEvents: ViewEvents,
-		ViewEvent: ViewEvent,
-		ModifyEvent: ModifyEvent,
-		ModifyHost: ModifyHost,
-		ModifyAttendee: ModifyAttendee,
-		CheckInAttendees: CheckInAttendees,
-		CameraScan: CameraScan,
-	},
-	{
-		defaultNavigationOptions: stackNavigatorOptions,
-	}
+  {
+    Welcome: Welcome,
+    Register: Register,
+    LoginHost: LoginHost,
+    LoginAttendee: LoginAttendee,
+    RegisterHost: RegisterHost,
+    RegisterAttendee: RegisterAttendee,
+    MainAttendee: MainAttendee,
+    ViewAccount_Attendee: ViewAccount_Attendee,
+    MainHost: MainHost,
+    ViewAccount_Host: ViewAccount_Host,
+    CreateEvent: CreateEvent,
+    ViewEvents: ViewEvents,
+    ViewEvent: ViewEvent,
+    ModifyEvent: ModifyEvent,
+    ModifyHost: ModifyHost,
+    ModifyAttendee: ModifyAttendee,
+    CheckInAttendees: CheckInAttendees,
+    CameraScan: CameraScan,
+    ForgotPassword: ForgotPassword,
+  },
+  {
+    defaultNavigationOptions: stackNavigatorOptions,
+  }
 );
 export default createAppContainer(AppNavigator);
