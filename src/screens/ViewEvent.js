@@ -14,7 +14,7 @@ import Firebase from '../components/Firebase';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import { Alert } from 'react-native';
-import XLSX from 'xlsx';
+
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -87,7 +87,7 @@ const ViewEvent = (props) => {
 		//console.warn(attendeesList)
 		getAttendeeInfo();
 	}, [attendeesList]);
-
+/*
 	useEffect(() => {
 		//console.warn(attendeesInfoList)
 		let ws = XLSX.utils.json_to_sheet(JSON.stringify(attendeesInfoList));
@@ -102,7 +102,7 @@ const ViewEvent = (props) => {
 	useEffect(() => {
 		console.warn(results);
 	}, [results]);
-
+*/
 	const handleCheckIn = () => {
 		if (spotsLeft === 0) {
 			Alert.alert(
