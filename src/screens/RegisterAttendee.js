@@ -259,7 +259,7 @@ const RegisterAttendee = (props) => {
 					title='Sign Up'
 					onPress={() => {
 						signUpWithEmailPassword(
-							email,
+							email.toLowerCase(),
 							password,
 							props,
 							verifypass,
