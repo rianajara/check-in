@@ -56,7 +56,6 @@ const LoginAttendee = (props) => {
                   JSON.stringify(userData)
                 );
 
-<<<<<<< HEAD
 								
 								alert('Successfuly logged in.');
 								props.navigation.navigate('MainAttendee');
@@ -79,26 +78,7 @@ const LoginAttendee = (props) => {
 			});
 		// [END auth_signin_password]
 	};
-=======
-                alert('Successfuly logged in.');
-                props.navigation.navigate('MainAttendee');
-              } else {
-                alert('Check your unique ID or email and try again.');
-              }
-            });
-          });
->>>>>>> 1397f8022521c31db43f9585adfcc303a565e901
 
-        // ...
-      })
-      .catch((error) => {
-        console.warn(error);
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        alert('Check your password and try again.');
-      });
-    // [END auth_signin_password]
-  };
 
   return (
     <View style={styles.contentContainer}>
