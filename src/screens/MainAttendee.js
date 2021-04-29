@@ -32,23 +32,6 @@ const MainAttendee = (props) => {
         //setCurrentUser(null);
 	};
 
-<<<<<<< HEAD
-	console.warn(currentUser);
-	console.warn(currentUser['attendeeEmail']);
-
-	useEffect(() => {
-        var user = firebase.auth().currentUser
-
-        if (user != null) {
-            user.providerData.forEach(function (profile) {
-                //console.warn('provider uid ' + user.uid);
-            });
-        }
-    }, []);
-	
-
-=======
->>>>>>> 1397f8022521c31db43f9585adfcc303a565e901
 	return (
 		<View style={styles.contentContainer}>
 			<Text
