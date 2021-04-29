@@ -15,6 +15,7 @@ import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import { Alert } from 'react-native';
 
+
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
 
@@ -23,7 +24,85 @@ const ViewEvent = (props) => {
 	const [eventData, setEventData] = useState(eventInfo);
 	const { currentUser, setCurrentUser } = useContext(UserContext);
 	const [spotsLeft, setSpotsLeft] = useState(0);
+	const [attendeesList, setAttendeesList] = useState([]);
+	const [attendeesInfoList, setAttendeesInfoList] = useState([]);
+	const [results, setResults] = useState([]);
 
+	const headers = [
+		{ label: 'Email', key: 'Email' },
+		{ label: 'FirstName', key: 'FirstName' },
+		{ label: 'LastName', key: 'LastName' },
+		{ label: 'Major', key: 'Major' },
+		{ label: 'YearLevel', key: 'YearLevel' },
+	];
+
+	const tableHeaders = {
+		Email: '',
+		FirstName: '',
+		LastName: '',
+		Major: '',
+		YearLevel: '',
+	};
+
+	// gets all of the attendees email DONE
+	const getAttendeeEmail = async () => {
+		const attendees = db
+			.collection('OrgEvents')
+			.doc(currentUser['hostOrg'])
+			.collection('Events')
+			.doc(eventInfo[Object.keys(eventInfo)[0]]['Title'])
+			.collection('Attendees');
+
+		const snapshot = await attendees.get();
+		const tempEventArray = [];
+
+		snapshot.forEach(async (collection) => {
+			tempEventArray.push(collection.id);
+		});
+
+		setAttendeesList(tempEventArray);
+	};
+
+	// get and add the attendees information and places it in an array
+	const getAttendeeInfo = async () => {
+		const tempEventArray = [];
+
+		for (let step = 0; step < attendeesList.length; step++) {
+			const attendeeInfo = db
+				.collection('Attendee')
+				.doc(attendeesList[step]);
+
+			const snapshot = await (await attendeeInfo.get()).data();
+			//console.warn("this is the snapshot data "+ attendeesList[step] + JSON.stringify(snapshot.data()))
+			tempEventArray.push(snapshot);
+		}
+
+		setAttendeesInfoList(tempEventArray);
+	};
+
+	//csv maker
+
+	// console
+	useEffect(() => {
+		//console.warn(attendeesList)
+		getAttendeeInfo();
+	}, [attendeesList]);
+/*
+	useEffect(() => {
+		//console.warn(attendeesInfoList)
+		let ws = XLSX.utils.json_to_sheet(JSON.stringify(attendeesInfoList));
+		let wb = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(wb, ws, 'Attendees');
+		const wbout = XLSX.write(wb, {
+			type: 'base64',
+			bookType: 'xlsx',
+		});
+	}, [attendeesInfoList]);
+
+	useEffect(() => {
+		console.warn(results);
+	}, [results]);
+*/
 	const handleCheckIn = () => {
 		if (spotsLeft === 0) {
 			Alert.alert(
@@ -122,6 +201,7 @@ const ViewEvent = (props) => {
 
 			<View style={styles.viewEventButtonView}>
 				<TouchableOpacity
+					onPress={() => getAttendeeEmail()}
 					style={[
 						styles.viewEventButton,
 						{ backgroundColor: '#c1dace' },

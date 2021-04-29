@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Text,
 	View,
@@ -22,10 +22,14 @@ const MainAttendee = (props) => {
 	const [password, setPassword] = React.useState('');
 	const image = require('../images/image.png');
 	const { currentUser, setCurrentUser } = useContext(UserContext);
+	const [qrcodePic, setQRCodePic] = useState(currentUser['attendeeEmail'])
 
 	const logOut = async () => {
-		setCurrentUser(null);
-        await AsyncStorage.removeItem('currentUser')
+		
+		props.navigation.navigate('Welcome')
+		setQRCodePic("some string value")
+		await AsyncStorage.removeItem('currentUser')
+        //setCurrentUser(null);
 	};
 
 <<<<<<< HEAD
@@ -58,7 +62,7 @@ const MainAttendee = (props) => {
 			</Text>
 			
 			<QRCode 
-				value= {currentUser['attendeeEmail']}
+				value= {qrcodePic}
 				size={300} 
 			/>
 
@@ -74,7 +78,7 @@ const MainAttendee = (props) => {
 					style={styles.smallButton}
 					title='Log Out'
 					onPress={() => {
-						logOut(), props.navigation.navigate('Welcome');
+						logOut();
 					}}
 				/>
 			</View>
