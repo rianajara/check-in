@@ -56,7 +56,7 @@ const LoginAttendee = (props) => {
                   JSON.stringify(userData)
                 );
 
-<<<<<<< HEAD
+
 								
 								alert('Successfuly logged in.');
 								props.navigation.navigate('MainAttendee');
@@ -79,15 +79,7 @@ const LoginAttendee = (props) => {
 			});
 		// [END auth_signin_password]
 	};
-=======
-                alert('Successfuly logged in.');
-                props.navigation.navigate('MainAttendee');
-              } else {
-                alert('Check your unique ID or email and try again.');
-              }
-            });
-          });
->>>>>>> 15dfb3b7094d7d9e3bff23ecd741141a1bda59c7
+
 
 
   return (
