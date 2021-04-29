@@ -1,14 +1,57 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import {
+	Text,
+	View,
+	StyleSheet,
+	ScrollView,
+	TouchableHighlight,
+} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
 import Firebase from '../components/Firebase';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 
+import RNPickerSelect from 'react-native-picker-select'; //dropdown
+
 const ViewEvents = (props) => {
 	const { currentUser, setCurrentUser } = useContext(UserContext);
+
 	const [eventArray, setEventArray] = useState([]);
+	const [arrayOfEvents, setArrayOfEvents] = useState([]);
+	const [filterChangeCount, setFilterChangeCount] = useState(0);
+	const [pastEvents, setPastEvents] = useState(false);
+	const [futureEvents, setFutureEvents] = useState(false);
+	const [currentFilter, setCurrentFilter] = useState('All');
+	const [pastButtonColor, setPastButtonColor] = useState('#d1dfbe');
+	const [futureButtonColor, setFutureButtonColor] = useState('#d7eef6');
+
+	const eventTypes = [
+		{
+			label: 'All',
+			value: 'All',
+		},
+		{
+			label: 'Social',
+			value: 'Social',
+		},
+		{
+			label: 'Industry',
+			value: 'Industry',
+		},
+		{
+			label: 'Tabling',
+			value: 'Tabling',
+		},
+		{
+			label: 'Workshop',
+			value: 'Workshop',
+		},
+		{
+			label: 'General Body',
+			value: 'General Body',
+		},
+	];
 
 	const colorPicker = (buttonNum) => {
 		if (buttonNum % 4 == 1) {
@@ -45,73 +88,198 @@ const ViewEvents = (props) => {
 			.doc(currentUser['hostOrg'])
 			.collection('Events');
 		const snapshot = await aesbEvents.get();
+
 		const tempEventArray = [];
-		snapshot.forEach((collection) => {
-			console.log(collection.id, ':', collection.data());
-			tempEventArray.push(collection.data());
+		snapshot.forEach(async (collection) => {
+			const eventTitle = await Object.keys(collection.data())[0];
+			if (pastEvents === false && futureEvents === false) {
+				await tempEventArray.push(collection.data());
+			} else if (
+				pastEvents === true &&
+				new Date(collection.data()[eventTitle]['Date']) < new Date()
+			) {
+				await tempEventArray.push(collection.data());
+			} else if (
+				futureEvents === true &&
+				new Date(collection.data()[eventTitle]['Date']) > new Date()
+			) {
+				await tempEventArray.push(collection.data());
+			}
 		});
 
-		
+		await setEventArray(tempEventArray);
 
-		setEventArray(tempEventArray);
-
-		
+		setArrayList();
 	}
+
+	// Help here
+	async function filterEvents(filter) {
+		setFilterChangeCount(filterChangeCount + 1);
+		const aesbEvents = db
+			.collection('OrgEvents')
+			.doc(currentUser['hostOrg'])
+			.collection('Events');
+
+		const snapshot = await aesbEvents.get();
+		const tempEventArray = [];
+
+		if (filter === 'All') {
+			getAllEvents(db);
+		} else {
+			snapshot.forEach(async (collection) => {
+				const eventTitle = await Object.keys(collection.data())[0];
+				if (collection.data()[eventTitle]['Event Type'] === filter) {
+					if (pastEvents === false && futureEvents === false) {
+						await tempEventArray.push(collection.data());
+					} else if (
+						pastEvents === true &&
+						new Date(collection.data()[eventTitle]['Date']) <
+							new Date()
+					) {
+						await tempEventArray.push(collection.data());
+					} else if (
+						futureEvents === true &&
+						new Date(collection.data()[eventTitle]['Date']) >
+							new Date()
+					) {
+						await tempEventArray.push(collection.data());
+					}
+				}
+			});
+
+			setEventArray(tempEventArray);
+		}
+	}
+
+	const pastFutureToggle = (buttonPressed) => {
+		if (buttonPressed === 'past') {
+			if (pastEvents === true) {
+				setPastEvents(false);
+				setPastButtonColor('#d1dfbe');
+			} else if (pastEvents === false) {
+				setPastEvents(true);
+				setPastButtonColor('#364522');
+				setFutureButtonColor('#d7eef6');
+				setFutureEvents(false);
+			}
+		} else if (buttonPressed === 'future') {
+			if (futureEvents === true) {
+				setFutureEvents(false);
+				setFutureButtonColor('#d7eef6');
+			} else if (futureEvents === false) {
+				setFutureEvents(true);
+				setPastEvents(false);
+				setFutureButtonColor('#154b5e');
+				setPastButtonColor('#d1dfbe');
+			}
+		}
+	};
+
+	const setArrayList = () => {
+		setArrayOfEvents(
+			<ScrollView style={styles.scrollView}>
+				{eventArray.map((data, key) => (
+					<View key={key}>
+						<TouchableOpacity
+							onPress={() =>
+								props.navigation.navigate('ViewEvent', {
+									data: data,
+								})
+							}
+							style={[
+								styles.eventButton,
+								{
+									backgroundColor: colorPicker(key),
+									borderColor: borderColorPicker(key),
+								},
+							]}
+							key={key}>
+							<Text style={styles.buttonTitleText}>
+								{Object.keys(data)[0]}
+							</Text>
+							<Text style={styles.buttonDetailText}>
+								<Text style={styles.boldText}>
+									Spots Left:{' '}{data[Object.keys(data)[0]]['Spots Left']}
+								</Text>
+							</Text>
+							<Text style={styles.buttonDetailText}>
+								{data[Object.keys(data)[0]]['Date']},{' '}
+								{data[Object.keys(data)[0]]['Time']}
+							</Text>
+							<Text style={styles.buttonDetailText}>
+								{data[Object.keys(data)[0]]['Location']}
+							</Text>
+						</TouchableOpacity>
+					</View>
+				))}
+			</ScrollView>
+		);
+	};
 
 	useEffect(() => {
 		getAllEvents(db);
 	}, []);
 
+	useEffect(() => {
+		filterEvents(currentFilter);
+	}, [pastEvents, futureEvents]);
+
+	useEffect(() => {
+		if (eventArray.length === 0 && filterChangeCount > 0) {
+			setArrayOfEvents(
+				<Text
+					style={{
+						fontSize: 20,
+						fontFamily: 'Bold',
+						alignSelf: 'center',
+						marginTop: 115,
+						textAlign: 'center',
+					}}>
+					No Events of this type. {'\n'}Please try a different filter.{' '}
+				</Text>
+			);
+		} else {
+			setArrayList();
+		}
+	}, [eventArray]);
+
 	return (
 		<View style={styles.contentContainer}>
-			<View style={styles.scrollViewOuterView}>
-				<ScrollView style={styles.scrollView}>
-					{eventArray.map((data, key) => (
-						<View key={key}>
-							<TouchableOpacity
-								onPress={() =>
-									props.navigation.navigate('ViewEvent', {
-										data: data,
-									})
-								}
-								style={[
-									styles.eventButton,
-									{
-										backgroundColor: colorPicker(key),
-										borderColor: borderColorPicker(key),
-									},
-								]}
-								key={key}>
-								<Text style={styles.buttonTitleText}>
-									{Object.keys(data)[0]}
-									
-									
-								</Text>
-								<Text style={styles.buttonDetailText}>
-									{data[Object.keys(data)[0]]['Date']},{' '}{data[Object.keys(data)[0]]['Time']}
-									
-								</Text>
-								<Text style={styles.buttonDetailText}>
-									{data[Object.keys(data)[0]]['Location']}
-								</Text>
-							</TouchableOpacity>
-						</View>
-					))}
-				</ScrollView>
-			</View>
+			<View style={styles.scrollViewOuterView}>{arrayOfEvents}</View>
 			<View style={styles.buttonViewContainer}>
 				<TouchableOpacity
+					onPress={() => {
+						pastFutureToggle('past');
+					}}
 					style={[
 						styles.buttonView,
-						{ backgroundColor: '#d1dfbe' },
+						{ backgroundColor: pastButtonColor },
 						{ borderColor: '#aac486' },
 					]}>
 					<Text style={styles.buttonViewText}>Past Events</Text>
 				</TouchableOpacity>
+
+				<TouchableHighlight style={styles.filterButton}>
+					<RNPickerSelect //dropdown menu for filter
+						//on value change, call filterEvents with the value
+						//i have confirmed this part is working
+						onValueChange={(value) => {
+							filterEvents(value), setCurrentFilter(value);
+						}}
+						items={eventTypes}
+						style={pickerSelectStyles}
+						useNativeAndroidPickerStyle={false}
+						placeholder={{}}
+					/>
+				</TouchableHighlight>
+
 				<TouchableOpacity
+					onPress={() => {
+						pastFutureToggle('future');
+					}}
 					style={[
 						styles.buttonView,
-						{ backgroundColor: '#d7eef6' },
+						{ backgroundColor: futureButtonColor },
 						{ borderColor: '#a6d9ea' },
 					]}>
 					<Text style={styles.buttonViewText}>Upcoming Events</Text>
@@ -164,7 +332,6 @@ const styles = StyleSheet.create({
 	},
 	buttonDetailText: {
 		fontSize: 16,
-		
 	},
 	buttonViewContainer: {
 		width: '90%',
@@ -188,6 +355,46 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		textAlign: 'center',
 		fontWeight: '700',
+	},
+	filterButton: {
+		width: 150,
+		height: 70,
+		backgroundColor: 'rgba(255, 217, 112, 0.55)',
+
+		justifyContent: 'space-around',
+		borderRadius: 15,
+		borderWidth: 4,
+		borderColor: '#ffcd43',
+	},
+	filterText: {
+		textAlign: 'center',
+	},
+	boldText: {
+		fontWeight: 'bold',
+	},
+});
+
+// https://github.com/lawnstarter/react-native-picker-select/issues/29 sturmenta solution
+const pickerSelectStyles = StyleSheet.create({
+	inputIOS: {
+		fontSize: 16,
+		textAlign: 'center',
+		fontWeight: '700',
+		width: 150,
+		height: 70,
+		paddingRight: 8,
+		flexWrap: 'wrap',
+	},
+	inputAndroid: {
+		fontSize: 16,
+		textAlign: 'center',
+		fontWeight: '700',
+		width: 150,
+		height: 70,
+		paddingRight: 8,
+		flexWrap: 'wrap',
+		borderColor: 'blue',
+		borderWidth: 2,
 	},
 });
 

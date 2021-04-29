@@ -108,6 +108,7 @@ const CreateEvent = (props) => {
 						Description: description,
 						'Max Capacity': maxCapacity,
 						'Event Type': eventType,
+						'Spots Left': maxCapacity
 					},
 				},
 				{ merge: true }

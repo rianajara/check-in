@@ -28,6 +28,7 @@ const MainAttendee = (props) => {
         await AsyncStorage.removeItem('currentUser')
 	};
 
+<<<<<<< HEAD
 	console.warn(currentUser);
 	console.warn(currentUser['attendeeEmail']);
 
@@ -42,6 +43,8 @@ const MainAttendee = (props) => {
     }, []);
 	
 
+=======
+>>>>>>> 1397f8022521c31db43f9585adfcc303a565e901
 	return (
 		<View style={styles.contentContainer}>
 			<Text

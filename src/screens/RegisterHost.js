@@ -103,7 +103,7 @@ const RegisterHost = (props) => {
 					setUpdateClickCount(updateClickCount + 1);
 				} 
 
-				return db.collection('Host').doc(email).set(data);
+				return db.collection('Host').doc(org).set(data);
 				// ...
 			})
 			.catch((error) => {

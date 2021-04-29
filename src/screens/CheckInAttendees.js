@@ -46,7 +46,6 @@ const borderColorPicker = (buttonNum) => {
 		const snapshot = await aesbEvents.get();
 		const tempEventArray = [];
 		snapshot.forEach((collection) => {
-			console.log(collection.id, ':', collection.data());
 			tempEventArray.push(collection.data());
 		});
 
