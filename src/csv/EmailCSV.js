@@ -1,5 +1,5 @@
 const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey('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');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const fs = require("fs");
 pathToAttachment = `${__dirname}/demodata.csv`;
 attachment = fs.readFileSync(pathToAttachment).toString("base64");
