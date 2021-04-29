@@ -97,7 +97,7 @@ const ModfiyAttendee = (props) => {
 				<View style={styles.inputContainer}>
 					<Input
 					
-						label='Enter first name:'
+						label='First name:'
 						placeholder='first name'
 						leftIcon={
 							<Icon
@@ -108,11 +108,12 @@ const ModfiyAttendee = (props) => {
 							/>
 						}
 						defaultValue={currentUser['attendeeFirstName']}
+						color='gray'
 						editable={false}
 					/>
 
 					<Input
-						label='Enter last name:'
+						label='Last name:'
 						placeholder='last name'
 						leftIcon={
 							<Icon
@@ -123,11 +124,12 @@ const ModfiyAttendee = (props) => {
 							/>
 						}
 						defaultValue={currentUser['attendeeLastName']}
+						color='gray'
 						editable={false}
 					/>
 
 					<Input
-						label='Enter student email:'
+						label='Student email:'
 						placeholder='youremail@address.com'
 						leftIcon={
 							<Icon
@@ -138,6 +140,7 @@ const ModfiyAttendee = (props) => {
 							/>
 						}
 						defaultValue={currentUser['attendeeEmail']}
+						color='gray'
 						editable={false}
 						// onChangeText={(text) => setEmail(text)}
 						// value={email}
