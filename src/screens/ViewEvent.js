@@ -57,36 +57,20 @@ const ViewEvent = (props) => {
 		const tempEventArray = [];
 
 		snapshot.forEach(async (collection) => {
-			tempEventArray.push(collection.id);
+			tempEventArray.push(collection.data()['Data']);
 		});
 
 		setAttendeesList(tempEventArray);
 	};
 
-	// get and add the attendees information and places it in an array
-	const getAttendeeInfo = async () => {
-		const tempEventArray = [];
+	useEffect(() => {
+		console.warn(attendeesList)
+	}, [attendeesList])
 
-		for (let step = 0; step < attendeesList.length; step++) {
-			const attendeeInfo = db
-				.collection('Attendee')
-				.doc(attendeesList[step]);
-
-			const snapshot = await (await attendeeInfo.get()).data();
-			//console.warn("this is the snapshot data "+ attendeesList[step] + JSON.stringify(snapshot.data()))
-			tempEventArray.push(snapshot);
-		}
-
-		setAttendeesInfoList(tempEventArray);
-	};
 
 	//csv maker
 
-	// console
-	useEffect(() => {
-		//console.warn(attendeesList)
-		getAttendeeInfo();
-	}, [attendeesList]);
+
 /*
 	useEffect(() => {
 		//console.warn(attendeesInfoList)
