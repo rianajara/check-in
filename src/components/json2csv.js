@@ -1,5 +1,10 @@
 //reference : https://attacomsian.com/blog/nodejs-convert-json-to-csv
 
+//package installation: npm install json-2-csv --save
+//to test it navigate to ocmponents on terminal
+// run 'node json2csv.js'
+// it should create or modify the filename.json into filename.csv
+
 //Command to test it. Takes a json file and then creates a .csv with the json file name
 toCSV('infoList.json');
 
