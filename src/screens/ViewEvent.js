@@ -14,7 +14,18 @@ import Firebase from '../components/Firebase';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import { Alert } from 'react-native';
+//test
+import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
+import * as Permissions from 'expo-permissions';
 
+
+/*
+npm install expo-media-library
+npm install expo-file-system
+npm install expo-permissions
+
+*/
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -62,6 +73,44 @@ const ViewEvent = (props) => {
 
 		setAttendeesList(tempEventArray);
 	};
+
+
+
+
+	// ref : https://stackoverflow.com/questions/54586216/how-to-create-text-file-in-react-native-expo
+
+
+	saveFile = async () => {
+		const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+		console.log('test1');
+		if (status === "granted") {
+			console.log('test2');
+			let fileUri = FileSystem.documentDirectory + "text.txt";
+			console.log('test3');
+			await FileSystem.writeAsStringAsync(fileUri, "Hello World", { encoding: FileSystem.EncodingType.UTF8 });
+			console.log('test4');
+
+
+			try{
+			const asset = await MediaLibrary.createAssetAsync(fileUri)}
+
+			catch(e) {
+				console.log('Catch an error: ', e)
+			  }
+			console.log('test5');
+
+
+			await MediaLibrary.createAlbumAsync("Download", asset, false)
+			console.log('test6');
+		}
+	}
+
+
+
+
+
+
+
 
 	// get and add the attendees information and places it in an array
 	const getAttendeeInfo = async () => {
@@ -148,6 +197,7 @@ const ViewEvent = (props) => {
 	}, []);
 
 	return (
+		
 		<View style={styles.contentContainer}>
 			<View style={styles.eventInfoContainer}>
 				<ScrollView style={styles.scrollView}>
@@ -234,7 +284,7 @@ const ViewEvent = (props) => {
 					<Text style={styles.viewEventButtonText}>Modify Event</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					onPress={() => deleteEvent()}
+					onPress={() => /*deleteEvent()*/	saveFile()}
 					style={[
 						styles.viewEventButton,
 						{ backgroundColor: '#f9d391' },
