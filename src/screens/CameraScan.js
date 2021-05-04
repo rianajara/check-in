@@ -6,6 +6,7 @@ import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import Firebase from '../components/Firebase';
 import { NavigationActions, StackActions } from 'react-navigation';
+import { json2csv } from 'json-2-csv';
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -35,6 +36,7 @@ const CameraScan = (props) => {
 	}, []);
 
 	useEffect(() => {
+		// checks if max capacity has been reached
 		if (spotsLeft === 0) {
 			Alert.alert(
 				'Max Capacity Reached',
@@ -54,7 +56,7 @@ const CameraScan = (props) => {
 	}
 
 	const addAttendee = async (data) => {
-		// adds attendee to database
+		// attemps to add attendee to database
 		var docRef = await db
 			.collection('OrgEvents')
 			.doc(currentUser['hostOrg'])
@@ -63,7 +65,7 @@ const CameraScan = (props) => {
 			.collection('Attendees')
 			.doc(data);
 
-		docRef.get().then((doc) => {
+		docRef.get().then(async (doc) => {
 			if (doc.exists) {
 				Alert.alert(
 					'Unable to Scan QR Code',
@@ -74,69 +76,89 @@ const CameraScan = (props) => {
 						},
 					]
 				);
-			} else {
-				Alert.alert(
-					'QR Code Accepted',
-					'This attendee has been checked in.',
-					[
-						{
-							text: 'OK',
-						},
-					]
-				);
+			} else if (!doc.exists) {
+				// checks if the user's qr code is tied to an active account in the attendees database
+				var attendeeRef = await db.collection('Attendee').doc(data);
 
-				docRef.set({
-					Attendees: '',
-				});
-
-				//updates Spots left field in database
-				db.collection('OrgEvents')
-					.doc(currentUser['hostOrg'])
-					.collection('Events')
-					.doc(title)
-					.set(
-						{
-							[title]: {
-								Title: title,
-								Location:
-									eventInfo[Object.keys(eventInfo)[0]][
-										'Location'
-									],
-								'Primary Contact':
-									eventInfo[Object.keys(eventInfo)[0]][
-										'Primary Contact'
-									],
-								'Contact Email':
-									eventInfo[Object.keys(eventInfo)[0]][
-										'Contact Email'
-									],
-								Date:
-									eventInfo[Object.keys(eventInfo)[0]][
-										'Date'
-									],
-								Time:
-									eventInfo[Object.keys(eventInfo)[0]][
-										'Time'
-									],
-								Description:
-									eventInfo[Object.keys(eventInfo)[0]][
-										'Description'
-									],
-								'Max Capacity':
-									eventInfo[Object.keys(eventInfo)[0]][
-										'Max Capacity'
-									],
-								'Event Type':
-									eventInfo[Object.keys(eventInfo)[0]][
-										'Event Type'
-									],
-								'Spots Left': spotsLeft - 1,
+				if (undefined === (await attendeeRef.get()).data()) {
+					Alert.alert(
+						'Unable to Scan QR Code',
+						'This attendee has an inactive account and cannot be scanned to this event.',
+						[
+							{
+								text: 'OK',
 							},
-						},
-						{ merge: false }
+						]
 					);
+				} else {
+					Alert.alert(
+						'QR Code Accepted',
+						'This attendee has been checked in.',
+						[
+							{
+								text: 'OK',
+							},
+						]
+					);
+					// gets the attendee info from the attendees collection using the data variable
+					const attendeeInfo = db.collection('Attendee').doc(data);
 
-				setSpotsLeft(spotsLeft - 1);
+					const snapshot = await (await attendeeInfo.get()).data();
+
+					// sets the attendee info to the corresponding
+					docRef.set({
+						Data: snapshot,
+					});
+
+					//updates Spots left field in database
+					db.collection('OrgEvents')
+						.doc(currentUser['hostOrg'])
+						.collection('Events')
+						.doc(title)
+						.set(
+							{
+								[title]: {
+									Title: title,
+									Location:
+										eventInfo[Object.keys(eventInfo)[0]][
+											'Location'
+										],
+									'Primary Contact':
+										eventInfo[Object.keys(eventInfo)[0]][
+											'Primary Contact'
+										],
+									'Contact Email':
+										eventInfo[Object.keys(eventInfo)[0]][
+											'Contact Email'
+										],
+									Date:
+										eventInfo[Object.keys(eventInfo)[0]][
+											'Date'
+										],
+									Time:
+										eventInfo[Object.keys(eventInfo)[0]][
+											'Time'
+										],
+									Description:
+										eventInfo[Object.keys(eventInfo)[0]][
+											'Description'
+										],
+									'Max Capacity':
+										eventInfo[Object.keys(eventInfo)[0]][
+											'Max Capacity'
+										],
+									'Event Type':
+										eventInfo[Object.keys(eventInfo)[0]][
+											'Event Type'
+										],
+									'Spots Left': spotsLeft - 1,
+								},
+							},
+							{ merge: false }
+						);
+
+					setSpotsLeft(spotsLeft - 1);
+				}
 			}
 		});
 	};

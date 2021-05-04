@@ -19,7 +19,9 @@ import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
 
-
+// const sgMail = require('@sendgrid/mail')
+// sgMail.setApiKey(sgMail.setApiKey('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');
+// const fs = require("fs");
 /*
 npm install expo-media-library
 npm install expo-file-system
@@ -68,15 +70,11 @@ const ViewEvent = (props) => {
 		const tempEventArray = [];
 
 		snapshot.forEach(async (collection) => {
-			tempEventArray.push(collection.id);
+			tempEventArray.push(collection.data()['Data']);
 		});
 
 		setAttendeesList(tempEventArray);
 	};
-
-
-
-
 	// ref : https://stackoverflow.com/questions/54586216/how-to-create-text-file-in-react-native-expo
 
 
@@ -126,16 +124,15 @@ const ViewEvent = (props) => {
 			tempEventArray.push(snapshot);
 		}
 
-		setAttendeesInfoList(tempEventArray);
-	};
+	useEffect(() => {
+		console.warn(attendeesList)
+	}, [attendeesList])
+
+
 
 	//csv maker
 
-	// console
-	useEffect(() => {
-		//console.warn(attendeesList)
-		getAttendeeInfo();
-	}, [attendeesList]);
+
 /*
 	useEffect(() => {
 		//console.warn(attendeesInfoList)

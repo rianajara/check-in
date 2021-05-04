@@ -7,7 +7,13 @@ import AppLoading from 'expo-app-loading';
 import viewHost from './src/screens/ViewAccount_Host.js';
 import { UserProvider } from './src/context/UserContext.js';
 
+
+
+
 export default class App extends React.Component {
+	
+
+	
 	state = {
 		isFontLoaded: false,
 	};
@@ -19,6 +25,9 @@ export default class App extends React.Component {
 			Regular: require('./src/fonts/Montserrat-Black.otf'),
 			Thin: require('./src/fonts/SpaceMono-Regular.ttf'),
 		});
+		
+
+		
 		this.setState({ isFontLoaded: true });
 	}
 
