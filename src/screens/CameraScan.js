@@ -6,7 +6,7 @@ import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import Firebase from '../components/Firebase';
 import { NavigationActions, StackActions } from 'react-navigation';
-import { json2csv } from 'json-2-csv';
+//import { json2csv } from 'json2csv.js';
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
