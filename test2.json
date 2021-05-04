@@ -1,0 +1,540 @@
+{
+  "__collections__": {
+    "Attendee": {
+      "1089404@live.com": {
+        "FirstName": "Taylor",
+        "LastName": "1089",
+        "Major": "Mechanical Engineering",
+        "YearLevel": "",
+        "Email": "1089404@live.com",
+        "__collections__": {}
+      },
+      "428@test.com": {
+        "Major": "Electronics Engineering Technology",
+        "YearLevel": "1111",
+        "Email": "428@test.com",
+        "LastName": "Niw",
+        "FirstName": "New ",
+        "__collections__": {}
+      },
+      "Joe@rogan.com": {
+        "Email": "joe@rogan.com",
+        "FirstName": "Joe",
+        "Major": "Computer Science",
+        "LastName": "Rogan",
+        "YearLevel": "First-year",
+        "__collections__": {}
+      },
+      "Joseph@student.csulb.edu": {
+        "LastName": "Joe",
+        "Email": "joseph@student.csulb.edu",
+        "Major": "Electronics Engineering Technology",
+        "FirstName": "Joseph",
+        "YearLevel": "Sophomore",
+        "__collections__": {}
+      },
+      "MZuck@csulb.edu": {
+        "LastName": "Zuckerberg",
+        "Major": "Computer Science",
+        "FirstName": "Mark",
+        "Email": "mzuck@csulb.edu",
+        "YearLevel": "First Year",
+        "__collections__": {}
+      },
+      "Surya.das@gmail.com": {
+        "YearLevel": "",
+        "Major": "",
+        "LastName": "Das",
+        "Email": "surya.das@gmail.com",
+        "FirstName": "Surya",
+        "__collections__": {}
+      },
+      "Testtaylor2@test.com": {
+        "YearLevel": "3",
+        "Email": "testtaylor2@test.com",
+        "LastName": "Loe",
+        "FirstName": "Tay",
+        "Major": "Aerospace Engineering",
+        "__collections__": {}
+      },
+      "codyko@ck.com": {
+        "Email": "codyko@ck.com",
+        "FirstName": "Cody",
+        "YearLevel": "Junior",
+        "LastName": "Ko",
+        "Major": "Computer Science",
+        "__collections__": {}
+      },
+      "janeyre@student.csulb.edu": {
+        "YearLevel": "Senior",
+        "Email": "janeyre@student.csulb.edu",
+        "LastName": "Eyre",
+        "Major": "Biomedical Engineering",
+        "FirstName": "Jane",
+        "__collections__": {}
+      },
+      "kylelewis@gmail.com": {
+        "YearLevel": "Senior",
+        "LastName": "Lewis",
+        "Major": "Computer Science",
+        "Email": "kylelewis@gmail.com",
+        "FirstName": "Kyle",
+        "__collections__": {}
+      },
+      "kylewest@csulb.edu": {
+        "LastName": "West",
+        "YearLevel": "First Year",
+        "FirstName": "Kyle",
+        "Major": "Computer Engineering",
+        "Email": "kylewest@csulb.edu",
+        "__collections__": {}
+      },
+      "sebstan@csulb.edu": {
+        "FirstName": "Sebastian",
+        "Major": "Mechanical Engineering",
+        "Email": "sebstan@csulb.edu",
+        "LastName": "Stan",
+        "YearLevel": "Freshman",
+        "__collections__": {}
+      },
+      "srdas73@gmail.com": {
+        "LastName": "Das",
+        "Major": "",
+        "Email": "srdas73@gmail.com",
+        "YearLevel": "",
+        "FirstName": "Surya",
+        "__collections__": {}
+      }
+    },
+    "Host": {
+      "AESB": {
+        "Email": "secretary@aesb.org",
+        "LastName": "Gaines",
+        "Organization": "AESB",
+        "FirstName": "Melissa ",
+        "UniqueID": "123321",
+        "__collections__": {}
+      },
+      "Asd@asd.com": {
+        "email": "asd@asd.com",
+        "UniqueID": "123456",
+        "__collections__": {}
+      },
+      "Co@co.co": {
+        "UniqueID": "938383",
+        "Organization": "Coco",
+        "LastName": "Chanel",
+        "Email": "co@co.co",
+        "FirstName": "Coco",
+        "__collections__": {}
+      },
+      "HeheCompany": {
+        "FirstName": "Michael",
+        "Organization": "HeheCompany",
+        "Email": "hehe@hehe.com",
+        "UniqueID": "112112",
+        "LastName": "Jackson",
+        "__collections__": {}
+      },
+      "Rich@rich.com": {
+        "LastName": "Richie",
+        "FirstName": "Rich",
+        "UniqueID": "776389",
+        "Email": "rich@rich.com",
+        "Organization": "TYR",
+        "__collections__": {}
+      },
+      "Sdras@nc.com": {
+        "email": "sdras@nc.com",
+        "UniqueID": "654787",
+        "__collections__": {}
+      },
+      "TaylororganizatiON@test.com": {
+        "UniqueID": "999998",
+        "FirstName": "Taylor",
+        "Email": "taylororganization@test.com",
+        "LastName": "Lor",
+        "Organization": "TaylororganizatiO",
+        "__collections__": {}
+      },
+      "aesb@test.org": {
+        "UniqueID": "123456",
+        "email": "aesb@test.org",
+        "__collections__": {}
+      },
+      "lmessi@mls.com": {
+        "LastName": "Messi",
+        "FirstName": "Lionel",
+        "Organization": "MLS",
+        "UniqueID": "887262",
+        "Email": "lmessi@mls.com",
+        "__collections__": {}
+      },
+      "mjordan@nba.com": {
+        "FirstName": "Michael",
+        "LastName": "Jordan",
+        "Email": "mjordan@nba.com",
+        "Organization": "NBA",
+        "UniqueID": "887578",
+        "__collections__": {}
+      },
+      "potato@test.com": {
+        "email": "potato@test.com",
+        "UniqueID": "123789",
+        "__collections__": {}
+      },
+      "yo@da.com": {
+        "Email": "yo@da.com",
+        "UniqueID": "837373",
+        "Organization": "SW",
+        "LastName": "Da",
+        "FirstName": "Yo",
+        "__collections__": {}
+      }
+    },
+    "OrgEvents": {
+      "AESB": {
+        "ClubName": "Associated Engineering Student Body",
+        "__collections__": {
+          "Events": {
+            "Fall Week of Welcome": {
+              "Details": {
+                "Location": "VEC Courtyard",
+                "Event Title": "Fall Week of Welcome",
+                "Time": "10:00 am",
+                "Description": "Welcome new students to the COE! Come say hi to the many orgs and find some friends!",
+                "Primary Contact": "Riana Jara",
+                "Event Type": "Social",
+                "Date": "September 23, 2021",
+                "Contact Email": "secretary@aesb.org",
+                "Max Capacity": "100"
+              },
+              "__collections__": {
+                "Attendees": {
+                  "bg8sy6OeMH3GkRcH65ia": {
+                    "Attendee1": {
+                      "__datatype__": "documentReference",
+                      "value": "Attendee/ZEc3wfrHeKdmEHjuYS9NLmZ0pYg2"
+                    },
+                    "__collections__": {}
+                  }
+                }
+              }
+            },
+            "Spring Week of Welcome": {
+              "Details": {
+                "Date": "February 2, 2022",
+                "Primary Contact": "Melissa Gaines",
+                "Max Capacity": "100",
+                "Event Title": "Spring Week of Welcome",
+                "Event Type": "Social",
+                "Location": "The Outpost",
+                "Description": "A new semester means new chances to meet your COE organizations and clubs!",
+                "Time": "12:00 pm",
+                "Contact Email": "president@aesb.org"
+              },
+              "__collections__": {}
+            },
+            "Tea with Industry": {
+              "Details": {
+                "Location": "ECS-404",
+                "Max Capacity": "60",
+                "Event Type": "Industry",
+                "Time": "7:00 pm",
+                "Primary Contact": "Kayla Valencia",
+                "Description": "Need help finding a job? Want to practice your elevator pitch? Do you want to broaden your connections? Come to Tea with Industry!",
+                "Event Title": "Tea with Industry",
+                "Date": "December 5, 2021",
+                "Contact Email": "co-vicepresident@aesb.org"
+              },
+              "__collections__": {}
+            }
+          }
+        }
+      },
+      "ASCE": {
+        "ClubName": "ASCE",
+        "__collections__": {}
+      },
+      "Coco": {
+        "ClubName": "Coco",
+        "__collections__": {
+          "Events": {
+            "Bird woodshop": {
+              "Bird woodshop": {
+                "Time": "3:02 am",
+                "Contact Email": "Birdy@bird.com",
+                "Spots Left": "5",
+                "Event Type": "General Body",
+                "Title": "Bird woodshop",
+                "Date": "May 13, 2021",
+                "Max Capacity": "5",
+                "Location": "CE 402",
+                "Description": "Making houses for birds",
+                "Primary Contact": "Birdu"
+              },
+              "__collections__": {
+                "Attendees": {
+                  "sebstan@csulb.edu": {
+                    "Attendees": "",
+                    "__collections__": {}
+                  }
+                }
+              }
+            },
+            "Coco pizza": {
+              "Coco pizza": {
+                "Time": "6:02 am",
+                "Spots Left": 24,
+                "Location": "Coco room",
+                "Primary Contact": "Coco",
+                "Event Type": "Social",
+                "Contact Email": "Co.@co.co",
+                "Title": "Coco pizza",
+                "Max Capacity": "25",
+                "Date": "April 26, 2021",
+                "Description": "Eat pizza"
+              },
+              "__collections__": {
+                "Attendees": {
+                  "rianajara@yahoo.com": {
+                    "Attendees": "",
+                    "__collections__": {}
+                  },
+                  "sebstan@csulb.edu": {
+                    "Attendees": "",
+                    "__collections__": {}
+                  }
+                }
+              }
+            },
+            "Halloween Horror Night": {
+              "Halloween Horror Night": {
+                "Time": "8:16 pm",
+                "Spots Left": 2,
+                "Contact Email": "lennoxscott@ls.com",
+                "Primary Contact": "Lennox Scott",
+                "Date": "October 31, 2021",
+                "Event Type": "Social",
+                "Description": "Boo! Scary Times!",
+                "Max Capacity": "33",
+                "Location": "VEC 504",
+                "Title": "Halloween Horror Night"
+              },
+              "__collections__": {}
+            },
+            "Potato Party": {
+              "Potato Party": {
+                "Primary Contact": "Riana Jara",
+                "Title": "Potato Party",
+                "Time": "5:36 pm",
+                "Event Type": "Social",
+                "Contact Email": "rianajara@gmail.com",
+                "Spots Left": 8,
+                "Description": "Potato time",
+                "Date": "April 30, 2021",
+                "Max Capacity": "10",
+                "Location": "USU 116"
+              },
+              "__collections__": {
+                "Attendees": {
+                  "RianaJara@yahoo.com": {
+                    "Attendees": "",
+                    "__collections__": {}
+                  },
+                  "rianajara@yahoo.com": {
+                    "Attendees": "",
+                    "__collections__": {}
+                  },
+                  "sebstan@csulb.edu": {
+                    "Attendees": "",
+                    "__collections__": {}
+                  }
+                }
+              }
+            },
+            "Rainbow Machine": {
+              "Rainbow Machine": {
+                "Primary Contact": "Naked Juice",
+                "Date": "December 24, 2020",
+                "Title": "Rainbow Machine",
+                "Max Capacity": "23",
+                "Contact Email": "No@sugar.added",
+                "Event Type": "General Body",
+                "Spots Left": 17,
+                "Location": "Packed with Vitamin C",
+                "Time": "12:09 pm",
+                "Description": "64 fl oz"
+              },
+              "__collections__": {
+                "Attendees": {
+                  "sebstan@csulb.edu": {
+                    "Data": {
+                      "FirstName": "Sebastian",
+                      "Email": "sebstan@csulb.edu",
+                      "YearLevel": "Freshman",
+                      "Major": "Mechanical Engineering",
+                      "LastName": "Stan"
+                    },
+                    "__collections__": {}
+                  }
+                }
+              }
+            },
+            "Speaker Andrew": {
+              "Speaker Andrew": {
+                "Primary Contact": "Andrew",
+                "Contact Email": "andrew@andrew.com",
+                "Description": "Yes",
+                "Date": "April 23, 2021",
+                "Time": "3:39 pm",
+                "Event Type": "Workshop",
+                "Location": "ZoomOn",
+                "Max Capacity": "55",
+                "Title": "Speaker Andrew",
+                "Spots Left": "55"
+              },
+              "__collections__": {
+                "Attendees": {
+                  "sebstan@csulb.edu": {
+                    "Attendees": "",
+                    "__collections__": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "GuardianScholars": {
+        "ClubName": "Guardian Scholars",
+        "__collections__": {}
+      },
+      "HeheCompany": {
+        "ClubName": "HeheCompany",
+        "__collections__": {}
+      },
+      "MAES": {
+        "ClubName": "MAES",
+        "__collections__": {}
+      },
+      "MLS": {
+        "ClubName": "MLS",
+        "__collections__": {}
+      },
+      "NBA": {
+        "ClubName": "NBA",
+        "__collections__": {}
+      },
+      "NSBE": {
+        "ClubName": "NSBE",
+        "__collections__": {}
+      },
+      "NSLS": {
+        "ClubName": "NSLS",
+        "__collections__": {}
+      },
+      "New Club": {
+        "ClubName": "Coco",
+        "__collections__": {
+          "Events": {
+            "Temp": {
+              "Heyyyy": {
+                "Max Capacity": "444",
+                "Title": "Heyyyy",
+                "Event Type": "Social",
+                "Time": "8:19 am",
+                "Contact Email": "Ray@say.com",
+                "Location": "Okayyy",
+                "Date": "May 14, 2021",
+                "Primary Contact": "Rayyyy",
+                "Description": "Playy"
+              },
+              "Yayyy": {
+                "Event Type": "Tabling",
+                "Title": "Yayyy",
+                "Max Capacity": "66",
+                "Primary Contact": "Hahah",
+                "Contact Email": "Nsns@jdjjd.com",
+                "Description": "Nnn",
+                "Location": "Cmon",
+                "Date": "May 14, 2021",
+                "Time": "7:22 am"
+              },
+              "__collections__": {
+                "Attendees": {
+                  "Attendees List": {
+                    "ghost Summers": {
+                      "lastName": "Summers",
+                      "firstName": "Joanne"
+                    },
+                    "__collections__": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RCC": {
+        "ClubName": "RCC",
+        "__collections__": {}
+      },
+      "RHA": {
+        "Yeeeee": {
+          "Primary Contact": "Nabab",
+          "Description": "Hhh",
+          "Event Type": "Industry",
+          "Location": "Bbbssn",
+          "Contact Email": "Nansen",
+          "Time": "8:30 pm",
+          "Date": "April 4, 2021",
+          "Max Capacity": "333",
+          "Title": "Yeeeee"
+        },
+        "ClubName": "Something To uuuuuuu",
+        "__collections__": {
+          "Events": {
+            "Orientation": {
+              "Location": "Zoom",
+              "EventName": "Orientation",
+              "__collections__": {
+                "Attendees": {
+                  "AttendeeOne": {
+                    "FirstName": "Jim",
+                    "LastName": "Belushi",
+                    "__collections__": {}
+                  }
+                }
+              }
+            },
+            "Tunisia": {
+              "PleaseWork": "Now To try",
+              "__collections__": {}
+            }
+          }
+        }
+      },
+      "SASE": {
+        "ClubName": "SASE",
+        "__collections__": {}
+      },
+      "SW": {
+        "ClubName": "SW",
+        "__collections__": {}
+      },
+      "SWE": {
+        "ClubName": "SWE",
+        "__collections__": {}
+      },
+      "TYR": {
+        "ClubName": "TYR",
+        "__collections__": {}
+      },
+      "Temp": {
+        "ClubName": "Coco",
+        "__collections__": {}
+      }
+    }
+  }
+}
