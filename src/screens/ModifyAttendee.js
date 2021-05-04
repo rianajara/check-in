@@ -169,7 +169,7 @@ const ModfiyAttendee = (props) => {
 					<InfoDropDown 
 						setDataType={(value) => setMajor(value)}
 						dropDownType={'major'}
-						defaultEventType={'major'}
+						defaultEventType={currentUser['attendeeMajor']}
 						labelInfo="Choose a major">
 						
 					</InfoDropDown>
