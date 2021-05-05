@@ -27,6 +27,8 @@ npm install expo-permissions
 
 */
 
+
+
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
 
@@ -74,7 +76,25 @@ const ViewEvent = (props) => {
         setAttendeesList(tempEventArray);
     };
 
-
+	const RequestData = () => {
+		const sgMail = require('@sendgrid/mail')
+	sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+	
+	const msg = {
+	  to: 'csulbteamaxiom@gmail.com', // Change to your recipient
+	  from: 'csulbteamaxiom@gmail.com', // Change to your verified sender
+	  subject: 'Request Event Data',
+	  text: `Host ${currentUser['hostEmail']} is requesting event data`
+	}
+	sgMail
+	  .send(msg)
+	  .then(() => {
+		console.log('Email sent')
+	  })
+	  .catch((error) => {
+		console.error(error)
+	  })
+	}
 
 
     // ref : https://stackoverflow.com/questions/54586216/how-to-create-text-file-in-react-native-expo
