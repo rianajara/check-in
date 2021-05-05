@@ -14,6 +14,7 @@ import Firebase from '../components/Firebase';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import { Alert } from 'react-native';
+import msg from '../components/RequestData.js'
 //test
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
@@ -27,8 +28,12 @@ npm install expo-permissions
 
 */
 
+//const sgMail = require('@sendgrid/mail')
+// const fs = require("fs");
+//sgMail.setApiKey('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');
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
+console.log(msg);
 
 const ViewEvent = (props) => {
     const eventInfo = props.navigation.state.params.data;
@@ -74,7 +79,25 @@ const ViewEvent = (props) => {
         setAttendeesList(tempEventArray);
     };
 
+	const requestData = () => {
+		 const msg = {
+	  to: 'srdas73@gmail.com', // Change to your recipient
+	  from: 'csulbteamaxiom@gmail.com', // Change to your verified sender
+	  subject: 'Here is your event data',
+	  text: 'sending test data',
+	  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+	}
+	sgMail
+	  .send(msg)
+	  .then(() => {
+	    console.log('Email sent')
+	  })
+	  .catch((error) => {
+	    console.error(error)
+	  })
+	  return msg;
 
+	};
 
 
     // ref : https://stackoverflow.com/questions/54586216/how-to-create-text-file-in-react-native-expo
@@ -104,13 +127,6 @@ const ViewEvent = (props) => {
             console.log('test6');
         }
     }
-
-
-
-
-
-
-
 
     // get and add the attendees information and places it in an array
     const getAttendeeInfo = async () => {
@@ -251,13 +267,13 @@ const ViewEvent = (props) => {
 
             <View style={styles.viewEventButtonView}>
                 <TouchableOpacity
-                    onPress={() => getAttendeeEmail()}
+                   // onPress={() => requestData()}
                     style={[
                         styles.viewEventButton,
                         { backgroundColor: '#c1dace' },
                         { borderColor: '#8dbba4' },
                     ]}>
-                    <Text style={styles.viewEventButtonText}>Export Data</Text>
+                    <Text style={styles.viewEventButtonText}>Request Data</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[
