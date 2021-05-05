@@ -12,6 +12,7 @@ export const UserContext = createContext({
 //Provides the other components with the UserContext information
 export const UserProvider = (props) => {
 	const [currentUser, setCurrentUser] = useState();
+	const [requestedEventInfo, setRequestedEventInfo] = useState("UMMMM YES");
 
 	const loadData = async () => {
 		let user = await AsyncStorage.getItem('currentUser')
@@ -30,7 +31,7 @@ export const UserProvider = (props) => {
 		
 	}, [])
 	return (
-		<UserContext.Provider value={{currentUser, setCurrentUser}}>
+		<UserContext.Provider value={{currentUser, setCurrentUser, requestedEventInfo, setRequestedEventInfo}}>
 			{props.children}
 		</UserContext.Provider>
 	);

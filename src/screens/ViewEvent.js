@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {
-	Text,
-	View,
-	Image,
-	TextInput,
-	KeyboardAvoidingView,
-	StyleSheet,
-	ScrollView,
-	Dimensions,
-} from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Firebase from '../components/Firebase';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import { Alert } from 'react-native';
-
+import * as SMS from 'expo-sms';
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -27,6 +18,52 @@ const ViewEvent = (props) => {
 	const [attendeesList, setAttendeesList] = useState([]);
 	const [attendeesInfoList, setAttendeesInfoList] = useState([]);
 	const [results, setResults] = useState([]);
+	const [smsVerified, setSMSVerified] = useState(false);
+	const { requestedEventInfo, setRequestedEventInfo } = useContext(
+		UserContext
+	);
+
+	const addToRequestCollection = async () => {
+		db.collection('RequestedEventData')
+			.doc(eventInfo[Object.keys(eventInfo)[0]]['Title'])
+			.set(
+				{
+					host: currentUser['hostOrg'],
+					hostEmail: currentUser['hostEmail']
+				},
+				{ merge: true }
+			);
+	};
+
+	const sendMessage = async () => {
+		const { result } = await SMS.sendSMSAsync(
+			'5622139483',
+			`${
+				currentUser['hostEmail']
+			} is requesting the attendees list for the ${
+				eventInfo[Object.keys(eventInfo)[0]]['Title']
+			} held on ${eventInfo[Object.keys(eventInfo)[0]]['Date']}.`
+		);
+	};
+
+	const requestDataAlert = async () => {
+		const isAvailable = await SMS.isAvailableAsync();
+		if (isAvailable) {
+			Alert.alert(
+				'Reminder',
+				'Please make sure to press send to ensure the request is made.\n Thank you!',
+				[{ text: 'Got it', onPress: () => setSMSVerified(true) }]
+			);
+		} else {
+			Alert.alert(
+				'Alert',
+				'We cannot send a text request. Please try again on another device with an active cell phone',
+				{ text: 'Okay' }
+			);
+		}
+
+		setSMSVerified(false);
+	};
 
 	const headers = [
 		{ label: 'Email', key: 'Email' },
@@ -63,30 +100,6 @@ const ViewEvent = (props) => {
 		setAttendeesList(tempEventArray);
 	};
 
-	useEffect(() => {
-		console.warn(attendeesList)
-	}, [attendeesList])
-
-
-	//csv maker
-
-
-/*
-	useEffect(() => {
-		//console.warn(attendeesInfoList)
-		let ws = XLSX.utils.json_to_sheet(JSON.stringify(attendeesInfoList));
-		let wb = XLSX.utils.book_new();
-		XLSX.utils.book_append_sheet(wb, ws, 'Attendees');
-		const wbout = XLSX.write(wb, {
-			type: 'base64',
-			bookType: 'xlsx',
-		});
-	}, [attendeesInfoList]);
-
-	useEffect(() => {
-		console.warn(results);
-	}, [results]);
-*/
 	const handleCheckIn = () => {
 		if (spotsLeft === 0) {
 			Alert.alert(
@@ -130,6 +143,13 @@ const ViewEvent = (props) => {
 			parseInt(eventInfo[Object.keys(eventInfo)[0]]['Spots Left'])
 		);
 	}, []);
+
+	useEffect(() => {
+		if (smsVerified == true) {
+			sendMessage();
+			addToRequestCollection();
+		}
+	}, [smsVerified]);
 
 	return (
 		<View style={styles.contentContainer}>
@@ -185,7 +205,9 @@ const ViewEvent = (props) => {
 
 			<View style={styles.viewEventButtonView}>
 				<TouchableOpacity
-					onPress={() => getAttendeeEmail()}
+					onPress={() => {
+						getAttendeeEmail(), requestDataAlert();
+					}}
 					style={[
 						styles.viewEventButton,
 						{ backgroundColor: '#c1dace' },

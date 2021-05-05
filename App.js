@@ -6,6 +6,7 @@ import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import viewHost from './src/screens/ViewAccount_Host.js';
 import { UserProvider } from './src/context/UserContext.js';
+import { EmailCSV } from './src/csv/EmailCSV';
 
 export default class App extends React.Component {
 	state = {
@@ -25,7 +26,7 @@ export default class App extends React.Component {
 	render() {
 		return this.state.isFontLoaded === true ? (
 			<UserProvider>
-				<AppNavigator />
+				<AppNavigator/>
 			</UserProvider>
 		) : (
 			AppLoading
