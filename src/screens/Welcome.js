@@ -4,6 +4,9 @@ import { Button } from 'react-native-elements';
 import PopUpModal from '../components/PopUpModal';
 import Icon from '@expo/vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LogBox } from "react-native";
+
+LogBox.ignoreAllLogs(true);
 
 export default class Welcome extends React.Component {
 	async componentDidMount() {

@@ -16,6 +16,7 @@ import * as firebase from 'firebase';
 import PopUpModal from '../components/PopUpModal';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const ModifyHost = (props) => {
 	const { currentUser, setCurrentUser } = useContext(UserContext);
@@ -43,10 +44,14 @@ const ModifyHost = (props) => {
 					fontSize: 20,
 					fontFamily: 'Bold',
 					alignSelf: 'center',
-					marginTop: 115,
+					marginTop: '10%',
 				}}>
-				Modify Host Account{' '}
+				Modify Host Account{' \n'}
 			</Text>
+
+			<ScrollView>
+
+	
 			<View style={styles.inputContainer}>
 			<Input
 					label="Enter Organization Name:"
@@ -92,8 +97,8 @@ const ModifyHost = (props) => {
 					value={lastName}
 				/>
 
-				<Input
-					label='Enter preferred organization email:'
+				<Input //added a lot of space to space it out to max width
+					label='Enter preferred organization email:                '
 					placeholder='youremail@address.com'
 					leftIcon={
 						<Icon
@@ -154,7 +159,11 @@ const ModifyHost = (props) => {
                     editable={false}
                     value={uniqueID}
                 />
+			
 			</View>
+			</ScrollView>
+
+			
 			<View style={styles.buttonContainer}>
 				<Button
 					style={styles.smallButton}
@@ -227,28 +236,30 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'space-evenly',
-		marginTop: 10
 	},
+
 	smallImage: {
 		marginTop: 60,
 		width: 200,
 		height: 200,
 	},
+
 	inputContainer: {
-		width: '90%',
-		marginTop: 100,
+		width: '100%',
+		marginTop: '0%',
 		justifyContent: 'space-evenly',
-		marginBottom: -50,
 	},
+
 	buttonContainer: {
-		
 		justifyContent: 'space-around',
-		height: '40%',
+		height: '10%',
 	},
 	smallButton: {},
 	icon: {
 		marginRight: 15,
 	},
+
+
 });
 
 export default ModifyHost;

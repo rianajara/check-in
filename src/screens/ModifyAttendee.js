@@ -146,38 +146,7 @@ const ModfiyAttendee = (props) => {
 						// value={email}
 					/>
 
-					<Input
-						label='Enter password:'
-						placeholder='password'
-						secureTextEntry={true}
-						leftIcon={
-							<Icon
-								name='lock'
-								size={24}
-								color='black'
-								style={styles.icon}
-							/>
-						}
-						onChangeText={(text) => setPassword(text)}
-						value={password}
-					/>
-
-					<Input
-						label='Re-type password:'
-						placeholder='confirm password'
-						secureTextEntry={true}
-						leftIcon={
-							<Icon
-								name='lock'
-								size={24}
-								color='black'
-								style={styles.icon}
-							/>
-						}
-						onChangeText={(text) => verifyPassword(text)}
-						value={verifypass}
-					/>
-
+					
 					<Input
 						label='Enter attendee year level:'
 						placeholder='Year Level'

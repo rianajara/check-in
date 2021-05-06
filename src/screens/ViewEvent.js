@@ -1,11 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import {
+    Text,
+    View,
+    Image,
+    TextInput,
+    KeyboardAvoidingView,
+    StyleSheet,
+    ScrollView,
+    Dimensions,
+} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Firebase from '../components/Firebase';
 import { UserContext } from '../context/UserContext.js';
 import { useContext } from 'react';
 import { Alert } from 'react-native';
 import * as SMS from 'expo-sms';
+
+/*
+npm install expo-media-library
+npm install expo-file-system
+npm install expo-permissions
+
+*/
 
 const db = Firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
@@ -254,68 +270,69 @@ const ViewEvent = (props) => {
 };
 
 const styles = StyleSheet.create({
-	contentContainer: {
-		backgroundColor: '#fff7d5',
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'flex-start',
-		paddingTop: 50,
-	},
-	eventInfoContainer: {
-		width: '90%',
-		height: '75%',
-		backgroundColor: '#d1dfbe',
-		borderRadius: 8,
-		borderColor: '#aac486',
-		borderWidth: 5,
-		marginTop: '5%',
-		paddingTop: 25,
-		paddingHorizontal: 15,
-	},
-	eventHeaderTextView: {
-		borderBottomColor: 'black',
-		borderBottomWidth: 4,
-	},
-	eventHeaderText: {
-		fontSize: 40,
-		fontWeight: '700',
-		marginBottom: 10,
-	},
-	eventInfoText: {
-		fontSize: 20,
-		marginVertical: 5,
-	},
-	boldText: {
-		fontWeight: 'bold',
-	},
-	scrollView: {
-		paddingRight: 15,
-		width: '90%',
-	},
-	viewEventButtonView: {
-		width: '90%',
-		height: 70,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-around',
-		marginTop: 40,
-	},
-	viewEventButton: {
-		width: 70,
-		height: 70,
-		backgroundColor: 'red',
-		alignItems: 'center',
-		justifyContent: 'space-around',
-		borderRadius: 15,
-		borderWidth: 4,
-		padding: 2,
-	},
-	viewEventButtonText: {
-		fontSize: 12,
-		textAlign: 'center',
-		fontWeight: '700',
-	},
+    contentContainer: {
+        backgroundColor: '#fff7d5',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingTop: 50,
+    },
+    eventInfoContainer: {
+        width: '90%',
+        height: '75%',
+        backgroundColor: '#d1dfbe',
+        borderRadius: 8,
+        borderColor: '#aac486',
+        borderWidth: 5,
+        marginTop: '5%',
+        paddingTop: 25,
+        paddingHorizontal: 15,
+    },
+    eventHeaderTextView: {
+        borderBottomColor: 'black',
+        borderBottomWidth: 4,
+    },
+    eventHeaderText: {
+        fontSize: 40,
+        fontWeight: '700',
+        marginBottom: 10,
+    },
+    eventInfoText: {
+        fontSize: 20,
+        marginVertical: 5,
+    },
+    boldText: {
+        fontWeight: 'bold',
+    },
+    scrollView: {
+        paddingRight: 15,
+        width: '90%',
+    },
+    viewEventButtonView: {
+        width: '90%',
+        height: 70,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        marginTop: 40,
+    },
+    viewEventButton: {
+        width: 70,
+        height: 70,
+        backgroundColor: 'red',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        borderRadius: 15,
+        borderWidth: 4,
+        padding: 2,
+    },
+    viewEventButtonText: {
+        fontSize: 12,
+        textAlign: 'center',
+        fontWeight: '700',
+    },
 });
 
 export default ViewEvent;
 // https://www.npmjs.com/package/react-native-modal-datetime-picker
+

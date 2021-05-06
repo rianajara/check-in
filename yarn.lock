@@ -4069,7 +4069,15 @@
   "resolved" "https://registry.npmjs.org/expo-location/-/expo-location-10.0.0.tgz"
   "version" "10.0.0"
 
-"expo-permissions@~10.0.0":
+"expo-media-library@^12.0.2":
+  "integrity" "sha512-0gi4ny4IldYg3uWHjwP+P04VRe5Ea9BYflRILpQWBzcivppzEzTSYFQKUTQEXuZsWB9PA5uTQd2UaB+4q/dcJQ=="
+  "resolved" "https://registry.npmjs.org/expo-media-library/-/expo-media-library-12.0.2.tgz"
+  "version" "12.0.2"
+  dependencies:
+    "@expo/config-plugins" "^1.0.18"
+    "unimodules-permissions-interface" "~6.1.0"
+
+"expo-permissions@^10.0.0", "expo-permissions@~10.0.0":
   "integrity" "sha512-b6oitd4JmFdQ7DxczZ2WRS9aDyqgVM7lEhy3JyKZ2dbU19C6NyHyLCcwssZgfzOfGnp2owoaWn3KU4zdrF5MIA=="
   "resolved" "https://registry.npmjs.org/expo-permissions/-/expo-permissions-10.0.0.tgz"
   "version" "10.0.0"
@@ -6974,6 +6982,11 @@
   "resolved" "https://registry.npmjs.org/qs/-/qs-6.9.6.tgz"
   "version" "6.9.6"
 
+"qs@6.9.4":
+  "integrity" "sha512-A1kFqHekCTM7cz0udomYUoYNWjBebHm/5wzU/XqrBRBNWectVH0QIiN+NEcZ0Dte5hvzHwbr8+XQmguPhJ6WdQ=="
+  "resolved" "https://registry.npmjs.org/qs/-/qs-6.9.4.tgz"
+  "version" "6.9.4"
+
 "query-string@^6.13.6":
   "integrity" "sha512-XDxAeVmpfu1/6IjyT/gXHOl+S0vQ9owggJ30hhWKdHAsNPOcasn5o9BW0eejZqL2e4vMjhAxoW3jVHcD6mbcYw=="
   "resolved" "https://registry.npmjs.org/query-string/-/query-string-6.14.1.tgz"
@@ -7061,6 +7074,13 @@
     "prop-types" "^15.7.2"
     "react-native-ratings" "^7.3.0"
     "react-native-size-matters" "^0.3.1"
+
+"react-native-email@^1.1.0":
+  "integrity" "sha512-vyH8gkk+Rz/l7QF76bSr6EclBu1yF7DMWejfspGdbOsDe6/6TGbReP0t4zx2FXR4mh6h4GjmZNPwFEwycepGRA=="
+  "resolved" "https://registry.npmjs.org/react-native-email/-/react-native-email-1.1.0.tgz"
+  "version" "1.1.0"
+  dependencies:
+    "qs" "6.9.4"
 
 "react-native-fs@^2.16.6":
   "integrity" "sha512-ZWOooD1AuFoAGY3HS2GY7Qx2LZo4oIg6AK0wbC68detxwvX75R/q9lRqThXNKP6vIo2VHWa0fYUo/SrLw80E8w=="
@@ -8265,6 +8285,11 @@
   "integrity" "sha512-mb+uiWvf2M/og7bA28CYOH6uKsAg/7oRBodZNsXVRH/h5LjQlBd5lTECH/L3Hkm3Ta7NSQUnENtXUCO4jfnVkg=="
   "resolved" "https://registry.npmjs.org/unimodules-permissions-interface/-/unimodules-permissions-interface-5.4.0.tgz"
   "version" "5.4.0"
+
+"unimodules-permissions-interface@~6.1.0":
+  "integrity" "sha512-jeJx/y+Vn/Cp1/4su5XJ06UBul83MpXkYEqIOAb2jwaikhmj6tNwko7HpKy9OhfGfrhddCzwtedlro8xxZUk9A=="
+  "resolved" "https://registry.npmjs.org/unimodules-permissions-interface/-/unimodules-permissions-interface-6.1.0.tgz"
+  "version" "6.1.0"
 
 "unimodules-sensors-interface@~5.4.0":
   "integrity" "sha512-QxjP8XiiQ3rnjQE2/oRMweRa262hIxeg2SCAgSVNUSC1sTIC44nZgjsfpFk0omkfUpXi3lqSt0wjZjkSgJ1NeQ=="
