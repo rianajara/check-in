@@ -1,7 +1,7 @@
 # check-in
 check-in mobile application is a multi platform software for mobile devices. The software helps manage events sign up and sign in.
 
-Description: It allows a "host" to create event and then scan attendee.For the attendee, each attendee is given a unique QR code. The host would scan the attendee's QR code and this will register the attendee into the firebase database.
+Event check-in App provides a new and efficient way of tracking and managing events and attendees through the usage of QR codes via a mobile application. This application will help the attendees to check-in, register, cancel and RSVP for an event and the hosts to create, manage, limit attendees for the hosted events all under one application.
 
 Required Software: React Native, Expo Go, Firebase, Visual Studio, npm install, GitHub, Node js….
 node js : v12.16.0
